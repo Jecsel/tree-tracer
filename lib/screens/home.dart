@@ -181,7 +181,14 @@ Widget _getSelectedWidget() {
         itemBuilder: (BuildContext context, int index) {
           final imageData = filteredDataList[index];
           return ListTile(
-            leading: Image.asset(imageData.imagePath),
+            leading: Container(
+              width: 100, // Adjust the width as needed
+              height: 100, // Adjust the height as needed
+              child: Image.asset(
+                imageData.imagePath,
+                fit: BoxFit.cover
+                ),
+            ),
             title: Text(imageData.name),
             subtitle: Text(imageData.description),
           );
