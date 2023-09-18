@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:grovievision/models/image_data.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -23,22 +24,71 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String searchQuery = '';
   int _selectedIndex = 0;
+  int _selectedIdx = 0;
+  final CarouselController _carouselController = CarouselController();
+
+      // Define a list of ImageData objects
+    List<ImageData> imageDataList = [
+      ImageData(
+        imagePath: "assets/images/coconut.jpeg",
+        name: "Image 1",
+        description: "This is the first image.",
+      ),
+      ImageData(
+        imagePath: "assets/images/narra.jpeg",
+        name: "Image 2",
+        description: "This is the second image.",
+      ),
+      // add more images here...
+    ];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedIdx = index;
+    });
+  }
+
+  void _goToPreviousSlide() {
+    _carouselController.previousPage();
+  }
+
+  void _goToNextSlide() {
+    _carouselController.nextPage();
+  }
+
+  void _onItemTappedCat(int index) {
+    setState(() {
+      _selectedIdx = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Grovievision'),
-      backgroundColor: Colors.green, // Set the background color here
+      appBar: AppBar(
+        title: const Text('Grovievision'),
+        backgroundColor: Colors.green, // Set the background color here
       ),
       body: Column(
         children: [
+          SizedBox(height: 20),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10.0), // Adjust the margin as needed
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                prefixIcon: Icon(Icons.search),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
+            ),
+          ),
+          SizedBox(height: 20),
           // Half of the screen with a green gradient
           CarouselSlider(
             options: CarouselOptions(
@@ -114,18 +164,37 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _getSelectedWidget() {
-    switch (_selectedIndex) {
-      case 0:
-        return Text('Index 0: Home');
-      case 1:
-        return Mangroove(); // Replace with your Mangroove page
-      case 2:
-        return AboutUs();
-      default:
-        return Text('Unknown Page');
-    }
+Widget _getSelectedWidget() {
+  switch (_selectedIndex) {
+    case 0:
+      // Filter the imageDataList based on the searchQuery
+      final filteredDataList = imageDataList
+          .where((data) =>
+              data.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
+              data.description.toLowerCase().contains(searchQuery.toLowerCase()))
+          .toList();
+
+      return ListView.separated(
+        itemCount: filteredDataList.length,
+        separatorBuilder: (BuildContext context, int index) =>
+            const Divider(),
+        itemBuilder: (BuildContext context, int index) {
+          final imageData = filteredDataList[index];
+          return ListTile(
+            leading: Image.asset(imageData.imagePath),
+            title: Text(imageData.name),
+            subtitle: Text(imageData.description),
+          );
+        },
+      );
+    case 1:
+      return Mangroove();
+    case 2:
+      return AboutUs();
+    default:
+      return Text('Unknown Page');
   }
+}
 
   ListTile _buildDrawerItem({required String title, required int index}) {
     return ListTile(
