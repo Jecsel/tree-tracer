@@ -1,0 +1,93 @@
+-- Table: Family
+CREATE TABLE IF NOT EXISTS Family (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT
+);
+
+-- Table: Mangroove
+CREATE TABLE IF NOT EXISTS Mangroove (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    family_id INTEGER NOT NULL,
+    local_name TEXT NOT NULL,
+    scientific_name TEXT NOT NULL,
+    description TEXT,
+    order BOOLEAN,
+    FOREIGN KEY (family_id) REFERENCES Family(id)
+);
+
+-- Table: Tree
+CREATE TABLE IF NOT EXISTS Tree (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mangroove_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    image BLOB,
+    FOREIGN KEY (mangroove_id) REFERENCES Mangroove(id)
+);
+
+-- Table: Root
+CREATE TABLE IF NOT EXISTS Root (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mangroove_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    image BLOB,
+    FOREIGN KEY (mangroove_id) REFERENCES Mangroove(id)
+);
+
+-- Table: Flower
+CREATE TABLE IF NOT EXISTS Flower (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mangroove_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    image BLOB,
+    FOREIGN KEY (mangroove_id) REFERENCES Mangroove(id)
+);
+
+-- Table: Trunk
+CREATE TABLE IF NOT EXISTS Trunk (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mangroove_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    image BLOB,
+    FOREIGN KEY (mangroove_id) REFERENCES Mangroove(id)
+);
+
+-- Table: Leaf
+CREATE TABLE IF NOT EXISTS Leaf (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mangroove_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    image BLOB,
+    FOREIGN KEY (mangroove_id) REFERENCES Mangroove(id)
+);
+
+-- Table: Fruit
+CREATE TABLE IF NOT EXISTS Fruit (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mangroove_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    image BLOB,
+    FOREIGN KEY (mangroove_id) REFERENCES Mangroove(id)
+);
+
+-- Table: UserType
+CREATE TABLE IF NOT EXISTS UserType (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+-- Table: User
+CREATE TABLE IF NOT EXISTS User (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+    user_type_id INTEGER NOT NULL,
+    is_active BOOLEAN,
+    FOREIGN KEY (user_type_id) REFERENCES UserType(id)
+);

@@ -1,15 +1,36 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:grovievision/components/treeImageListState.dart';
 import 'package:grovievision/models/image_data.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:image_compare/image_compare.dart';
+import 'package:path/path.dart';
+import 'dart:typed_data';
+import 'package:sqflite_common/sqlite_api.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  sqfliteFfiInit(); // Initialize the sqflite_ffi library
+  databaseFactory = databaseFactoryFfi; // Initialize the databaseFactory
+
+  // Open the database and perform any necessary setup
+  final databasePath = await getDatabasesPath();
+  final path = join(databasePath, 'mangroove_main_db.db');
+
+  final database = await openDatabase(path);
+
+  // Run your app within the runApp function
+  runApp(MyApp(database: database));
 }
 
 class MyApp extends StatelessWidget {
+  final Database database;
+
+  MyApp({required this.database});
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +45,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  late Database database; // Declare a variable to hold the database instance
   String searchQuery = '';
   int _selectedIndex = 0;
   int _selectedIdx = 0;
@@ -64,9 +87,16 @@ class _HomeState extends State<Home> {
     });
   }
 
+  _drawerItemTapped(int index) {
+  setState(() {
+    _selectedIndex = index;
+  });
+}
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home:     Scaffold(
       appBar: AppBar(
         title: const Text('Grovievision'),
         backgroundColor: Colors.green, // Set the background color here
@@ -111,7 +141,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 child: Center(
-                  child: Text('Image 1'),
+                  child: Text('Tree'),
                 ),
               ),
               Container(
@@ -123,8 +153,56 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 child: Center(
-                  child: Text('Image 2'),
+                  child: Text('Root'),
+                ),   
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.blue.shade300, Colors.blue.shade700],
+                  ),
                 ),
+                child: Center(
+                  child: Text('Flower'),
+                ),   
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.blue.shade300, Colors.blue.shade700],
+                  ),
+                ),
+                child: Center(
+                  child: Text('Trunk'),
+                ),   
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.blue.shade300, Colors.blue.shade700],
+                  ),
+                ),
+                child: Center(
+                  child: Text('Leaf'),
+                ),   
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.blue.shade300, Colors.blue.shade700],
+                  ),
+                ),
+                child: Center(
+                  child: Text('Fruit'),
+                ),   
               ),
               // Add more carousel items as needed
             ],
@@ -144,29 +222,47 @@ class _HomeState extends State<Home> {
             _buildDrawerItem(
               title: 'Home',
               index: 0,
+              onTap: () {
+                _drawerItemTapped(0);
+              },
             ),
             _buildDrawerItem(
               title: 'Mangrooves',
               index: 1,
+              onTap: () {
+                _drawerItemTapped(1);
+                Navigator.pushNamed(context, '/mangrooves'); // Navigate to "Mangrooves" screen
+              },
             ),
             _buildDrawerItem(
               title: 'About Us',
               index: 2,
+              onTap: () {
+                _drawerItemTapped(2);
+              },
             ),
             _buildDrawerItem(
               title: 'Exit',
               index: 3,
+              onTap: () {
+                _drawerItemTapped(3);
+              },
             ),
           ],
         ),
       ),
       floatingActionButton: MyFAB(),
+    ),
+    routes: {
+        '/mangrooves': (context) => Mangroove(), // Define the Mangrooves screen route
+      },
     );
   }
 
 Widget _getSelectedWidget() {
   switch (_selectedIndex) {
     case 0:
+      // return TreeImageList(database: database);
       // Filter the imageDataList based on the searchQuery
       final filteredDataList = imageDataList
           .where((data) =>
@@ -203,14 +299,26 @@ Widget _getSelectedWidget() {
   }
 }
 
-  ListTile _buildDrawerItem({required String title, required int index}) {
+  // ListTile _buildDrawerItem({required String title, required int index}) {
+  //   return ListTile(
+  //     title: Text(title),
+  //     selected: _selectedIndex == index,
+  //     onTap: () {
+  //       _onItemTapped(index);
+  //       Navigator.pop(context as BuildContext); // Close the drawer
+  //     },
+  //   );
+  // }
+
+   Widget _buildDrawerItem({
+    required String title,
+    required int index,
+    VoidCallback? onTap,
+  }) {
     return ListTile(
       title: Text(title),
       selected: _selectedIndex == index,
-      onTap: () {
-        _onItemTapped(index);
-        Navigator.pop(context); // Close the drawer
-      },
+      onTap: onTap,
     );
   }
 }
@@ -227,16 +335,32 @@ class _MyFABState extends State<MyFAB> {
   File? localImage;
   File? takenImage;
 
+  double perceptualResult = 0.0;
+
+  /// Compare two images
+  Future compareTwoImages() async {
+    final perceptual = await compareImages(
+        src1: localImage, src2: takenImage, algorithm: PerceptualHash());
+
+    setState(() {
+      perceptualResult = 100 - (perceptual * 100);
+    });
+    print('Difference: ${perceptualResult}%');
+  }
+
   /// Get from gallery
   Future _getFromGallery() async {
-    final pickedFile = await ImagePicker().getImage(
+    final pickedFileFromGallery = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
-    if (pickedFile != null) {
+    print('pickFile');
+    print(pickedFileFromGallery);
+
+    if (pickedFileFromGallery != null) {
       setState(() {
-        localImage = File(pickedFile.path);
+        localImage = File(pickedFileFromGallery.path);
       });
     }
   }
@@ -244,6 +368,8 @@ class _MyFABState extends State<MyFAB> {
   /// Get Image from Camera
   Future getImageFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
+    print('pickFile');
+    print(pickedFile);
 
     if (pickedFile != null) {
       setState(() {
@@ -255,6 +381,7 @@ class _MyFABState extends State<MyFAB> {
 
   @override
   Widget build(BuildContext context) {
+
     return FloatingActionButton(
       onPressed: () {
         // Add your action here when the FAB is tapped.
@@ -268,11 +395,32 @@ class _MyFABState extends State<MyFAB> {
                 // Wrap the Column with SingleChildScrollView
                 child: Column(
                   children: [
+                    localImage != null
+                    ? Image.file(
+                        localImage!,
+                        height: 150,
+                      )
+                    : Text('Local Image Placeholder'),
+                    SizedBox(height: 10),
+                    takenImage != null
+                    ? Image.file(
+                        takenImage!,
+                        height: 150,
+                      )
+                    : Text('Taken Image Placeholder'),
+                    SizedBox(height: 10),
+                    Text('PerceptualHash ${perceptualResult.toInt().toString()} %'),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: compareTwoImages,
+                      child: Text('Compare Images'),
+                    ),
+                    SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: _getFromGallery,
                       child: Text('Take Local Image'),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: getImageFromCamera,
                       child: Text('Take Image'),
