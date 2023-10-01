@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grovievision/components/treeImageListState.dart';
-import 'package:grovievision/models/image_data.dart';
-import 'package:grovievision/screens/about_us.dart';
-import 'package:grovievision/screens/mangroove.dart';
+import 'package:tree_tracer/components/treeImageListState.dart';
+import 'package:tree_tracer/models/image_data.dart';
+import 'package:tree_tracer/screens/about_us.dart';
+import 'package:tree_tracer/screens/mangroove.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_compare/image_compare.dart';
@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
     return MaterialApp(
       home:     Scaffold(
       appBar: AppBar(
-        title: const Text('Grovievision'),
+        title: const Text('Tree Tracer'),
         backgroundColor: Colors.green, // Set the background color here
       ),
       body: Column(

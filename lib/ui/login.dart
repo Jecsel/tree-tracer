@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grovievision/screens/home.dart';
+import 'package:tree_tracer/screens/home.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // import 'home.dart';

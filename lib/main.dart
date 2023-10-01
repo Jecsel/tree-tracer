@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:grovievision/main_app.dart';
-import 'package:grovievision/routes.dart';
-import 'package:grovievision/screens/splash_screen.dart';
-import 'package:grovievision/theme.dart';
+import 'package:tree_tracer/main_app.dart';
+import 'package:tree_tracer/routes.dart';
+import 'package:tree_tracer/screens/splash_screen.dart';
+import 'package:tree_tracer/theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {

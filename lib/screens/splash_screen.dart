@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:grovievision/screens/home.dart';
+import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/ui/login.dart';
 
 class SplashScreen extends StatefulWidget {
   
   static String routeName = "/splash";
 
-  const SplashScreen({super.key});
+  // const SplashScreen({super.key});
+  const SplashScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -22,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async{
     await Future.delayed(Duration(milliseconds: 2000), (){});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
   }
 
   @override

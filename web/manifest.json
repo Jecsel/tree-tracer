@@ -1,6 +1,6 @@
 {
-    "name": "grovievision",
-    "short_name": "grovievision",
+    "name": "tree_tracer",
+    "short_name": "tree_tracer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

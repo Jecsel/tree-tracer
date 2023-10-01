@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:grovievision/components/show_mangroove.dart';
-import 'package:grovievision/screens/about_us.dart';
-import 'package:grovievision/screens/home.dart';
+import 'package:tree_tracer/components/show_mangroove.dart';
+import 'package:tree_tracer/screens/about_us.dart';
+import 'package:tree_tracer/screens/home.dart';
 
 class Mangroove extends StatefulWidget {
   const Mangroove({super.key});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tree_tracer/screens/splash_screen.dart';
 
 import 'ui/login.dart';
 
@@ -13,7 +14,7 @@ class MainApp extends StatelessWidget {
           seedColor: const Color.fromRGBO(32, 63, 129, 1.0),
         ),
       ),
-      home: const Login(),
+      home: const SplashScreen(),
     );
   }
 }

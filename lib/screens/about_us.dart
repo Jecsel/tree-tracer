@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:grovievision/screens/home.dart';
-import 'package:grovievision/screens/mangroove.dart';
+import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/screens/mangroove.dart';
 
 class AboutUs extends StatefulWidget {
 
@@ -35,7 +35,7 @@ class AboutUsState extends State<AboutUs>{
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Grovievision'),
+        title: const Text('Tree Tracer'),
         backgroundColor: Colors.green, // Set the background color here
       ),
       body: Padding(

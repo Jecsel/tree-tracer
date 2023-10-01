@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grovievision/size_config.dart';
+import 'package:tree_tracer/size_config.dart';
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
