@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grovievision/components/treeImageListState.dart';
 import 'package:grovievision/models/image_data.dart';
+import 'package:grovievision/screens/about_us.dart';
+import 'package:grovievision/screens/mangroove.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_compare/image_compare.dart';
@@ -161,7 +163,7 @@ class _HomeState extends State<Home> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade300, Colors.blue.shade700],
+                    colors: [Colors.blue.shade300, Colors.green.shade700],
                   ),
                 ),
                 child: Center(
@@ -185,7 +187,7 @@ class _HomeState extends State<Home> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade300, Colors.blue.shade700],
+                    colors: [Colors.blue.shade300, Colors.green.shade700],
                   ),
                 ),
                 child: Center(
@@ -207,7 +209,6 @@ class _HomeState extends State<Home> {
               // Add more carousel items as needed
             ],
           ),
-          // The rest of your content goes here
           Expanded(
             child: Center(
               child: _getSelectedWidget(),
@@ -224,21 +225,26 @@ class _HomeState extends State<Home> {
               index: 0,
               onTap: () {
                 _drawerItemTapped(0);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
               },
             ),
             _buildDrawerItem(
               title: 'Mangrooves',
               index: 1,
               onTap: () {
-                _drawerItemTapped(1);
-                Navigator.pushNamed(context, '/mangrooves'); // Navigate to "Mangrooves" screen
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
+                // _drawerItemTapped(1);
+                // Navigator.pushNamed(context, '/mangrooves'); // Navigate to "Mangrooves" screen
+                // Navigator.pop(context);
               },
             ),
             _buildDrawerItem(
               title: 'About Us',
               index: 2,
               onTap: () {
-                _drawerItemTapped(2);
+                // _drawerItemTapped(2);
+                // Navigator.pop(context);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AboutUs()));
               },
             ),
             _buildDrawerItem(
@@ -246,6 +252,7 @@ class _HomeState extends State<Home> {
               index: 3,
               onTap: () {
                 _drawerItemTapped(3);
+                Navigator.pop(context);
               },
             ),
           ],
@@ -254,7 +261,8 @@ class _HomeState extends State<Home> {
       floatingActionButton: MyFAB(),
     ),
     routes: {
-        '/mangrooves': (context) => Mangroove(), // Define the Mangrooves screen route
+        '/mangrooves': (context) => Mangroove(),
+        '/about_us': (context) => Mangroove(),
       },
     );
   }
@@ -298,17 +306,6 @@ Widget _getSelectedWidget() {
       return Text('Unknown Page');
   }
 }
-
-  // ListTile _buildDrawerItem({required String title, required int index}) {
-  //   return ListTile(
-  //     title: Text(title),
-  //     selected: _selectedIndex == index,
-  //     onTap: () {
-  //       _onItemTapped(index);
-  //       Navigator.pop(context as BuildContext); // Close the drawer
-  //     },
-  //   );
-  // }
 
    Widget _buildDrawerItem({
     required String title,
@@ -453,16 +450,3 @@ class _MyFABState extends State<MyFAB> {
   }
 }
 
-class Mangroove extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Text('Mangroove Page'); // Replace with your Mangroove content
-  }
-}
-
-class AboutUs extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Text('About Us Page'); // Replace with your About Us content
-  }
-}

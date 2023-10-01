@@ -1,16 +1,18 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grovievision/screens/about_us.dart';
 import 'package:grovievision/screens/home.dart';
 import 'package:grovievision/screens/mangroove.dart';
 
-class AboutUs extends StatefulWidget {
+class ShowMangroove extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => AboutUsState();
+  State<StatefulWidget> createState() => _ShowMangrooveState();
 
 }
 
-class AboutUsState extends State<AboutUs>{
+class _ShowMangrooveState  extends State<ShowMangroove> {
   int _selectedIndex = 0;
 
   _drawerItemTapped(int index) {
@@ -44,14 +46,12 @@ class AboutUsState extends State<AboutUs>{
           child: Column(
             children:<Widget>[
               Image.asset(
-                'assets/images/banner.png',
+                'assets/images/coconut.jpeg',
               ),
               SizedBox(height: 10),
               Text("Description:"),
               SizedBox(height: 10),
-              Text("Mangroves play a crucial role in coastal ecosystems, providing habitat, protecting shorelines, and sequestering carbon. Accurate identification of mangrove species is essential for monitoring their health and understanding their ecological contributions. 'Grovievision' is a novel standalone application developed to streamline and enhance the process of mangrove species identification."),
-              SizedBox(height: 10),
-              Text("This thesis explores the development and implementation of Grovievision, a user-friendly application designed to facilitate the identification of mangrove species through image recognition technology. The application harnesses the power of machine learning and computer vision algorithms to enable quick and accurate identification of mangrove species from photographs, making it an invaluable tool for researchers, conservationists, and field practitioners.")
+              Text("A coconut is an iconic drupe with a distinctive appearance. It typically features a round or oval shape, a tough, brown, fibrous husk, and a smooth, glossy, brown or green shell. The inner fruit, or 'endosperm,' is the edible part of the coconut and has a white, luscious flesh with a mildly sweet flavor.")
             ],
           ),
         ),
