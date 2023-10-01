@@ -67,7 +67,7 @@ class AboutUsState extends State<AboutUs>{
               },
             ),
             _buildDrawerItem(
-              title: 'Mangrooves',
+              title: 'Trees',
               index: 1,
               onTap: () {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
@@ -92,6 +92,53 @@ class AboutUsState extends State<AboutUs>{
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.grass),
+                label: 'Trees',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.face),
+                label: 'About',
+                backgroundColor: Colors.blueAccent),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.qr_code_scanner_sharp),
+            //     label: 'Scan',
+            //     backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app),
+                label: 'Exit',
+                backgroundColor: Colors.blueAccent),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: (int index) {
+            switch (index) {
+              case 0:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              case 1:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => Trees()));
+              case 2:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => AboutUs()));
+              case 3:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+            }
+            setState(
+              () {
+                _selectedIndex = index;
+              },
+            );
+          },
+        ),
     );
   }
 }
