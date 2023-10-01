@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:tree_tracer/components/treeImageListState.dart';
 import 'package:tree_tracer/models/image_data.dart';
 import 'package:tree_tracer/screens/about_us.dart';
-import 'package:tree_tracer/screens/mangroove.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_compare/image_compare.dart';
@@ -13,6 +12,7 @@ import 'package:path/path.dart';
 import 'dart:typed_data';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:tree_tracer/screens/trees.dart';
 
 Future<void> main() async {
   sqfliteFfiInit(); // Initialize the sqflite_ffi library
@@ -216,7 +216,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      drawer: Drawer(
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -229,10 +229,10 @@ class _HomeState extends State<Home> {
               },
             ),
             _buildDrawerItem(
-              title: 'Mangrooves',
+              title: 'Trees',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
                 // _drawerItemTapped(1);
                 // Navigator.pushNamed(context, '/mangrooves'); // Navigate to "Mangrooves" screen
                 // Navigator.pop(context);
@@ -261,8 +261,8 @@ class _HomeState extends State<Home> {
       floatingActionButton: MyFAB(),
     ),
     routes: {
-        '/mangrooves': (context) => Mangroove(),
-        '/about_us': (context) => Mangroove(),
+        '/mangrooves': (context) => Trees(),
+        '/about_us': (context) => AboutUs(),
       },
     );
   }
@@ -299,7 +299,7 @@ Widget _getSelectedWidget() {
         },
       );
     case 1:
-      return Mangroove();
+      return Trees();
     case 2:
       return AboutUs();
     default:

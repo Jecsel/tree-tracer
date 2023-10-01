@@ -3,16 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/screens/about_us.dart';
 import 'package:tree_tracer/screens/home.dart';
-import 'package:tree_tracer/screens/mangroove.dart';
+import 'package:tree_tracer/screens/trees.dart';
 
-class ShowMangroove extends StatefulWidget {
+class ShowTree extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => _ShowMangrooveState();
+  State<StatefulWidget> createState() => _ShowTreeState();
 
 }
 
-class _ShowMangrooveState  extends State<ShowMangroove> {
+class _ShowTreeState  extends State<ShowTree> {
   int _selectedIndex = 0;
 
   _drawerItemTapped(int index) {
@@ -72,7 +72,7 @@ class _ShowMangrooveState  extends State<ShowMangroove> {
               title: 'Mangrooves',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
               },
             ),
             _buildDrawerItem(

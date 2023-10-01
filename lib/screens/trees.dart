@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
-import 'package:tree_tracer/components/show_mangroove.dart';
+import 'package:tree_tracer/components/show_tree.dart';
 import 'package:tree_tracer/screens/about_us.dart';
 import 'package:tree_tracer/screens/home.dart';
 
-class Mangroove extends StatefulWidget {
-  const Mangroove({super.key});
+class Trees extends StatefulWidget {
+  const Trees({super.key});
 
   @override
-  State<StatefulWidget> createState() => _MangroovePageState();
+  State<StatefulWidget> createState() => _TreesPageState();
 
 }
 
@@ -24,7 +24,7 @@ class DropdownItem {
   });
 }
 
-class _MangroovePageState extends State<Mangroove> {
+class _TreesPageState extends State<Trees> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -93,7 +93,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
               onChanged: (DropdownItem? newValue) {
                 setState(() {
                   // selectedDropdownItem = newValue;
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ShowMangroove()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ShowTree()));
                 });
               },
               items: dropdownItems.map((DropdownItem item) {
@@ -274,7 +274,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
             ),
         ],
       ),
-      drawer: Drawer(
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -290,7 +290,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
               title: 'Mangrooves',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
               },
             ),
             _buildDrawerItem(

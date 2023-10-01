@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/screens/home.dart';
-import 'package:tree_tracer/screens/mangroove.dart';
+import 'package:tree_tracer/screens/trees.dart';
 
 class AboutUs extends StatefulWidget {
 
@@ -56,7 +56,7 @@ class AboutUsState extends State<AboutUs>{
           ),
         ),
       ),
-      drawer: Drawer(
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -72,7 +72,7 @@ class AboutUsState extends State<AboutUs>{
               title: 'Mangrooves',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
               },
             ),
             _buildDrawerItem(
