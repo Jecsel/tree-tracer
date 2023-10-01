@@ -1,14 +1,43 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/main_app.dart';
 import 'package:tree_tracer/routes.dart';
 import 'package:tree_tracer/screens/splash_screen.dart';
 import 'package:tree_tracer/theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tree_tracer/ui_components/main_view.dart';
+
+// void main() {
+//   runApp(DevicePreview(
+//     builder: (context) => const MyApp(),
+//   ));
+// }
 
 void main() async {
   await _initHive();
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.light(),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+
+// void main() async {
+//   await _initHive();
+//   runApp(const MainApp());
+// }
 
 Future<void> _initHive() async{
   await Hive.initFlutter();

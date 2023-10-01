@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/screens/home.dart';
-import 'package:tree_tracer/ui/login.dart';
+import 'package:tree_tracer/ui_components/login.dart';
+import 'package:tree_tracer/ui_components/main_view.dart';
 
 class SplashScreen extends StatefulWidget {
   
@@ -25,20 +26,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async{
-    await Future.delayed(Duration(milliseconds: 2000), (){});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
+    await Future.delayed(Duration(milliseconds: 3000), (){});
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainView()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-      child: Column(
-          children: <Widget>[
-              Image.asset(
-              'assets/images/splash_logo.png',
-              ),
-          ],
+      child: Image.asset(
+          'assets/images/app_icon.jpg',
         ),
       )
     );

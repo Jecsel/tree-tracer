@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/screens/splash_screen.dart';
 
-import 'ui/login.dart';
-
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 

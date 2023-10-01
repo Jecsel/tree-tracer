@@ -78,7 +78,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mangrooves'),
+        title: const Text('Tree Tracer'),
         backgroundColor: Colors.green, // Set the background color here
       ),
       body: Column(
@@ -94,35 +94,6 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
                 setState(() {
                   // selectedDropdownItem = newValue;
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ShowTree()));
-                });
-              },
-              items: dropdownItems.map((DropdownItem item) {
-                return DropdownMenuItem<DropdownItem>(
-                  value: item,
-                  child: Row(
-                    children: <Widget>[
-                      Image.asset(
-                        item.imagePath,
-                        width: 30,
-                        height: 30,
-                      ),
-                      SizedBox(width: 10),
-                      Text(item.label),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-          Container(
-            width: double.infinity, // Expand to fit the width
-            padding: EdgeInsets.all(16),
-            child: DropdownButton<DropdownItem>(
-              hint: Text('Root'),
-              value: selectedDropdownItem,
-              onChanged: (DropdownItem? newValue) {
-                setState(() {
-                  selectedDropdownItem = newValue;
                 });
               },
               items: dropdownItems.map((DropdownItem item) {

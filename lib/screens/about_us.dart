@@ -44,14 +44,12 @@ class AboutUsState extends State<AboutUs>{
           child: Column(
             children:<Widget>[
               Image.asset(
-                'assets/images/banner.png',
+                'assets/images/cresta_de_gallo.jpg',
               ),
               SizedBox(height: 10),
               Text("Description:"),
               SizedBox(height: 10),
-              Text("Mangroves play a crucial role in coastal ecosystems, providing habitat, protecting shorelines, and sequestering carbon. Accurate identification of mangrove species is essential for monitoring their health and understanding their ecological contributions. 'Grovievision' is a novel standalone application developed to streamline and enhance the process of mangrove species identification."),
-              SizedBox(height: 10),
-              Text("This thesis explores the development and implementation of Grovievision, a user-friendly application designed to facilitate the identification of mangrove species through image recognition technology. The application harnesses the power of machine learning and computer vision algorithms to enable quick and accurate identification of mangrove species from photographs, making it an invaluable tool for researchers, conservationists, and field practitioners.")
+              Text("Cresta De Gallo Island emerges from the crystal clear waters of Romblon like a gem awaiting discovery. A picture of seclusion and untouched beauty, this crescent-shaped paradise is every traveler’s dream of an idyllic escape. Cresta De Gallo is famous for its pristine beaches, vibrant marine life, and the gentle lull of its waves. In this itinerary and travel guide, we’ll navigate through the must-see spots, local tips, and the best ways to get there. So, pack your bags, and let’s set sail to this lesser-known treasure of the Philippines!"),
             ],
           ),
         ),
