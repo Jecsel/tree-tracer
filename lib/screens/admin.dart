@@ -11,6 +11,7 @@ import 'package:tree_tracer/models/fruit_model.dart';
 import 'package:tree_tracer/models/leaf_model.dart';
 import 'package:tree_tracer/models/root_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
+import 'package:tree_tracer/screens/add_species.dart';
 import 'package:tree_tracer/screens/home.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -94,6 +95,17 @@ class _AdminPageState extends State<AdminPage> {
   // If no valid image is found, return a default placeholder
   return Image.asset("assets/images/default_placeholder.png", width: 60, height: 60,); // You can replace this with your placeholder image
 }
+
+  _gotoAddSpecies() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddSpecies()));
+  }
+
+  Future<void> _handleRefresh() async {
+    // Simulate a refresh action (e.g., fetch new data from a server)
+    fetchData();
+    await Future.delayed(Duration(seconds: 2));
+  }
+  
   void search(String keyword) {
     // Create a new list to store the filtered data
     List<TracerModel> filteredData = [];
@@ -144,98 +156,106 @@ class _AdminPageState extends State<AdminPage> {
           ),
           title: Text('Admin Page'), // Add your app title here
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
+      body: RefreshIndicator(
+        onRefresh: _handleRefresh,
+        child:   Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: ()=> {},
+                onPressed: () => {_gotoAddSpecies()},
                 child: const Text("Add Tree"),
               ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              onChanged: (value) {
-                search(value);
-              },
-              decoration: InputDecoration(
-                labelText: "Search Tree",
-                prefixIcon: Icon(Icons.image_search_rounded),
-                border: OutlineInputBorder(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                onChanged: (value) {
+                  search(value);
+                },
+                decoration: InputDecoration(
+                  labelText: "Search Tree",
+                  prefixIcon: Icon(Icons.image_search_rounded),
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: searchKey == 'TREE' 
-            ? ListView.builder(
-              itemCount: mangrooveData.length,
-              itemBuilder: (context, index) {
-                final imageData = mangrooveData[index];
-                final mangroveId= mangrooveData[index].id;
+            Expanded(
+              child: searchKey == 'TREE' 
+              ? ListView.builder(
+                itemCount: mangrooveData.length,
+                itemBuilder: (context, index) {
+                  final imageData = mangrooveData[index];
+                  final mangroveId= mangrooveData[index].id;
 
-                return GestureDetector(
-                  onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangroveId ?? 0, category: searchKey, pageType: pageType,)));
-                    //   final imageData = mangrooveData[index];
-                    //   final snackBar = SnackBar(
-                    //     content: Text('Tapped on ${imageData}'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  child: ListTile(
-                  title: Text('Local Name: ${imageData.local_name}'),
-                  subtitle: Text('Scientific Name: ${imageData.scientific_name}' ),
-                  leading: FutureBuilder<Widget>(
-                    future: loadImageFromFile(imageData.imagePath),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return snapshot.data ?? CircularProgressIndicator();
-                      } else {
-                        return CircularProgressIndicator(); // Or another loading indicator
-                      }
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangroveId ?? 0, category: searchKey, pageType: pageType,)));
+                      //   final imageData = mangrooveData[index];
+                      //   final snackBar = SnackBar(
+                      //     content: Text('Tapped on ${imageData}'),
+                      //   );
+                      //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
-                  ),
-                )
-                );
-              },
-            )
-            : ListView.builder(
-              itemCount: mangrooveData.length,
-              itemBuilder: (context, index) {
-                final imageDt = mangrooveData[index];
-                final mangId= mangrooveData[index].mangroveId;
+                    child: ListTile(
+                    title: Text('Local Name: ${imageData.local_name}'),
+                    subtitle: Text('Scientific Name: ${imageData.scientific_name}' ),
+                    leading: FutureBuilder<Widget>(
+                      future: loadImageFromFile(imageData.imagePath),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data ?? CircularProgressIndicator();
+                        } else {
+                          return CircularProgressIndicator(); // Or another loading indicator
+                        }
+                      },
+                    ),
+                  )
+                  );
+                },
+              )
+              : ListView.builder(
+                itemCount: mangrooveData.length,
+                itemBuilder: (context, index) {
+                  final imageDt = mangrooveData[index];
+                  final mangId= mangrooveData[index].mangroveId;
 
-                return GestureDetector(
-                  onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangId ?? 0, category: searchKey, pageType: pageType)));
-                    //   final snackBar = SnackBar(
-                    //     content: Text('Tapped on ${mangId}'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  child: ListTile(  
-                  title: Text('Name: ${imageDt.name}'),
-                  leading: FutureBuilder<Widget>(
-                    future: loadImageFromFile(imageDt.imagePath),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return snapshot.data ?? CircularProgressIndicator();
-                      } else {
-                        return CircularProgressIndicator(); // Or another loading indicator
-                      }
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangId ?? 0, category: searchKey, pageType: pageType)));
+                      //   final snackBar = SnackBar(
+                      //     content: Text('Tapped on ${mangId}'),
+                      //   );
+                      //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
-                  ),
-                )
-                );
-              },
+                    child: ListTile(  
+                    title: Text('Name: ${imageDt.name}'),
+                    leading: FutureBuilder<Widget>(
+                      future: loadImageFromFile(imageDt.imagePath),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data ?? CircularProgressIndicator();
+                        } else {
+                          return CircularProgressIndicator(); // Or another loading indicator
+                        }
+                      },
+                    ),
+                  )
+                  );
+                },
+              )
             )
-          )
-        ],
-      ),
+          ],
+        ),
+    
+      )
+      
     ));
   }
 }
