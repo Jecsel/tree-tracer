@@ -12,11 +12,14 @@ import 'package:path/path.dart';
 import 'dart:typed_data';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:tree_tracer/screens/admin.dart';
+import 'package:tree_tracer/screens/result.dart';
 import 'package:tree_tracer/screens/trees.dart';
 import 'package:tree_tracer/screens/user_tree_list.dart';
+import 'package:tree_tracer/services/database_helper.dart';
 import 'package:tree_tracer/ui_components/main_view.dart';
 
 import '../widgets/image_placeholder.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
 
@@ -54,48 +57,163 @@ class _HomeState extends State<Home> {
   File? localImage;
   File? takenImage;
   double perceptualResult = 0.0;
+  List<Map>? mangroveImages;
+  List<Map<String, dynamic>> similarImages = [];
+  late MangroveDatabaseHelper dbHelper;
+  bool isErrorShow = false;
 
-    /// Compare two images
-  Future compareTwoImages() async {
-    final perceptual = await compareImages(
-        src1: localImage, src2: takenImage, algorithm: PerceptualHash());
-
-    setState(() {
-      perceptualResult = 100 - (perceptual * 100);
-    });
-    print('Difference: ${perceptualResult}%');
+  @override
+  void initState() {
+    super.initState();
+      print("======= initState ===========");
+      dbHelper = MangroveDatabaseHelper.instance;
+      fetchData();
   }
 
-  /// Get from gallery
+  Future<void> fetchData() async {
+    mangroveImages = await dbHelper.getImagesFromMangrove();
+  }
+
   Future _getFromGallery() async {
-    final pickedFileFromGallery = await ImagePicker().getImage(
+    final pickedFileFromGallery = await ImagePicker().getImage(     /// Get from gallery
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     print('pickFile');
-    print(pickedFileFromGallery);
+    print(pickedFileFromGallery?.path);
 
-    if (pickedFileFromGallery != null) {
-      setState(() {
-        localImage = File(pickedFileFromGallery.path);
-      });
+    localImage = File(pickedFileFromGallery!.path);
+
+    for (Map mangroveImage in mangroveImages!) {
+      String imagePath = mangroveImage['imagePath'];
+
+      final tempDir = await getTemporaryDirectory();
+      final tempPath = tempDir.path;
+      final file = File('$tempPath/temp_image.jpg');
+      await file.writeAsBytes(mangroveImage['imageBlob']);
+
+      print('mANGROVE imagePath');
+      print(imagePath);
+      print('mANGROVE localImage');
+      print(localImage);
+      double similarityScore = 1.0;
+
+      if (imagePath.startsWith('assets/')) {
+        print("image is from the asset ********");
+        similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+      } else {
+        similarityScore = await compareImages(src1: localImage, src2: imagePath, algorithm: PerceptualHash());
+      }
+
+      print("similarityScore $similarityScore.");
+
+      if (similarityScore <= 0.5) {
+        print("Gallery image is similar to $similarityScore.");
+
+        similarityScore = 100 - (similarityScore * 100);
+        Map<String, dynamic> imageInfo = {
+          "score": similarityScore,
+          "image": mangroveImage, // Add the image or any other relevant information here
+        };
+        similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
+        similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
+      }else{
+        print("Gallery image is BELOW similar to $similarityScore.");
+      }
     }
+
+    setState(() {
+      localImage = File(pickedFileFromGallery.path);  
+      similarImages = similarImages;
+
+      print("similarImages ${similarImages.length}");
+      isErrorShow = false;
+      if(similarImages.length > 0) {
+        // Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+      } else {
+        isErrorShow = true;
+        final snackBar = SnackBar(
+          content: Text('No Results Found!'),
+        );
+        ScaffoldMessenger.of(this.context).showSnackBar(snackBar);
+      }
+    });
   }
 
-  /// Get Image from Camera
-  Future _getImageFromCamera() async {
+  Future<File> getImageFileFromAsset(String assetPath) async {
+    final ByteData data = await rootBundle.load(assetPath);
+    final List<int> bytes = data.buffer.asUint8List();
+    final String tempFileName = assetPath.split('/').last;
+
+    final Directory tempDir = await getTemporaryDirectory();
+    final File tempFile = File('${tempDir.path}/$tempFileName');
+    
+    await tempFile.writeAsBytes(bytes, flush: true);
+    return tempFile;
+  }
+
+  checkImagePath(filePath) {
+    if (!filePath.startsWith('assets/')) {
+      return File(filePath);
+    }
+
+    return filePath;
+  }
+
+  Future _getImageFromCamera() async {    /// Get Image from Camera
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     print('pickFile');
     print(pickedFile);
 
+    for (Map mangroveImage in mangroveImages!) {
+      String imagePath = mangroveImage['imagePath'];
+
+      print('mANGROVE IMAGES');
+      print(imagePath);
+
+      double similarityScore = 1.0;
+
+      final tempDir = await getTemporaryDirectory();
+      final tempPath = tempDir.path;
+      final file = File('$tempPath/temp_image.jpg');
+      await file.writeAsBytes(mangroveImage['imageBlob']);
+
+      if (imagePath.startsWith('assets/')) {
+        similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+      } else {
+         similarityScore = await compareImages(src1: File(pickedFile!.path), src2: imagePath, algorithm: PerceptualHash());
+      }
+
+      if (similarityScore <= 0.5) {
+        print("Gallery image is similar to $similarityScore.");
+        similarityScore = 100 - (similarityScore * 100);
+        Map<String, dynamic> imageInfo = {
+          "score": similarityScore,
+          "image": mangroveImage, // Add the image or any other relevant information here
+        };
+        similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
+        similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
+      }else{
+        print("Gallery image is BELOW similar to $similarityScore.");
+      }
+    }
+
     if (pickedFile != null) {
       setState(() {
-        takenImage = File(pickedFile.path);
-        // Compare the images here and show the result
+        takenImage = File(pickedFile.path);// Compare the images here and show the result
+        if(similarImages.length > 0) {
+          Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+        } else {
+          final snackBar = SnackBar(
+            content: Text('No Results Found!'),
+          );
+          ScaffoldMessenger.of(this.context).showSnackBar(snackBar);
+        }
       });
     }
   }
+
 
   // Define a list of ImageData objects
   List<ImageData> imageDataList = [
@@ -138,8 +256,53 @@ class _HomeState extends State<Home> {
     });
   }
 
+  _showModal() {
+  BuildContext context = this.context;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: Container(
+          height: 150,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _getFromGallery,
+                child: Text('Take Local Image'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _getImageFromCamera,
+                child: Text('      Scan Image     '),
+              ),
+              Visibility(
+                visible: isErrorShow,
+                child: Text(
+                "No Results Found",
+                style: TextStyle(
+                  color: Colors.red
+                ),
+              ) 
+              )
+              
+            ],
+          ),
+        ),
+        actions: <TextButton>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Close'),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -179,7 +342,7 @@ class _HomeState extends State<Home> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                onPressed: _getImageFromCamera,
+                onPressed: _showModal,
                 child: const Text("Scan"),
               ),
             ),
@@ -294,23 +457,6 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void showModal(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        content: const Text('Example Dialog'),
-        actions: <TextButton>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Close'),
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _getSelectedWidget() {
     switch (_selectedIndex) {
       case 0:
@@ -360,136 +506,6 @@ class _HomeState extends State<Home> {
       title: Text(title),
       selected: _selectedIndex == index,
       onTap: onTap,
-    );
-  }
-}
-
-class MyFAB extends StatefulWidget {
-  @override
-  _MyFABState createState() => _MyFABState();
-}
-
-class _MyFABState extends State<MyFAB> {
-  static const IconData qr_code_scanner_rounded =
-      IconData(0xf00cc, fontFamily: 'MaterialIcons');
-  final picker = ImagePicker();
-  File? localImage;
-  File? takenImage;
-
-  double perceptualResult = 0.0;
-
-  /// Compare two images
-  Future compareTwoImages() async {
-    final perceptual = await compareImages(
-        src1: localImage, src2: takenImage, algorithm: PerceptualHash());
-
-    setState(() {
-      perceptualResult = 100 - (perceptual * 100);
-    });
-    print('Difference: ${perceptualResult}%');
-  }
-
-  /// Get from gallery
-  Future _getFromGallery() async {
-    final pickedFileFromGallery = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    print('pickFile');
-    print(pickedFileFromGallery);
-
-    if (pickedFileFromGallery != null) {
-      setState(() {
-        localImage = File(pickedFileFromGallery.path);
-      });
-    }
-  }
-
-  /// Get Image from Camera
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    print('pickFile');
-    print(pickedFile);
-
-    if (pickedFile != null) {
-      setState(() {
-        takenImage = File(pickedFile.path);
-        // Compare the images here and show the result
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        // Add your action here when the FAB is tapped.
-        // For example, you can open a dialog to add items to the list.
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Select'),
-              content: SingleChildScrollView(
-                // Wrap the Column with SingleChildScrollView
-                child: Column(
-                  children: [
-                    localImage != null
-                        ? Image.file(
-                            localImage!,
-                            height: 150,
-                          )
-                        : Text('Local Image Placeholder'),
-                    SizedBox(height: 10),
-                    takenImage != null
-                        ? Image.file(
-                            takenImage!,
-                            height: 150,
-                          )
-                        : Text('Taken Image Placeholder'),
-                    SizedBox(height: 10),
-                    Text(
-                        'PerceptualHash ${perceptualResult.toInt().toString()} %'),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: compareTwoImages,
-                      child: Text('Compare Images'),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: _getFromGallery,
-                      child: Text('Take Local Image'),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: getImageFromCamera,
-                      child: Text('Take Image'),
-                    ),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text('Add'),
-                  onPressed: () {
-                    // Add your logic to add the item to the list here.
-                    // You can update the list using a Stateful widget or a state management solution like Provider or Riverpod.
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
-      child: const Icon(qr_code_scanner_rounded),
     );
   }
 }

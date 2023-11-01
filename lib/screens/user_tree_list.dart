@@ -11,6 +11,7 @@ import 'package:tree_tracer/models/fruit_model.dart';
 import 'package:tree_tracer/models/leaf_model.dart';
 import 'package:tree_tracer/models/root_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
+import 'package:tree_tracer/screens/about_us.dart';
 import 'package:tree_tracer/screens/home.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -31,6 +32,25 @@ class _UserTreeListState extends State<UserTreeList> {
 
   late MangroveDatabaseHelper dbHelper;
   List<dynamic> mangrooveData = [];
+
+    int _selectedIndex = 0;
+
+  _drawerItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  Widget _buildDrawerItem({
+    required String title,
+    required int index,
+    VoidCallback? onTap,
+  }) {
+    return ListTile(
+      title: Text(title),
+      selected: _selectedIndex == index,
+      onTap: onTap,
+    );
+  }
 
   @override
   void initState() {
@@ -275,6 +295,88 @@ class _UserTreeListState extends State<UserTreeList> {
           )
         ],
       ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            _buildDrawerItem(
+              title: 'Home',
+              index: 0,
+              onTap: () {
+                _drawerItemTapped(0);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
+              },
+            ),
+            _buildDrawerItem(
+              title: 'Trees',
+              index: 1,
+              onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+              },
+            ),
+            _buildDrawerItem(
+              title: 'About Us',
+              index: 2,
+              onTap: () {
+                _drawerItemTapped(2);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AboutUs()));
+              },
+            ),
+            _buildDrawerItem(
+              title: 'Exit',
+              index: 3,
+              onTap: () {
+                _drawerItemTapped(3);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.grass),
+                label: 'Trees',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.face),
+                label: 'About',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app),
+                label: 'Exit',
+                backgroundColor: Colors.blueAccent),
+          ],
+          currentIndex: 1,
+          selectedItemColor: Colors.amber[800],
+          onTap: (int index) {
+            switch (index) {
+              case 0:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              case 1:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+              case 2:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => AboutUs()));
+              case 3:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+            }
+            setState(
+              () {
+                _selectedIndex = index;
+              },
+            );
+          },
+        ),
+    
     ));
   }
 }

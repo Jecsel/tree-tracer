@@ -8,6 +8,9 @@ class TracerModel {
   final String scientific_name;
   final String description;
   final String summary;
+  final String family;
+  final String benifits;
+  final String uses;
 
   TracerModel({
     this.id,
@@ -16,7 +19,10 @@ class TracerModel {
     required this.local_name,
     required this.scientific_name,
     required this.description,
-    required this.summary
+    required this.summary,
+    required this.family,
+    required this.benifits,
+    required this.uses
   });
 
   Map<String, dynamic> toMap() {
@@ -27,7 +33,10 @@ class TracerModel {
       'local_name': local_name,
       'scientific_name': scientific_name,
       'description': description,
-      'summary': summary
+      'summary': summary,
+      'family': family,
+      'benifits': benifits,
+      'uses': uses
     };
   }
 
@@ -39,7 +48,10 @@ class TracerModel {
       local_name: map['local_name'],
       scientific_name: map['scientific_name'],
       description: map['description'],
-      summary: map['summary']
+      summary: map['summary'],
+      family: map['family'],
+      benifits: map['benifits'],
+      uses: map['uses']
     );
   }
 
@@ -50,7 +62,10 @@ class TracerModel {
     String? local_name,
     String? scientific_name,
     String? description,
-    String? summary
+    String? summary,
+    String? family,
+    String? benifits,
+    String? uses
   }) {
     return TracerModel(
       id: id ?? this.id,
@@ -59,7 +74,10 @@ class TracerModel {
       local_name: local_name ?? this.local_name,
       scientific_name: scientific_name ?? this.scientific_name,
       description: description ?? this.description,
-      summary: summary ?? this.summary
+      summary: summary ?? this.summary,
+      family: family ?? this.family,
+      benifits: benifits ?? this.benifits,
+      uses: uses ?? this.uses
     );
   }
 }

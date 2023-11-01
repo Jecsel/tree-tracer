@@ -39,6 +39,9 @@ class _AddSpeciesState extends State<AddSpecies> {
   TextEditingController scientificNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController summaryController = TextEditingController();
+  TextEditingController familyController = TextEditingController();
+  TextEditingController benifitsController = TextEditingController();
+  TextEditingController usesController = TextEditingController();
   //For Root
   TextEditingController rootNameInput = TextEditingController();
   TextEditingController rootDescInput = TextEditingController();
@@ -101,7 +104,10 @@ class _AddSpeciesState extends State<AddSpecies> {
         local_name: localNameController.text,
         scientific_name: scientificNameController.text,
         description: descriptionController.text,
-        summary: summaryController.text
+        summary: 'No Summary',
+        family: familyController.text,
+        benifits: benifitsController.text,
+        uses: usesController.text
       );
       
       final insertedMangrove = await dbHelper?.insertDBMangroveData(newMangroove);
@@ -252,7 +258,7 @@ class _AddSpeciesState extends State<AddSpecies> {
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: localNameController,
-                        decoration: InputDecoration(labelText: 'Local Name'),
+                        decoration: InputDecoration(labelText: 'Common Name'),
                       ),
                     ),
                     Padding(
@@ -266,252 +272,37 @@ class _AddSpeciesState extends State<AddSpecies> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
+                        controller: familyController,
+                        decoration: InputDecoration(labelText: 'Family'),
+                        maxLines: 2, // You can adjust the number of lines
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                      child: TextField(
                         controller: descriptionController,
                         decoration: InputDecoration(labelText: 'Description'),
                         maxLines: 2, // You can adjust the number of lines
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
-                        controller: summaryController,
-                        decoration: InputDecoration(labelText: 'Summary'),
+                        controller: benifitsController,
+                        decoration: InputDecoration(labelText: 'Benifits'),
+                        maxLines: 4, // You can adjust the number of lines
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                      child: TextField(
+                        controller: usesController,
+                        decoration: InputDecoration(labelText: 'Uses'),
                         maxLines: 4, // You can adjust the number of lines
                       ),
                     ),
                     
                     SizedBox(height: 30),
-                    Text(
-                      "Root",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    rootImage != null
-                        ? Image.file(
-                            rootImage!,
-                            height: 150,
-                          )
-                        : Image.asset(
-                            'assets/images/default_placeholder.png',
-                            height: 150,
-                            width: 150,
-                          ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _getFromGallery('root');
-                          },
-                          style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              minimumSize: Size(double.infinity, 60)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Upload Root Image'),
-                              Icon(Icons.add)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: rootNameInput,
-                        decoration: InputDecoration(labelText: 'Name'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: rootDescInput,
-                        decoration: InputDecoration(labelText: 'Description'),
-                        maxLines: 2, // You can adjust the number of lines
-                      ),
-                    ),
-
-                    SizedBox(height: 30),
-                    Text(
-                      "Flower",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    flowerImage != null
-                        ? Image.file(
-                            flowerImage!,
-                            height: 150,
-                          )
-                        : Image.asset(
-                            'assets/images/default_placeholder.png',
-                            height: 150,
-                            width: 150,
-                          ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _getFromGallery('flower');
-                          },
-                          style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              minimumSize: Size(double.infinity, 60)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Upload Flower Image'),
-                              Icon(Icons.add)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: flowerNameInput,
-                        decoration: InputDecoration(labelText: 'Name'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: flowerDescInput,
-                        decoration: InputDecoration(labelText: 'Description'),
-                        maxLines: 2, // You can adjust the number of lines
-                      ),
-                    ),
-
-                    SizedBox(height: 30),
-                    Text(
-                      "Leaf",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    leafImage != null
-                        ? Image.file(
-                            leafImage!,
-                            height: 150,
-                          )
-                        : Image.asset(
-                            'assets/images/default_placeholder.png',
-                            height: 150,
-                            width: 150,
-                          ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _getFromGallery('leaf');
-                          },
-                          style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              minimumSize: Size(double.infinity, 60)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Upload Leaf Image'),
-                              Icon(Icons.add)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: leafNameInput,
-                        decoration: InputDecoration(labelText: 'Name'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: leafDescInput,
-                        decoration: InputDecoration(labelText: 'Description'),
-                        maxLines: 2, // You can adjust the number of lines
-                      ),
-                    ),
-
-                    SizedBox(height: 30),
-                    Text(
-                      "Fruit",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    fruitImage != null
-                        ? Image.file(
-                            fruitImage!,
-                            height: 150,
-                          )
-                        : Image.asset(
-                            'assets/images/default_placeholder.png',
-                            height: 150,
-                            width: 150,
-                          ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _getFromGallery('fruit');
-                          },
-                          style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              minimumSize: Size(double.infinity, 60)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Upload Fruit Image'),
-                              Icon(Icons.add)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: fruitNameInput,
-                        decoration: InputDecoration(labelText: 'Name'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      child: TextField(
-                        controller: fruitDescInput,
-                        decoration: InputDecoration(labelText: 'Description'),
-                        maxLines: 2, // You can adjust the number of lines
-                      ),
-                    ),
                     Container(
                       width: double.infinity,
                       child: Padding(
@@ -525,23 +316,10 @@ class _AddSpeciesState extends State<AddSpecies> {
                               textStyle: TextStyle(fontSize: 20),
                               backgroundColor:  Color.fromARGB(255, 2, 191, 5),
                               minimumSize: Size(double.infinity, 60)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('SUBMIT'),
-                              Icon(Icons.upload)
-                            ],
-                          ),
+                          child: Text('UPLOAD')
                         ),
                       ),
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     _insertMangrooveData();
-                    //     _gotoSearchList();
-                    //   },
-                    //   child: Text("Upload Mangroove"),
-                    // ),
                   ],
                 ),
               ),
