@@ -13,6 +13,7 @@ import 'package:tree_tracer/models/root_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
 import 'package:tree_tracer/screens/add_species.dart';
 import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/screens/view_species.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -196,7 +197,7 @@ class _AdminPageState extends State<AdminPage> {
 
                   return GestureDetector(
                     onTap: () {
-                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangroveId ?? 0, category: searchKey, pageType: pageType,)));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, pageType: pageType,)));
                       //   final imageData = mangrooveData[index];
                       //   final snackBar = SnackBar(
                       //     content: Text('Tapped on ${imageData}'),
@@ -224,11 +225,11 @@ class _AdminPageState extends State<AdminPage> {
                 itemCount: mangrooveData.length,
                 itemBuilder: (context, index) {
                   final imageDt = mangrooveData[index];
-                  final mangId= mangrooveData[index].mangroveId;
+                  final mangId= mangrooveData[index].tracerId;
 
                   return GestureDetector(
                     onTap: () {
-                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangId ?? 0, category: searchKey, pageType: pageType)));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangId ?? 0, category: searchKey, pageType: pageType)));
                       //   final snackBar = SnackBar(
                       //     content: Text('Tapped on ${mangId}'),
                       //   );
