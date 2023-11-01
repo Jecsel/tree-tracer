@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:tree_tracer/models/UserModel.dart';
+import 'package:tree_tracer/services/database_helper.dart';
 
-class SingUpScreen extends StatefulWidget {
-  const SingUpScreen({super.key, required this.controller});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key, required this.controller});
   final PageController controller;
   @override
-  State<SingUpScreen> createState() => _SingUpScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SingUpScreenState extends State<SingUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _repassController = TextEditingController();
+
+    Future<void> _registerUser() async {
+    final newUser = UserModel(username: _emailController.text, password: _passController.text);
+    final registeredUser = await dbHelper.registerUser(newUser);
+
+    print("=========registeredUser============");
+    print(registeredUser);
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -150,42 +161,45 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       child: SizedBox(
                         width: 147,
                         height: 56,
-                        child: TextField(
-                          controller: _passController,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Color(0xFF393939),
-                            fontSize: 13,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                          ),
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
-                            hintText: 'Create Password',
-                            hintStyle: TextStyle(
-                              color: Color(0xFF837E93),
-                              fontSize: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: TextField(
+                            controller: _passController,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Color(0xFF393939),
+                              fontSize: 13,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
                             ),
-                            labelStyle: TextStyle(
-                              color: Color(0xFF755DC1),
-                              fontSize: 15,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(
-                                width: 1,
+                            decoration: const InputDecoration(
+                              labelText: 'Confirm Password',
+                              hintText: 'Create Current Password',
+                              hintStyle: TextStyle(
                                 color: Color(0xFF837E93),
+                                fontSize: 10,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w400,
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: Color(0xFF9F7BFF),
+                              labelStyle: TextStyle(
+                                color: Color(0xFF755DC1),
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xFF837E93),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xFF9F7BFF),
+                                ),
                               ),
                             ),
                           ),
@@ -207,6 +221,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         widget.controller.animateToPage(2,
                             duration: const Duration(milliseconds: 500),
                             curve: Curves.ease);
+
+                        _registerUser();  
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF9F7BFF),

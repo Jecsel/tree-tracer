@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/services/database_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.controller});
@@ -9,8 +11,27 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  var isLogin = false;
+
+  Future<void> _login() async {
+    isLogin = await dbHelper.loginUser(_emailController.text, _passController.text);
+
+    if (isLogin) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return AdminPage(searchKey: 'TREE', pageType: 'User',);
+          },
+        ),
+      );
+    }
+    print("==========isLogin===========");
+    print(isLogin);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +43,18 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(left: 15, top: 2, right: 15, bottom: 2),
-                child: ClipOval(
-                  child: Image.asset(
-                    "assets/images/app_icon.jpg",
-                    width: 300,  // Set both width and height to the same value
-                    height: 300, // to create a perfect circle
+                padding: const EdgeInsets.only(left: 15, top: 100, right: 15, bottom: 50),
+                child: Text(
+                  'Admin',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
+              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
               child: Column(
                 textDirection: TextDirection.ltr,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,14 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: Color(0xFF9F7BFF),
                     ),
                     onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return Home();
-                            },
-                          ),
-                        );
+                      _login();
                     },
                     child: const Text("Login"),
                   ),

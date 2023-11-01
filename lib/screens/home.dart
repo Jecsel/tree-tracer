@@ -11,29 +11,22 @@ import 'package:image_compare/image_compare.dart';
 import 'package:path/path.dart';
 import 'dart:typed_data';
 import 'package:sqflite_common/sqlite_api.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/trees.dart';
+import 'package:tree_tracer/screens/user_tree_list.dart';
+import 'package:tree_tracer/ui_components/main_view.dart';
 
 import '../widgets/image_placeholder.dart';
 
 Future<void> main() async {
-  sqfliteFfiInit(); // Initialize the sqflite_ffi library
-  databaseFactory = databaseFactoryFfi; // Initialize the databaseFactory
-
-  // Open the database and perform any necessary setup
-  final databasePath = await getDatabasesPath();
-  final path = join(databasePath, 'mangroove_main_db.db');
-
-  final database = await openDatabase(path);
 
   // Run your app within the runApp function
-  runApp(MyApp(database: database));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Database database;
 
-  MyApp({required this.database});
+  MyApp();
 
   @override
   Widget build(BuildContext context) {
@@ -150,86 +143,44 @@ class _HomeState extends State<Home> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Tree Tracer'),
-          backgroundColor: Colors.green, // Set the background color here
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  
-                  if (localImage != null)
-                    Image.file(
-                      localImage!,
-                      height: 150,
-                    ),
-                  SizedBox(height: 10),
-                  if(takenImage != null)
-                    Image.file(
-                      takenImage!,
-                        height: 150,
-                    ),
-                  SizedBox(height: 10),
-                  if(takenImage != null && localImage != null)
-                    Text('${perceptualResult.toInt().toString()} % Matched!'),
-                  SizedBox(height: 10),
-                  if(takenImage == null)
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: _getImageFromCamera,
-                      child: const Text("Scan"),
-                    ),
-                  SizedBox(height: 10),
-                  if(takenImage != null && localImage == null)
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: _getFromGallery,
-                      child: const Text("Upload Image"),
-                  ),
-                  SizedBox(height: 10),
-                  if(takenImage != null && localImage == null)
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Text("Find Match"),
-                    ),
-                  SizedBox(height: 10),
-                  if(takenImage != null  && localImage != null) 
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: compareTwoImages,
-                      child: const Text("Compare"),
-                    ),
-                  SizedBox(height: 10),
-                ],
+          title: const Text('Home'),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue, Colors.lightBlue],
               ),
             ),
-
-            Expanded(
-              child: Center(
-                child: _getSelectedWidget(),
+          ),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icon.png',
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'TREE TRACER',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                onPressed: _getImageFromCamera,
+                child: const Text("Scan"),
               ),
             ),
           ],
@@ -248,7 +199,7 @@ class _HomeState extends State<Home> {
                 },
               ),
               _buildDrawerItem(
-                title: 'Trees',
+                title: 'Favorite',
                 index: 1,
                 onTap: () {
                   Navigator.pushReplacement(context,
@@ -256,8 +207,24 @@ class _HomeState extends State<Home> {
                 },
               ),
               _buildDrawerItem(
-                title: 'About Us',
+                title: 'Admin',
                 index: 2,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => MainView()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Tree List',
+                index: 3,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'About Us',
+                index: 4,
                 onTap: () {
                   Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => AboutUs()));
@@ -265,7 +232,7 @@ class _HomeState extends State<Home> {
               ),
               _buildDrawerItem(
                 title: 'Exit',
-                index: 3,
+                index: 5,
                 onTap: () {
                   _drawerItemTapped(3);
                   Navigator.pop(context);
@@ -277,25 +244,21 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.blueAccent),
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Colors.blueAccent),
             BottomNavigationBarItem(
-                icon: Icon(Icons.grass),
-                label: 'Trees',
-                backgroundColor: Colors.blueAccent),
+              icon: Icon(Icons.grass),
+              label: 'Trees',
+              backgroundColor: Colors.blueAccent),
             BottomNavigationBarItem(
-                icon: Icon(Icons.face),
-                label: 'About',
-                backgroundColor: Colors.blueAccent),
-            // BottomNavigationBarItem(
-            //     icon: Icon(Icons.qr_code_scanner_sharp),
-            //     label: 'Scan',
-            //     backgroundColor: Colors.blueAccent),
+              icon: Icon(Icons.face),
+              label: 'About',
+              backgroundColor: Colors.blueAccent),
             BottomNavigationBarItem(
-                icon: Icon(Icons.exit_to_app),
-                label: 'Exit',
-                backgroundColor: Colors.blueAccent),
+              icon: Icon(Icons.exit_to_app),
+              label: 'Exit',
+              backgroundColor: Colors.blueAccent),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
@@ -307,16 +270,11 @@ class _HomeState extends State<Home> {
                     context, MaterialPageRoute(builder: (context) => Home()));
               case 1:
                 Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => Trees()));
-                // _drawerItemTapped(1);
-                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
+                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', pageType: 'User',)));
               case 2:
                 // _drawerItemTapped(2);
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => AboutUs()));
-              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AboutUs()));
-              // case 3:
-              //   showModal(context);
               case 3:
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) => Home()));

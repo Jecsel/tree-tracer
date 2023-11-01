@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/ui_components/screens/login_screen.dart';
-import 'package:tree_tracer/ui_components/screens/sing_up_screen.dart';
+import 'package:tree_tracer/ui_components/screens/sign_up_screen.dart';
 import 'package:tree_tracer/ui_components/screens/verify_screen.dart';
 
 class MainView extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MainViewState extends State<MainView> {
               controller: controller,
             );
           } else if (index == 1) {
-            return SingUpScreen(
+            return SignUpScreen(
               controller: controller,
             );
           } else {
