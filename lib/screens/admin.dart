@@ -19,9 +19,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class AdminPage extends StatefulWidget {
   String searchKey;
-  String pageType;
+  String userType;
 
-  AdminPage({required this.searchKey, required this.pageType});
+  AdminPage({required this.searchKey, required this.userType});
 
   @override
   _AdminPageState createState() => _AdminPageState();
@@ -128,7 +128,7 @@ class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     String searchKey = widget.searchKey;
-    String pageType = widget.pageType;
+    String pageType = widget.userType;
     List<Map<String, dynamic>> carouselItems = [
       {'name': 'TREE', 'image': 'assets/images/tree.png'},
       {'name': 'FLOWER', 'image': 'assets/images/flower.png'},
@@ -197,7 +197,7 @@ class _AdminPageState extends State<AdminPage> {
 
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, pageType: pageType,)));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: 'Admin',)));
                       //   final imageData = mangrooveData[index];
                       //   final snackBar = SnackBar(
                       //     content: Text('Tapped on ${imageData}'),
@@ -229,7 +229,7 @@ class _AdminPageState extends State<AdminPage> {
 
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangId ?? 0, category: searchKey, pageType: pageType)));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangId ?? 0, category: searchKey, userType: 'Admin')));
                       //   final snackBar = SnackBar(
                       //     content: Text('Tapped on ${mangId}'),
                       //   );

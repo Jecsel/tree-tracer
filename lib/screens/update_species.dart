@@ -13,22 +13,34 @@ import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/user_tree_list.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
-class AddSpecies extends StatefulWidget {
+class UpdateSpecies extends StatefulWidget {
+  final int tracerId;
+
+  UpdateSpecies({required this.tracerId});
+
   @override
-  _AddSpeciesState createState() => _AddSpeciesState();
+  _UpdateSpeciesState createState() => _UpdateSpeciesState();
 }
 
-class _AddSpeciesState extends State<AddSpecies> {
+class _UpdateSpeciesState extends State<UpdateSpecies> {
   final picker = ImagePicker();
-  File? mangroveImage;
+  
+  File? tracerImage;
   File? fruitImage;
   File? leafImage;
   File? flowerImage;
   File? rootImage;
 
-  File? takenImage;
+  TracerModel? tracerData;
+  RootModel? rootData;
+  FlowerModel? flowerData;
+  LeafModel? leafData;
+  FruitModel? fruitData;
 
-  String? mangroveImagePath = 'assets/images/default_placeholder.png';
+  File? takenImage;
+  Uint8List? tracerImg;
+
+  String? tracerImagePath = 'assets/images/default_placeholder.png';
   String? fruitImagePath = 'assets/images/default_placeholder.png';
   String? leafImagePath = 'assets/images/default_placeholder.png';
   String? flowerImagePath = 'assets/images/default_placeholder.png';
@@ -68,87 +80,69 @@ class _AddSpeciesState extends State<AddSpecies> {
   void initState() {
     super.initState();
     dbHelper = MangroveDatabaseHelper.instance;
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    int mangroveId = widget.tracerId;
+    TracerModel? tracerResultData = await dbHelper?.getOneTracerData(mangroveId);
+
+    setState(() {
+      tracerData = tracerResultData;
+      tracerImg = tracerData!.imageBlob;
+      tracerImagePath = tracerData!.imagePath;
+
+      localNameController.text = tracerData!.local_name;
+      scientificNameController.text = tracerData!.scientific_name;
+      descriptionController.text = tracerData!.description;
+      summaryController.text = tracerData!.summary;
+      familyController.text = tracerData!.family;
+      benifitsController.text = tracerData!.benifits;
+      usesController.text = tracerData!.uses;
+    });
   }
 
   Future<Uint8List> fileToUint8List(File file) async {
     final List<int> bytes = await file.readAsBytes();
-    print('======== bytes ========');
-    print(bytes);
-
-    print('========  Uint8List.fromList(bytes) ========');
-    print( Uint8List.fromList(bytes));
     return Uint8List.fromList(bytes);
   }
 
-  Future<void> _insertMangrooveData() async {
-    print('======== mangroveImage ========');
-    print(mangroveImage);
+  Future<void> _updateTracerData() async {
+    final tracerUpdatedData = TracerModel(
+      id: tracerData!.id,
+      imageBlob: tracerImg,
+      imagePath: tracerImagePath,
+      local_name: localNameController.text,  
+      scientific_name: localNameController.text,
+      description: descriptionController.text,
+      summary: summaryController.text,
+      family: familyController.text,
+      benifits: benifitsController.text,
+      uses: usesController.text
+    );
 
-    if(mangroveImage != null){
-      print('======== mangroveImages is not null ========');
-
-      final List<int> bytes = await mangroveImage!.readAsBytes();
-      final List<int> rootBytes = await mangroveImage!.readAsBytes();
-      final List<int> flowerBytes = await mangroveImage!.readAsBytes();
-      final List<int> leafBytes = await mangroveImage!.readAsBytes();
-      final List<int> fruitBytes = await mangroveImage!.readAsBytes();
-      
-      final Uint8List mangroveImageBytes = Uint8List.fromList(bytes);
-      final Uint8List rootImageBytes =  Uint8List.fromList(rootBytes);
-      final Uint8List flowerImageBytes =  Uint8List.fromList(flowerBytes);
-      final Uint8List leafImageBytes =  Uint8List.fromList(leafBytes);
-      final Uint8List fruitImageBytes =  Uint8List.fromList(fruitBytes);
-
-      final newMangroove = TracerModel(
-        imagePath: mangroveImagePath,
-        local_name: localNameController.text,
-        scientific_name: scientificNameController.text,
-        description: descriptionController.text,
-        summary: 'No Summary',
-        family: familyController.text,
-        benifits: benifitsController.text,
-        uses: usesController.text
-      );
-      
-      final insertedMangrove = await dbHelper?.insertDBMangroveData(newMangroove);
-
-      final newRoot = RootModel(
-        imagePath: rootImagePath,
-        tracerId: insertedMangrove ?? 0,
-        name: rootNameInput.text,
-        description: rootDescInput.text,
-      );
-
-      final newFlower = FlowerModel(
-        imagePath: flowerImagePath,
-        tracerId: insertedMangrove ?? 0,
-        name: flowerNameInput.text,
-        description: flowerDescInput.text
-      );
-
-      final newLeaf = LeafModel(
-        imagePath: leafImagePath,
-        tracerId: insertedMangrove ?? 0,
-        name: leafNameInput.text,
-        description: leafDescInput.text,
-      );
-
-      final newFruit = FruitModel(
-        imagePath: fruitImagePath,
-        tracerId: insertedMangrove ?? 0,
-        name: fruitNameInput.text,
-        description: fruitDescInput.text,
-      );
-
-      final root_id = dbHelper?.insertDBRootData(newRoot);
-      final flower_id = dbHelper?.insertDBFlowerData(newFlower);
-      final leaf_id = dbHelper?.insertDBLeafData(newLeaf);
-      final fruit_id = dbHelper?.insertDBFruitData(newFruit);
-    }
+    final insertedMangrove = await dbHelper?.updateTracerData(tracerUpdatedData);
   }
 
   _gotoSearchList() {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AdminPage(searchKey: 'TREE', userType: 'Admin')));
+  }
+
+  Future<Widget> loadImageFromFile(String filePath) async {
+    if (filePath.startsWith('assets/')) {
+      // If the path starts with 'assets/', load from assets
+      return Image.asset(filePath);
+    } else {
+      final file = File(filePath);
+
+      if (await file.exists()) {
+        // If the file exists in local storage, load it
+        return Image.file(file);
+      }
+    }
+
+    // If no valid image is found, return a default placeholder
+    return Image.asset("assets/images/default_placeholder.png"); // You can replace this with your placeholder image
   }
 
   Future _getFromGallery(fromField) async {
@@ -165,8 +159,9 @@ class _AddSpeciesState extends State<AddSpecies> {
           case "tree":
             print('===******===== pickedFileFromGallery.path ===*****=====');
             print(pickedFileFromGallery.path);
-            mangroveImage = File(pickedFileFromGallery.path);
-            mangroveImagePath = pickedFileFromGallery.path;
+            tracerImage = File(pickedFileFromGallery.path);
+            tracerImagePath = pickedFileFromGallery.path;
+            tracerData!.imagePath = pickedFileFromGallery.path;
             break;
           case "root":
             rootImage = File(pickedFileFromGallery.path);
@@ -185,8 +180,8 @@ class _AddSpeciesState extends State<AddSpecies> {
             fruitImagePath = pickedFileFromGallery.path;
             break;
           default:
-            mangroveImage = File(pickedFileFromGallery.path);
-            mangroveImagePath = pickedFileFromGallery.path;
+            tracerImage = File(pickedFileFromGallery.path);
+            tracerImagePath = pickedFileFromGallery.path;
         }
         
       });
@@ -221,16 +216,26 @@ class _AddSpeciesState extends State<AddSpecies> {
                     SizedBox(
                       height: 10,
                     ),
-                    mangroveImage != null
-                        ? Image.file(
-                            mangroveImage!,
-                            height: 150,
-                          )
-                        : Image.asset(
-                            'assets/images/default_placeholder.png',
-                            height: 150,
-                            width: 150,
-                          ),
+                    FutureBuilder<Widget>(
+                      future: loadImageFromFile(tracerData?.imagePath ?? ''),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data ?? CircularProgressIndicator();;
+                        } else {
+                          return CircularProgressIndicator(); // Or another loading indicator
+                        }
+                      },
+                    ),
+                    // tracerImage != null
+                    //     ? Image.file(
+                    //         tracerImage!,
+                    //         height: 150,
+                    //       )
+                    //     : Image.asset(
+                    //         'assets/images/default_placeholder.png',
+                    //         height: 150,
+                    //         width: 150,
+                    //       ),
                     SizedBox(height: 10),
                     Container(
                       width: double.infinity,
@@ -309,14 +314,14 @@ class _AddSpeciesState extends State<AddSpecies> {
                         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                         child: ElevatedButton(
                           onPressed: () {
-                            _insertMangrooveData();
+                            _updateTracerData();
                             _gotoSearchList();
                           },
                           style: ElevatedButton.styleFrom(
                               textStyle: TextStyle(fontSize: 20),
                               backgroundColor:  Color.fromARGB(255, 2, 191, 5),
                               minimumSize: Size(double.infinity, 60)),
-                          child: Text('UPLOAD')
+                          child: Text('UPDATE')
                         ),
                       ),
                     ),

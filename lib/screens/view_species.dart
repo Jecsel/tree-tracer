@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -8,14 +9,16 @@ import 'package:tree_tracer/models/fruit_model.dart';
 import 'package:tree_tracer/models/leaf_model.dart';
 import 'package:tree_tracer/models/root_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
+import 'package:tree_tracer/screens/admin.dart';
+import 'package:tree_tracer/screens/update_species.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
 class ViewSpecies extends StatefulWidget {
   final int tracerId; // Mangrove Id
   final String category; // What category of mangrove, if TREE, ROOT, ETC.
-  final String pageType; //What type of User
+  final String userType; //What type of User
 
-  ViewSpecies({required this.tracerId, required this.category, required this.pageType}); // Constructor that accepts data
+  ViewSpecies({required this.tracerId, required this.category, required this.userType}); // Constructor that accepts data
 
   @override
   State<StatefulWidget> createState() => _ViewSpeciesState();
@@ -24,7 +27,7 @@ class ViewSpecies extends StatefulWidget {
 class _ViewSpeciesState extends State<ViewSpecies> {
   int _selectedIndex = 0;
   MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
-  TracerModel? mangroveData;
+  TracerModel? tracerData;
   RootModel? rootData;
   FlowerModel? flowerData;
   FruitModel? fruitData;
@@ -39,14 +42,14 @@ class _ViewSpeciesState extends State<ViewSpecies> {
   Future<void> fetchData() async {
     int tracerId = widget.tracerId;
     TracerModel? mangroveResultData =
-        await dbHelper.getOneMangroveData(tracerId);
+        await dbHelper.getOneTracerData(tracerId);
     RootModel? rootResultData = await dbHelper.getOneRootData(tracerId);
     FlowerModel? flowerResultData = await dbHelper.getOneFlowerData(tracerId);
     LeafModel? leafResultData = await dbHelper.getOneLeafData(tracerId);
     FruitModel? fruitResultData = await dbHelper.getOneFruitData(tracerId);
 
     setState(() {
-      mangroveData = mangroveResultData;
+      tracerData = mangroveResultData;
       rootData = rootResultData;
       fruitData = fruitResultData;
       leafData = leafResultData;
@@ -57,13 +60,13 @@ class _ViewSpeciesState extends State<ViewSpecies> {
     });
   }
 
-  Future<void> deleteMangroveData() async {
+  Future<void> deleteTracer() async {
     int tracerId = widget.tracerId;
     await dbHelper.deleteFlowerData(tracerId);
     await dbHelper.deleteFruitData(tracerId);
     await dbHelper.deleteLeafData(tracerId);
     await dbHelper.deleteRootData(tracerId);
-    await dbHelper.deleteMangroveData(tracerId);
+    await dbHelper.deleteTracerData(tracerId);
   }
 
   _drawerItemTapped(int index) {
@@ -73,48 +76,57 @@ class _ViewSpeciesState extends State<ViewSpecies> {
   }
 
   _gotoSearchList() {
-    String pageType = widget.pageType;
-    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SearchPage(searchKey: 'TREE', pageType: pageType)));
+    String userType = widget.userType;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+            AdminPage(searchKey: 'TREE', userType: userType)));
   }
 
   _gotoUpdateSpecies() {
     int tracerId = widget.tracerId;
-    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> UpdateSpecies(tracerId: tracerId)));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UpdateSpecies(tracerId: tracerId)));
   }
 
-    Future<Widget> loadImageFromFile(String filePath) async {
-      if (filePath.startsWith('assets/')) {
-        // If the path starts with 'assets/', load from assets
-        return Image.asset(filePath);
-      } else {
-        final file = File(filePath);
+  Future<Widget> loadImageFromFile(String filePath) async {
+    if (filePath.startsWith('assets/')) {
+      // If the path starts with 'assets/', load from assets
+      return Image.asset(filePath);
+    } else {
+      final file = File(filePath);
 
-        if (await file.exists()) {
-          // If the file exists in local storage, load it
-          return Image.file(file);
-        }
+      if (await file.exists()) {
+        // If the file exists in local storage, load it
+        return Image.file(file);
       }
-
-      // If no valid image is found, return a default placeholder
-      return Image.asset("assets/images/default_placeholder.png"); // You can replace this with your placeholder image
     }
 
-    Future<Widget> loadImage(String filePath) async {
-      if (filePath.startsWith('assets/')) {
-        // If the path starts with 'assets/', load from assets
-        return Image.asset(filePath, width: 80, height: 80);
-      } else {
-        final file = File(filePath);
+    // If no valid image is found, return a default placeholder
+    return Image.asset("assets/images/default_placeholder.png"); // You can replace this with your placeholder image
+  }
 
-        if (await file.exists()) {
-          // If the file exists in local storage, load it
-          return Image.file(file, width: 80, height: 80);
-        }
+  Future<Widget> loadImage(String filePath) async {
+    if (filePath.startsWith('assets/')) {
+      // If the path starts with 'assets/', load from assets
+      return Image.asset(filePath, width: 80, height: 80);
+    } else {
+      final file = File(filePath);
+
+      if (await file.exists()) {
+        // If the file exists in local storage, load it
+        return Image.file(file, width: 80, height: 80);
       }
-
-      // If no valid image is found, return a default placeholder
-      return Image.asset("assets/images/default_placeholder.png", width: 80, height: 80); // You can replace this with your placeholder image
     }
+
+    // If no valid image is found, return a default placeholder
+    return Image.asset("assets/images/default_placeholder.png",
+      width: 80,
+      height: 80); // You can replace this with your placeholder image
+  }
 
   Widget _buildDrawerItem({
     required String title,
@@ -130,7 +142,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
 
   @override
   Widget build(BuildContext context) {
-    var pageType = widget.pageType;
+    var userType = widget.userType;
     var searchKey = widget.category;
     return Scaffold(
       appBar: AppBar(
@@ -139,12 +151,12 @@ class _ViewSpeciesState extends State<ViewSpecies> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back), // Add your arrow icon here
             onPressed: () {
-              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SearchPage(pageType: pageType, searchKey: searchKey,)));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminPage(userType: userType, searchKey: searchKey)));
             },
           ),
         actions: <Widget>[
           Visibility(
-            visible: pageType == 'Admin',
+            visible: userType == 'Admin',
             child: IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
@@ -153,11 +165,11 @@ class _ViewSpeciesState extends State<ViewSpecies> {
             ),
           ),
           Visibility(
-            visible: pageType == 'Admin',
+            visible: userType == 'Admin',
             child: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                deleteMangroveData();
+                deleteTracer();
                 _gotoSearchList();
                 final snackBar = SnackBar(
                   content: Text('Mangrove Delete!'),
@@ -175,7 +187,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
             child: Column(
               children: <Widget>[
                 FutureBuilder<Widget>(
-                  future: loadImageFromFile(mangroveData?.imagePath ?? ''),
+                  future: loadImageFromFile(tracerData?.imagePath ?? ''),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       return snapshot.data ?? CircularProgressIndicator();;
@@ -186,202 +198,50 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  mangroveData?.scientific_name ?? 'No Scientific Name',
+                  tracerData?.local_name ?? 'No Local Name',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  children: [
-                    Text(
-                      "Local Names: ",
-                      style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
-                    Expanded(
-                      child: Text(
-                        mangroveData?.local_name ?? 'No Scientific Name')),
-                  ],
+                Text(
+                  tracerData?.scientific_name ?? 'No Scientific Name',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic
+                  ),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  children: [
-                    Text(
-                      "Description: ",
-                      style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
-                    Expanded(
-                      child: Text(
-                        mangroveData?.description ?? 'No Description')),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Summary: ",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
-                    Expanded(
-                      child: Text(
-                        mangroveData?.description ?? '--------------')),
-                  ],
-                ),
+                Text(tracerData?.description ?? 'No Description'),
 
-                SizedBox(height: 30),
-                Visibility(
-                  visible: leafData?.imagePath != null || leafData?.imagePath != '',
-                    child: Text(
-                    "Leaves",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
+                SizedBox(height: 20),
+                Container(
+                  width: double.infinity,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Benifits',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600
+                          ),
+                        ),
+                        Text(tracerData?.benifits ?? 'No Benifits'),
+                        Text(
+                          'Uses',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600
+                          ),
+                        ),
+                        Text(tracerData?.uses ?? 'No Uses'),
+                      ],
+                  )
+,
+                  )
+                   
                 ),
-                Visibility(
-                  visible: leafData?.imagePath != null || leafData?.imagePath != '',
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Text(leafData?.name ?? 'No Name'),
-                      ),
-                      Expanded(
-                        child: Text(leafData?.description ?? 'No Description'),
-                      ),
-                      FutureBuilder<Widget>(
-                        future: loadImage(leafData?.imagePath ?? ''),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return snapshot.data ?? CircularProgressIndicator();;
-                          } else {
-                            return CircularProgressIndicator(); // Or another loading indicator
-                          }
-                        },
-                      ),
-                      // Image.memory(
-                      //   leafData?.imageBlob ?? Uint8List(0),
-                      //   width: 80,
-                      //   height: 80,
-                      // ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 30),
-                Visibility(
-                  visible: fruitData?.imageBlob != null || fruitData?.imageBlob != '',
-                    child: Text(
-                    "Fruit",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Visibility(
-                  visible: fruitData?.imageBlob != null || fruitData?.imageBlob != '',
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Text(fruitData?.name ?? 'No Name'),
-                      ),
-                      Expanded(
-                        child: Text(fruitData?.description ?? 'No Description')
-                      ),
-                      FutureBuilder<Widget>(
-                        future: loadImage(fruitData?.imagePath ?? ''),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return snapshot.data ?? CircularProgressIndicator();;
-                          } else {
-                            return CircularProgressIndicator(); // Or another loading indicator
-                          }
-                        },
-                      ), 
-                      // Image.memory(
-                      //   fruitData?.imageBlob ?? Uint8List(0),
-                      //   width: 80,
-                      //   height: 80,
-                      // ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 30),
-                Visibility(
-                  visible: flowerData?.imageBlob != null || flowerData?.imageBlob != '',
-                    child: Text(
-                    "Flower",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Visibility(
-                  visible: flowerData?.imageBlob != null || flowerData?.imageBlob != '',
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Text(flowerData?.name ?? 'No Name'),
-                      ),
-                      Expanded(
-                        child: Text(flowerData?.description ?? 'No Description')
-                      ),
-                      FutureBuilder<Widget>(
-                        future: loadImage(flowerData?.imagePath ?? ''),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return snapshot.data ?? CircularProgressIndicator();;
-                          } else {
-                            return CircularProgressIndicator(); // Or another loading indicator
-                          }
-                        },
-                      ),
-                      // Image.memory(
-                      //   flowerData?.imageBlob ?? Uint8List(0),
-                      //   width: 80,
-                      //   height: 80,
-                      // ),
-                    ],
-                  ),
-
-                ),
-                
-                SizedBox(height: 30),
-                Visibility(
-                  visible: rootData?.imageBlob != null || rootData?.imageBlob != '',
-                    child: Text(
-                    "Root",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Visibility(
-                  visible: rootData?.imageBlob != null || rootData?.imageBlob != '',
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Text(rootData?.name ?? 'No Name'),
-                      ),
-                      Expanded(
-                        child: Text(rootData?.description ?? 'No Description')
-                      ),
-                      FutureBuilder<Widget>(
-                        future: loadImage(rootData?.imagePath ?? ''),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return snapshot.data ?? CircularProgressIndicator();;
-                          } else {
-                            return CircularProgressIndicator(); // Or another loading indicator
-                          }
-                        },
-                      ),
-                      // Image.memory(
-                      //   rootData?.imageBlob ?? Uint8List(0),
-                      //   width: 80,
-                      //   height: 80,
-                      // ),
-                    ],
-                  ),
-                ),
-                
-              ],
+                ],
             ),
           ),
         ),

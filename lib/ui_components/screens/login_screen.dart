@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return AdminPage(searchKey: 'TREE', pageType: 'User',);
+            return AdminPage(searchKey: 'TREE', userType: 'User',);
           },
         ),
       );

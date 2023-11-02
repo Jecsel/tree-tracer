@@ -211,7 +211,7 @@ class MangroveDatabaseHelper {
     });
   }
 
-  Future<TracerModel?> getOneMangroveData(int tracerId) async {
+  Future<TracerModel?> getOneTracerData(int tracerId) async {
     final db = await database;
     final List<Map<String, dynamic>> mangroveData = await db.query('tracer',
       where: 'id = ?',
@@ -312,7 +312,7 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     return combinedData;
   }
 
-  Future<void> updateMangroveData(TracerModel mangrooveData) async {
+  Future<void> updateTracerData(TracerModel mangrooveData) async {
     final db = await database;
     await db.update(
       'tracer',
@@ -362,7 +362,7 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     );
   }
 
-  Future<void> deleteMangroveData(int id) async {
+  Future<void> deleteTracerData(int id) async {
     final db = await database;
     await db.delete(
       'tracer',
