@@ -10,6 +10,7 @@ import 'package:tree_tracer/models/leaf_model.dart';
 import 'package:tree_tracer/models/root_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
 import 'package:tree_tracer/screens/admin.dart';
+import 'package:tree_tracer/screens/home.dart';
 import 'package:tree_tracer/screens/update_species.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
@@ -146,12 +147,24 @@ class _ViewSpeciesState extends State<ViewSpecies> {
     var searchKey = widget.category;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mangroove Info'),
-        backgroundColor: Colors.green, // Set the background color here
+        title: const Text('Tree Info'),
+        flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue, Colors.lightBlue],
+              ),
+            ),
+          ),
         leading: IconButton(
             icon: Icon(Icons.arrow_back), // Add your arrow icon here
             onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminPage(userType: userType, searchKey: searchKey)));
+              if(userType == 'Admin') {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminPage(userType: userType, searchKey: searchKey)));
+              } else {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+              }
             },
           ),
         actions: <Widget>[
@@ -190,7 +203,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                   future: loadImageFromFile(tracerData?.imagePath ?? ''),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      return snapshot.data ?? CircularProgressIndicator();;
+                      return snapshot.data ?? CircularProgressIndicator();
                     } else {
                       return CircularProgressIndicator(); // Or another loading indicator
                     }
@@ -203,7 +216,14 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  tracerData?.scientific_name ?? 'No Scientific Name',
+                  'Scientific Name: ${tracerData?.scientific_name}' ?? 'No Scientific Name',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic
+                  ),
+                ),
+                Text(
+                  'Family: ${tracerData?.family}' ?? 'No Family',
                   style: TextStyle(
                     color: Colors.grey,
                     fontStyle: FontStyle.italic

@@ -175,7 +175,7 @@ class AboutUsState extends State<AboutUs>{
               title: 'Trees',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> UserTreeList(searchKey: 'TREE', userType: 'User',)));
               },
             ),
             _buildDrawerItem(
@@ -225,7 +225,7 @@ class AboutUsState extends State<AboutUs>{
                     context, MaterialPageRoute(builder: (context) => Home()));
               case 1:
                 Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
               case 2:
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => AboutUs()));

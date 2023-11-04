@@ -83,27 +83,33 @@ class _HomeState extends State<Home> {
     print('pickFile');
     print(pickedFileFromGallery?.path);
 
+    print('mangroveImages');
+    print(mangroveImages!.length);
+
     localImage = File(pickedFileFromGallery!.path);
 
     for (Map mangroveImage in mangroveImages!) {
       String imagePath = mangroveImage['imagePath'];
-
-      final tempDir = await getTemporaryDirectory();
-      final tempPath = tempDir.path;
-      final file = File('$tempPath/temp_image.jpg');
-      await file.writeAsBytes(mangroveImage['imageBlob']);
-
       print('mANGROVE imagePath');
       print(imagePath);
       print('mANGROVE localImage');
       print(localImage);
-      double similarityScore = 1.0;
+
+      print("mangroveImage['imageBlob']");
+      print(mangroveImage['imageBlob']);
+
+      final tempDir = await getTemporaryDirectory();
+      final tempPath = tempDir.path;
+      final file = File('$tempPath/temp_image.jpg');
+      if(mangroveImage['imageBlob'] != null) {
+        await file.writeAsBytes(mangroveImage['imageBlob']);
+      }
+      print('========== PASOK ========');
+
+      double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
 
       if (imagePath.startsWith('assets/')) {
-        print("image is from the asset ********");
         similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
-      } else {
-        similarityScore = await compareImages(src1: localImage, src2: imagePath, algorithm: PerceptualHash());
       }
 
       print("similarityScore $similarityScore.");
@@ -119,6 +125,7 @@ class _HomeState extends State<Home> {
         similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
         similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
       }else{
+        similarityScore = 100 - (similarityScore * 100);
         print("Gallery image is BELOW similar to $similarityScore.");
       }
     }
@@ -130,7 +137,7 @@ class _HomeState extends State<Home> {
       print("similarImages ${similarImages.length}");
       isErrorShow = false;
       if(similarImages.length > 0) {
-        // Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+        Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
       } else {
         isErrorShow = true;
         final snackBar = SnackBar(
@@ -141,17 +148,17 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<File> getImageFileFromAsset(String assetPath) async {
-    final ByteData data = await rootBundle.load(assetPath);
-    final List<int> bytes = data.buffer.asUint8List();
-    final String tempFileName = assetPath.split('/').last;
+  // Future<File> getImageFileFromAsset(String assetPath) async {
+  //   final ByteData data = await rootBundle.load(assetPath);
+  //   final List<int> bytes = data.buffer.asUint8List();
+  //   final String tempFileName = assetPath.split('/').last;
 
-    final Directory tempDir = await getTemporaryDirectory();
-    final File tempFile = File('${tempDir.path}/$tempFileName');
+  //   final Directory tempDir = await getTemporaryDirectory();
+  //   final File tempFile = File('${tempDir.path}/$tempFileName');
     
-    await tempFile.writeAsBytes(bytes, flush: true);
-    return tempFile;
-  }
+  //   await tempFile.writeAsBytes(bytes, flush: true);
+  //   return tempFile;
+  // }
 
   checkImagePath(filePath) {
     if (!filePath.startsWith('assets/')) {
@@ -382,7 +389,7 @@ class _HomeState extends State<Home> {
                 index: 3,
                 onTap: () {
                   Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+                  MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
                 },
               ),
               _buildDrawerItem(
@@ -433,7 +440,7 @@ class _HomeState extends State<Home> {
                     context, MaterialPageRoute(builder: (context) => Home()));
               case 1:
                 Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
               case 2:
                 // _drawerItemTapped(2);
                 Navigator.pushReplacement(context,

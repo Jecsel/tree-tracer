@@ -13,14 +13,17 @@ import 'package:tree_tracer/models/root_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
 import 'package:tree_tracer/screens/about_us.dart';
 import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/screens/trees.dart';
+import 'package:tree_tracer/screens/view_species.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:tree_tracer/ui_components/main_view.dart';
 
 class UserTreeList extends StatefulWidget {
   String searchKey;
-  String pageType;
+  String userType;
 
-  UserTreeList({required this.searchKey, required this.pageType});
+  UserTreeList({required this.searchKey, required this.userType});
 
   @override
   _UserTreeListState createState() => _UserTreeListState();
@@ -135,7 +138,8 @@ class _UserTreeListState extends State<UserTreeList> {
   @override
   Widget build(BuildContext context) {
     String searchKey = widget.searchKey;
-    String pageType = widget.pageType;
+    String userType = widget.userType;
+    
     List<Map<String, dynamic>> carouselItems = [
       {'name': 'TREE', 'image': 'assets/images/tree.png'},
       {'name': 'FLOWER', 'image': 'assets/images/flower.png'},
@@ -181,7 +185,7 @@ class _UserTreeListState extends State<UserTreeList> {
               items: carouselItems.map((item) {
                 return GestureDetector(
                   onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SearchPage(searchKey: item['name'], pageType: 'User')));
+                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: 'User',)));
                   },
                   child: Container(
                   decoration: BoxDecoration(
@@ -238,12 +242,12 @@ class _UserTreeListState extends State<UserTreeList> {
 
                 return GestureDetector(
                   onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangroveId ?? 0, category: searchKey, pageType: pageType,)));
-                    //   final imageData = mangrooveData[index];
-                    //   final snackBar = SnackBar(
-                    //     content: Text('Tapped on ${imageData}'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: userType,)));
+                      // final imageData = mangrooveData[index];
+                      // final snackBar = SnackBar(
+                      //   content: Text('Tapped on ${imageData}'),
+                      // );
+                      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   child: ListTile(
                   title: Text('Local Name: ${imageData.local_name}'),
@@ -270,11 +274,9 @@ class _UserTreeListState extends State<UserTreeList> {
 
                 return GestureDetector(
                   onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangId ?? 0, category: searchKey, pageType: pageType)));
-                    //   final snackBar = SnackBar(
-                    //     content: Text('Tapped on ${mangId}'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangId ?? 0, category: searchKey, userType: userType)));
+                    // final snackBar = SnackBar(content: Text('Tapped on ${mangId}'),);
+                    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   child: ListTile(  
                   title: Text('Name: ${imageDt.name}'),
@@ -304,27 +306,50 @@ class _UserTreeListState extends State<UserTreeList> {
               index: 0,
               onTap: () {
                 _drawerItemTapped(0);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
               },
             ),
             _buildDrawerItem(
-              title: 'Trees',
+              title: 'Favorite',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> UserTreeList(searchKey: 'TREE', pageType: 'User',)));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Trees()));
+              },
+            ),
+            _buildDrawerItem(
+              title: 'Admin',
+              index: 2,
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => MainView()));
+              },
+            ),
+            _buildDrawerItem(
+              title: 'Tree List',
+              index: 3,
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserTreeList(
+                              searchKey: 'TREE',
+                              userType: 'User',
+                            )));
               },
             ),
             _buildDrawerItem(
               title: 'About Us',
-              index: 2,
+              index: 4,
               onTap: () {
-                _drawerItemTapped(2);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AboutUs()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => AboutUs()));
               },
             ),
             _buildDrawerItem(
               title: 'Exit',
-              index: 3,
+              index: 5,
               onTap: () {
                 _drawerItemTapped(3);
                 Navigator.pop(context);
@@ -334,48 +359,53 @@ class _UserTreeListState extends State<UserTreeList> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.blueAccent),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.grass),
-                label: 'Trees',
-                backgroundColor: Colors.blueAccent),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.face),
-                label: 'About',
-                backgroundColor: Colors.blueAccent),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.exit_to_app),
-                label: 'Exit',
-                backgroundColor: Colors.blueAccent),
-          ],
-          currentIndex: 1,
-          selectedItemColor: Colors.amber[800],
-          onTap: (int index) {
-            switch (index) {
-              case 0:
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
-              case 1:
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', pageType: 'User',)));
-              case 2:
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => AboutUs()));
-              case 3:
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
-            }
-            setState(
-              () {
-                _selectedIndex = index;
-              },
-            );
-          },
-        ),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Colors.blueAccent),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.grass),
+              label: 'Trees',
+              backgroundColor: Colors.blueAccent),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.face),
+              label: 'About',
+              backgroundColor: Colors.blueAccent),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.exit_to_app),
+              label: 'Exit',
+              backgroundColor: Colors.blueAccent),
+        ],
+        currentIndex: 1,
+        selectedItemColor: Colors.amber[800],
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            case 1:
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserTreeList(
+                            searchKey: 'TREE',
+                            userType: 'User',
+                          )));
+            case 2:
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => AboutUs()));
+            case 3:
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+          }
+          setState(
+            () {
+              _selectedIndex = index;
+            },
+          );
+        },
+      ),
     
     ));
   }
