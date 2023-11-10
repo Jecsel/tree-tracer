@@ -61,6 +61,7 @@ class _HomeState extends State<Home> {
   List<Map<String, dynamic>> similarImages = [];
   late MangroveDatabaseHelper dbHelper;
   bool isErrorShow = false;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -75,6 +76,7 @@ class _HomeState extends State<Home> {
   }
 
   Future _getFromGallery() async {
+    isLoading = true;
     final pickedFileFromGallery = await ImagePicker().getImage(     /// Get from gallery
       source: ImageSource.gallery,
       maxWidth: 1800,
@@ -87,6 +89,7 @@ class _HomeState extends State<Home> {
     print(mangroveImages!.length);
 
     localImage = File(pickedFileFromGallery!.path);
+    Navigator.pop(this.context);
 
     for (Map mangroveImage in mangroveImages!) {
       String imagePath = mangroveImage['imagePath'];
@@ -136,29 +139,15 @@ class _HomeState extends State<Home> {
 
       print("similarImages ${similarImages.length}");
       isErrorShow = false;
+      isLoading = false;
       if(similarImages.length > 0) {
         Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
       } else {
         isErrorShow = true;
-        final snackBar = SnackBar(
-          content: Text('No Results Found!'),
-        );
-        ScaffoldMessenger.of(this.context).showSnackBar(snackBar);
       }
     });
   }
 
-  // Future<File> getImageFileFromAsset(String assetPath) async {
-  //   final ByteData data = await rootBundle.load(assetPath);
-  //   final List<int> bytes = data.buffer.asUint8List();
-  //   final String tempFileName = assetPath.split('/').last;
-
-  //   final Directory tempDir = await getTemporaryDirectory();
-  //   final File tempFile = File('${tempDir.path}/$tempFileName');
-    
-  //   await tempFile.writeAsBytes(bytes, flush: true);
-  //   return tempFile;
-  // }
 
   checkImagePath(filePath) {
     if (!filePath.startsWith('assets/')) {
@@ -169,9 +158,12 @@ class _HomeState extends State<Home> {
   }
 
   Future _getImageFromCamera() async {    /// Get Image from Camera
+    isLoading = true;
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     print('pickFile');
     print(pickedFile);
+
+    Navigator.pop(this.context);
 
     for (Map mangroveImage in mangroveImages!) {
       String imagePath = mangroveImage['imagePath'];
@@ -184,12 +176,16 @@ class _HomeState extends State<Home> {
       final tempDir = await getTemporaryDirectory();
       final tempPath = tempDir.path;
       final file = File('$tempPath/temp_image.jpg');
-      await file.writeAsBytes(mangroveImage['imageBlob']);
+      if(mangroveImage['imageBlob'] != null) {
+        await file.writeAsBytes(mangroveImage['imageBlob']);
+      }
 
       if (imagePath.startsWith('assets/')) {
+        print('========= Una ========');
         similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
       } else {
-         similarityScore = await compareImages(src1: File(pickedFile!.path), src2: imagePath, algorithm: PerceptualHash());
+        print('========= Dalawa ========');
+        similarityScore = await compareImages(src1: File(pickedFile!.path), src2: File(imagePath), algorithm: PerceptualHash());
       }
 
       if (similarityScore <= 0.5) {
@@ -209,13 +205,12 @@ class _HomeState extends State<Home> {
     if (pickedFile != null) {
       setState(() {
         takenImage = File(pickedFile.path);// Compare the images here and show the result
+        isErrorShow = false;
+        isLoading = false;
         if(similarImages.length > 0) {
           Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
         } else {
-          final snackBar = SnackBar(
-            content: Text('No Results Found!'),
-          );
-          ScaffoldMessenger.of(this.context).showSnackBar(snackBar);
+          isErrorShow = true;
         }
       });
     }
@@ -353,6 +348,15 @@ class _HomeState extends State<Home> {
                 child: const Text("Scan"),
               ),
             ),
+            SizedBox(height: 20),
+            Visibility(visible: isLoading, child: CircularProgressIndicator()),
+            SizedBox(height: 20),
+            Visibility(
+              visible: !isLoading && isErrorShow,
+              child: Text(
+                "No Results Found!",
+                style: TextStyle(color: Colors.red),
+              ))
           ],
         ),
         endDrawer: Drawer(

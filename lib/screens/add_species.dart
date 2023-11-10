@@ -28,7 +28,9 @@ class _AddSpeciesState extends State<AddSpecies> {
 
   File? takenImage;
 
-  String? mangroveImagePath = 'assets/images/default_placeholder.png';
+  List<String> treeImagePathList = [];
+
+  String? treeImagePath = 'assets/images/default_placeholder.png';
   String? fruitImagePath = 'assets/images/default_placeholder.png';
   String? leafImagePath = 'assets/images/default_placeholder.png';
   String? flowerImagePath = 'assets/images/default_placeholder.png';
@@ -100,7 +102,7 @@ class _AddSpeciesState extends State<AddSpecies> {
       final Uint8List fruitImageBytes =  Uint8List.fromList(fruitBytes);
 
       final newMangroove = TracerModel(
-        imagePath: mangroveImagePath,
+        imagePath: treeImagePath,
         local_name: localNameController.text,
         scientific_name: scientificNameController.text,
         description: descriptionController.text,
@@ -161,34 +163,17 @@ class _AddSpeciesState extends State<AddSpecies> {
 
     if (pickedFileFromGallery != null) {
       setState(() {
-        switch (fromField) {
-          case "tree":
-            print('===******===== pickedFileFromGallery.path ===*****=====');
-            print(pickedFileFromGallery.path);
-            mangroveImage = File(pickedFileFromGallery.path);
-            mangroveImagePath = pickedFileFromGallery.path;
-            break;
-          case "root":
-            rootImage = File(pickedFileFromGallery.path);
-            rootImagePath = pickedFileFromGallery.path;
-            break;
-          case "flower":
-            flowerImage = File(pickedFileFromGallery.path);
-            flowerImagePath = pickedFileFromGallery.path;
-            break;
-          case "leaf":
-            leafImage = File(pickedFileFromGallery.path);
-            leafImagePath = pickedFileFromGallery.path;
-            break;
-          case "fruit":
-            fruitImage = File(pickedFileFromGallery.path);
-            fruitImagePath = pickedFileFromGallery.path;
-            break;
-          default:
-            mangroveImage = File(pickedFileFromGallery.path);
-            mangroveImagePath = pickedFileFromGallery.path;
-        }
-        
+        print('===******===== pickedFileFromGallery.path ===*****=====');
+        print(pickedFileFromGallery.path);
+
+        String imgPath = pickedFileFromGallery.path;
+        mangroveImage = File(imgPath);
+        treeImagePath = imgPath;
+        treeImagePathList.add(imgPath);
+
+        print('treeImagePathList');
+        print(treeImagePathList);
+        print(treeImagePathList.length);
       });
     }
   }

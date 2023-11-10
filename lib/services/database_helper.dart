@@ -8,8 +8,10 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tree_tracer/models/UserModel.dart';
+import 'package:tree_tracer/models/favourite_model.dart';
 import 'package:tree_tracer/models/flower_model.dart';
 import 'package:tree_tracer/models/fruit_model.dart';
+import 'package:tree_tracer/models/image_model.dart';
 import 'package:tree_tracer/models/leaf_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
 import 'package:tree_tracer/models/root_model.dart';
@@ -104,6 +106,25 @@ class MangroveDatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT,
         password TEXT
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE tree_image (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tracerId INTEGER,
+        imageBlob BLOB,
+        imagePath TEXT,
+        name TEXT,
+        FOREIGN KEY (tracerId) REFERENCES tracer (id)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE favourite (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tracerId INTEGER,
+        FOREIGN KEY (tracerId) REFERENCES tracer (id)
       )
     ''');
   }
@@ -407,11 +428,104 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     );
   }
 
+  //Tree Image Query Services
+  Future<ImageModel> insertDBTreeImageData(ImageModel imageData) async {
+    final db = await database;
+    final id = await db.insert('tree_image', imageData.toMap());
+    return imageData;
+  }
+
+  Future<List<ImageModel>> getTreeImageDataList() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('tree_image');
+    return List.generate(maps.length, (i) {
+      return ImageModel.fromMap(maps[i]);
+    });
+  }
+
+  Future<ImageModel?> getOneTreeImageData(int tracerId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> imageData = await db.query('tree_image',
+      where: 'tracerId = ?',
+      whereArgs: [tracerId]);
+
+    if (imageData.isNotEmpty) {
+      return ImageModel.fromMap(imageData[0]);
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> updateTreeImageData(ImageModel imageData) async {
+    final db = await database;
+    await db.update(
+      'tree_image',
+      imageData.toMap(),
+      where: 'id = ?',
+      whereArgs: [imageData.id],
+    );
+  }
+
+  Future<void> deleteTreeImageData(int id) async {
+    final db = await database;
+    await db.delete(
+      'tree_image',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  //Favourite Query Services
+  Future<FavouriteModel> insertDBFavouriteData(FavouriteModel imageData) async {
+    final db = await database;
+    final id = await db.insert('favourite', imageData.toMap());
+    return imageData;
+  }
+
+  Future<List<FavouriteModel>> getFavouriteDataList() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('favourite');
+    return List.generate(maps.length, (i) {
+      return FavouriteModel.fromMap(maps[i]);
+    });
+  }
+
+  Future<FavouriteModel?> getOneFavouriteData(int tracerId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> imageData = await db.query('favourite',
+      where: 'tracerId = ?',
+      whereArgs: [tracerId]);
+
+    if (imageData.isNotEmpty) {
+      return FavouriteModel.fromMap(imageData[0]);
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> updateFavouriteData(FavouriteModel imageData) async {
+    final db = await database;
+    await db.update(
+      'favourite',
+      imageData.toMap(),
+      where: 'id = ?',
+      whereArgs: [imageData.id],
+    );
+  }
+
+  Future<void> deleteFavouriteeData(int id) async {
+    final db = await database;
+    await db.delete(
+      'favourite',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<void> close() async {
     final db = await database;
     db.close();
   }
-
 
   Future<void> initiateUserData(MangroveDatabaseHelper dbHelper) async {
     // MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
