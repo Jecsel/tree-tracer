@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/icon.png',
+            'assets/images/app_logo.jpg',
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),

@@ -20,7 +20,11 @@ class AddSpecies extends StatefulWidget {
 
 class _AddSpeciesState extends State<AddSpecies> {
   final picker = ImagePicker();
-  File? mangroveImage;
+
+  List<File>? tracerFileImageArray;
+  List<String>? tracerPathImageArray;
+
+  File? tracerImage;
   File? fruitImage;
   File? leafImage;
   File? flowerImage;
@@ -83,17 +87,17 @@ class _AddSpeciesState extends State<AddSpecies> {
   }
 
   Future<void> _insertMangrooveData() async {
-    print('======== mangroveImage ========');
-    print(mangroveImage);
+    print('======== tracerImage ========');
+    print(tracerImage);
 
-    if(mangroveImage != null){
+    if(tracerImage != null){
       print('======== mangroveImages is not null ========');
 
-      final List<int> bytes = await mangroveImage!.readAsBytes();
-      final List<int> rootBytes = await mangroveImage!.readAsBytes();
-      final List<int> flowerBytes = await mangroveImage!.readAsBytes();
-      final List<int> leafBytes = await mangroveImage!.readAsBytes();
-      final List<int> fruitBytes = await mangroveImage!.readAsBytes();
+      final List<int> bytes = await tracerImage!.readAsBytes();
+      final List<int> rootBytes = await tracerImage!.readAsBytes();
+      final List<int> flowerBytes = await tracerImage!.readAsBytes();
+      final List<int> leafBytes = await tracerImage!.readAsBytes();
+      final List<int> fruitBytes = await tracerImage!.readAsBytes();
       
       final Uint8List mangroveImageBytes = Uint8List.fromList(bytes);
       final Uint8List rootImageBytes =  Uint8List.fromList(rootBytes);
@@ -109,7 +113,8 @@ class _AddSpeciesState extends State<AddSpecies> {
         summary: 'No Summary',
         family: familyController.text,
         benifits: benifitsController.text,
-        uses: usesController.text
+        uses: usesController.text,
+        favourite: 0
       );
       
       final insertedMangrove = await dbHelper?.insertDBMangroveData(newMangroove);
@@ -162,12 +167,17 @@ class _AddSpeciesState extends State<AddSpecies> {
     );
 
     if (pickedFileFromGallery != null) {
+
       setState(() {
         print('===******===== pickedFileFromGallery.path ===*****=====');
         print(pickedFileFromGallery.path);
 
         String imgPath = pickedFileFromGallery.path;
-        mangroveImage = File(imgPath);
+        tracerImage = File(imgPath);
+        
+        tracerFileImageArray!.add(tracerImage!);
+        tracerPathImageArray!.add(imgPath);
+
         treeImagePath = imgPath;
         treeImagePathList.add(imgPath);
 
@@ -206,9 +216,9 @@ class _AddSpeciesState extends State<AddSpecies> {
                     SizedBox(
                       height: 10,
                     ),
-                    mangroveImage != null
+                    tracerImage != null
                         ? Image.file(
-                            mangroveImage!,
+                            tracerImage!,
                             height: 150,
                           )
                         : Image.asset(

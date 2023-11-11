@@ -49,7 +49,8 @@ class MangroveDatabaseHelper {
         summary TEXT,
         family TEXT,
         benifits TEXT,
-        uses TEXT
+        uses TEXT,
+        favourite BOOLEAN
       )
     ''');
 
@@ -200,6 +201,14 @@ class MangroveDatabaseHelper {
     });
   }
 
+  Future<List<TracerModel>> getTracerFavouriteDataList() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('tracer', where: 'favourite = ?', whereArgs: [1],);
+    return List.generate(maps.length, (i) {
+      return TracerModel.fromMap(maps[i]);
+    });
+  }
+
   Future<List<RootModel>> getRootDataList() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('root');
@@ -331,6 +340,16 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     combinedData.addAll(fruitData);
 
     return combinedData;
+  }
+
+  Future<void> updateFavouriteStatus(int id, int isFavourite) async {
+    final db = await database;
+    await db.update(
+      'tracer',
+      {'favourite': isFavourite},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<void> updateTracerData(TracerModel mangrooveData) async {
@@ -608,7 +627,8 @@ Future<RootModel?> getOneRootData(int tracerId) async {
           summary: tracer['summary'],
           family: tracer['family'],
           benifits: tracer['benifits'],
-          uses: tracer['uses']
+          uses: tracer['uses'],
+          favourite: 0
         );
 
         int newMangrooveId = await dbHelper.insertDBMangroveData(newMangroove);

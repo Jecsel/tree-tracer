@@ -11,6 +11,7 @@ class TracerModel {
   final String family;
   final String benifits;
   final String uses;
+  int? favourite;
 
   TracerModel({
     this.id,
@@ -22,7 +23,8 @@ class TracerModel {
     required this.summary,
     required this.family,
     required this.benifits,
-    required this.uses
+    required this.uses,
+    required this.favourite
   });
 
   Map<String, dynamic> toMap() {
@@ -36,7 +38,8 @@ class TracerModel {
       'summary': summary,
       'family': family,
       'benifits': benifits,
-      'uses': uses
+      'uses': uses,
+      'favourite': favourite
     };
   }
 
@@ -51,7 +54,8 @@ class TracerModel {
       summary: map['summary'],
       family: map['family'],
       benifits: map['benifits'],
-      uses: map['uses']
+      uses: map['uses'],
+      favourite: map['favourite']
     );
   }
 
@@ -65,7 +69,8 @@ class TracerModel {
     String? summary,
     String? family,
     String? benifits,
-    String? uses
+    String? uses,
+    int? favourite
   }) {
     return TracerModel(
       id: id ?? this.id,
@@ -77,7 +82,8 @@ class TracerModel {
       summary: summary ?? this.summary,
       family: family ?? this.family,
       benifits: benifits ?? this.benifits,
-      uses: uses ?? this.uses
+      uses: uses ?? this.uses,
+      favourite: favourite ?? this.favourite
     );
   }
 }

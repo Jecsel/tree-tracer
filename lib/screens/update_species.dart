@@ -118,7 +118,8 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
       summary: summaryController.text,
       family: familyController.text,
       benifits: benifitsController.text,
-      uses: usesController.text
+      uses: usesController.text,
+      favourite: 0
     );
 
     final insertedMangrove = await dbHelper?.updateTracerData(tracerUpdatedData);

@@ -12,6 +12,8 @@ import 'package:path/path.dart';
 import 'dart:typed_data';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:tree_tracer/screens/admin.dart';
+import 'package:tree_tracer/screens/favorite.dart';
+import 'package:tree_tracer/screens/favourite.dart';
 import 'package:tree_tracer/screens/result.dart';
 import 'package:tree_tracer/screens/trees.dart';
 import 'package:tree_tracer/screens/user_tree_list.dart';
@@ -182,7 +184,7 @@ class _HomeState extends State<Home> {
 
       if (imagePath.startsWith('assets/')) {
         print('========= Una ========');
-        similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+        similarityScore = await compareImages(src1: File(pickedFile!.path), src2: file, algorithm: PerceptualHash());
       } else {
         print('========= Dalawa ========');
         similarityScore = await compareImages(src1: File(pickedFile!.path), src2: File(imagePath), algorithm: PerceptualHash());
@@ -323,7 +325,7 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/icon.png',
+              'assets/images/app_logo.jpg',
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -377,7 +379,7 @@ class _HomeState extends State<Home> {
                 index: 1,
                 onTap: () {
                   Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => Trees()));
+                  MaterialPageRoute(builder: (context) => FavoritePage()));
                 },
               ),
               _buildDrawerItem(

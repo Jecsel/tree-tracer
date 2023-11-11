@@ -37,6 +37,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
   @override
   void initState() {
     super.initState();
+    dbHelper = MangroveDatabaseHelper.instance;
     fetchData();
   }
 
@@ -68,6 +69,21 @@ class _ViewSpeciesState extends State<ViewSpecies> {
     await dbHelper.deleteLeafData(tracerId);
     await dbHelper.deleteRootData(tracerId);
     await dbHelper.deleteTracerData(tracerId);
+  }
+
+  Future<void> addToFavourite() async {
+    tracerData?.favourite = tracerData!.favourite == 0 ? 1 : 0;
+
+    var msg = tracerData!.favourite == 1 ? "Added to Favourite!" : "Removed to Favourite!";
+
+    final snackBar = SnackBar(content: Text(msg));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    await dbHelper.updateFavouriteStatus(tracerData!.id ?? 1, tracerData?.favourite ?? 1);
+
+    setState(() {
+      tracerData!.favourite = tracerData!.favourite;
+    });
   }
 
   _drawerItemTapped(int index) {
@@ -188,6 +204,15 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                   content: Text('Mangrove Delete!'),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+            ),
+          ),
+          Visibility(
+            visible: userType != 'Admin' && tracerData != null,
+            child: IconButton(
+              icon: tracerData?.favourite == 1 ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border),
+              onPressed: () {
+                addToFavourite();
               },
             ),
           ),
