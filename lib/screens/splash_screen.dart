@@ -42,15 +42,19 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/images/app_logo.jpg',
-          ),
+          ClipOval(
+            child: Image.asset(
+              "assets/images/app_logo.jpg",
+                  width: 200, // Set both width and height to the same value
+                  height: 200, // to create a perfect circle
+                ),
+              ),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Image.asset(
               "assets/images/loading.gif",
-              width: 50,  // Set both width and height to the same value
-              height: 50, // to create a perfect circle
+              width: 35,  // Set both width and height to the same value
+              height: 35, // to create a perfect circle
             ),
           ),
         ],

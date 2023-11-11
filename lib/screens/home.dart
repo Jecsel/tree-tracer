@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
       print('========== PASOK ========');
 
       double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
-
+      print('========== Second ========');
       if (imagePath.startsWith('assets/')) {
         similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
       }
@@ -123,6 +123,7 @@ class _HomeState extends State<Home> {
         print("Gallery image is similar to $similarityScore.");
 
         similarityScore = 100 - (similarityScore * 100);
+        int roundedSimilarityScore = similarityScore.round();
         Map<String, dynamic> imageInfo = {
           "score": similarityScore,
           "image": mangroveImage, // Add the image or any other relevant information here
@@ -190,11 +191,13 @@ class _HomeState extends State<Home> {
         similarityScore = await compareImages(src1: File(pickedFile!.path), src2: File(imagePath), algorithm: PerceptualHash());
       }
 
-      if (similarityScore <= 0.5) {
+      if (similarityScore <= 0.75) {
+        
         print("Gallery image is similar to $similarityScore.");
         similarityScore = 100 - (similarityScore * 100);
+        int roundedSimilarityScore = similarityScore.round();
         Map<String, dynamic> imageInfo = {
-          "score": similarityScore,
+          "score": roundedSimilarityScore,
           "image": mangroveImage, // Add the image or any other relevant information here
         };
         similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
@@ -260,6 +263,34 @@ class _HomeState extends State<Home> {
     });
   }
 
+    Future<bool> _onBackPressed(BuildContext context) async {
+    final confirmed = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Exit the app?'),
+          content: Text('Are you sure you want to exit the app?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    return confirmed ?? false; // Return false if the dialog is dismissed
+  }
+
   _showModal() {
   BuildContext context = this.context;
     showDialog(
@@ -307,7 +338,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
+    return WillPopScope(
+      onWillPop: () async {
+        return _onBackPressed(context);
+        },
+      child:     MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
@@ -324,9 +359,13 @@ class _HomeState extends State<Home> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/app_logo.jpg',
-            ),
+            ClipOval(
+            child: Image.asset(
+              "assets/images/app_logo.jpg",
+                  width: 200, // Set both width and height to the same value
+                  height: 200, // to create a perfect circle
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
@@ -339,17 +378,24 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+              child: Center(
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: _showModal,
+                    child: const Text("Scan"),
                   ),
                 ),
-                onPressed: _showModal,
-                child: const Text("Scan"),
               ),
             ),
+
+
             SizedBox(height: 20),
             Visibility(visible: isLoading, child: CircularProgressIndicator()),
             SizedBox(height: 20),
@@ -467,7 +513,10 @@ class _HomeState extends State<Home> {
         '/mangrooves': (context) => Trees(),
         '/about_us': (context) => AboutUs(),
       },
+    )
     );
+    
+
   }
 
   Widget _getSelectedWidget() {

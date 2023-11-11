@@ -577,36 +577,37 @@ Future<RootModel?> getOneRootData(int tracerId) async {
       await setFlagInTempStorage();
 
       List<dynamic> mangrove_datas = [
-        {
-          'path': 'assets/images/balobo.jpeg',
-          'local_name': 'Sample Local Name',
-          'scientific_name': 'Sample Scientific Name',
-          'description': 'Sample Description',
-          'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in felis vitae purus dignissim malesuada vel vitae ex. Mauris at purus ac urna dapibus hendrerit. Suspendisse tristique diam porta, mattis odio id, bibendum erat. Aliquam molestie metus aliquet ipsum condimentum, in fermentum leo varius. Suspendisse ante ante, tempus nec diam quis, aliquet ornare libero. Suspendisse finibus lectus enim, vel lobortis neque egestas nec. Phasellus semper mauris vel efficitur sollicitudin. In tempor justo id sapien hendrerit, et tincidunt enim condimentum. In volutpat nisl in ipsum malesuada suscipit. Duis magna lacus, fringilla malesuada nisi sit amet, lacinia pharetra diam. Maecenas mollis a nibh bibendum pellentesque.',
-          'family': 'Sample Family',
-          'benifits': 'Sample Benifits',
-          'uses': 'Sample Uses',
-          'root': {
-            'path': 'assets/images/balobo.jpeg',
-            'name': 'Root',
-            'description': 'Sample Description'
-          },
-          'flower': {
-            'path': 'assets/images/balobo.jpeg',
-            'name': 'Flower',
-            'description': 'Sample Description'
-          },
-          'leaf': {
-            'path': 'assets/images/balobo.jpeg',
-            'name': 'Leaf',
-            'description': 'Sample Description'
-          },
-          'fruit': {
-            'path': 'assets/images/balobo.jpeg',
-            'name': 'Fruit',
-            'description': 'Sample Description'
-          },
-        }
+        // {
+        //   'path': 'assets/images/balobo.jpeg',
+        //   'local_name': 'Sample Local Name',
+        //   'scientific_name': 'Sample Scientific Name',
+        //   'description': 'Sample Description',
+        //   'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in felis vitae purus dignissim malesuada vel vitae ex. Mauris at purus ac urna dapibus hendrerit. Suspendisse tristique diam porta, mattis odio id, bibendum erat. Aliquam molestie metus aliquet ipsum condimentum, in fermentum leo varius. Suspendisse ante ante, tempus nec diam quis, aliquet ornare libero. Suspendisse finibus lectus enim, vel lobortis neque egestas nec. Phasellus semper mauris vel efficitur sollicitudin. In tempor justo id sapien hendrerit, et tincidunt enim condimentum. In volutpat nisl in ipsum malesuada suscipit. Duis magna lacus, fringilla malesuada nisi sit amet, lacinia pharetra diam. Maecenas mollis a nibh bibendum pellentesque.',
+        //   'family': 'Sample Family',
+        //   'benifits': 'Sample Benifits',
+        //   'uses': 'Sample Uses',
+        //   'root': {
+        //     'path': 'assets/images/balobo.jpeg',
+        //     'name': 'Root',
+        //     'description': 'Sample Description'
+        //   },
+        //   'flower': {
+        //     'path': 'assets/images/balobo.jpeg',
+        //     'name': 'Flower',
+        //     'description': 'Sample Description'
+        //   },
+        //   'leaf': {
+        //     'path': 'assets/images/balobo.jpeg',
+        //     'name': 'Leaf',
+        //     'description': 'Sample Description'
+        //   },
+        //   'fruit': {
+        //     'path': 'assets/images/balobo.jpeg',
+        //     'name': 'Fruit',
+        //     'description': 'Sample Description'
+        //   },
+        // }
+      
       ];
 
       for (var tracer in mangrove_datas) {
