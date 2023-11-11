@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
-import 'package:tree_tracer/components/show_mangroove.dart';
+import 'package:tree_tracer/components/show_tree.dart';
 import 'package:tree_tracer/screens/about_us.dart';
 import 'package:tree_tracer/screens/home.dart';
 
-class Mangroove extends StatefulWidget {
-  const Mangroove({super.key});
+class Trees extends StatefulWidget {
+  const Trees({super.key});
 
   @override
-  State<StatefulWidget> createState() => _MangroovePageState();
+  State<StatefulWidget> createState() => _TreesPageState();
 
 }
 
@@ -24,7 +24,7 @@ class DropdownItem {
   });
 }
 
-class _MangroovePageState extends State<Mangroove> {
+class _TreesPageState extends State<Trees> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -63,12 +63,12 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
   List<DropdownItem> dropdownItems = [
     DropdownItem(
       label: 'Item 1',
-      imagePath: "assets/images/narra.jpeg",
+      imagePath: "assets/images/balobo.jpeg",
       description: 'Description for Item 1',
     ),
     DropdownItem(
       label: 'Item 2',
-      imagePath: "assets/images/narra.jpeg",
+      imagePath: "assets/images/balobo.jpeg",
       description: 'Description for Item 2',
     ),
     // Add more items as needed
@@ -78,7 +78,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mangrooves'),
+        title: const Text('Tree Tracer'),
         backgroundColor: Colors.green, // Set the background color here
       ),
       body: Column(
@@ -93,36 +93,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
               onChanged: (DropdownItem? newValue) {
                 setState(() {
                   // selectedDropdownItem = newValue;
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ShowMangroove()));
-                });
-              },
-              items: dropdownItems.map((DropdownItem item) {
-                return DropdownMenuItem<DropdownItem>(
-                  value: item,
-                  child: Row(
-                    children: <Widget>[
-                      Image.asset(
-                        item.imagePath,
-                        width: 30,
-                        height: 30,
-                      ),
-                      SizedBox(width: 10),
-                      Text(item.label),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-          Container(
-            width: double.infinity, // Expand to fit the width
-            padding: EdgeInsets.all(16),
-            child: DropdownButton<DropdownItem>(
-              hint: Text('Root'),
-              value: selectedDropdownItem,
-              onChanged: (DropdownItem? newValue) {
-                setState(() {
-                  selectedDropdownItem = newValue;
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ShowTree()));
                 });
               },
               items: dropdownItems.map((DropdownItem item) {
@@ -274,7 +245,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
             ),
         ],
       ),
-      drawer: Drawer(
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -287,10 +258,10 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
               },
             ),
             _buildDrawerItem(
-              title: 'Mangrooves',
+              title: 'Trees',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
               },
             ),
             _buildDrawerItem(
@@ -312,6 +283,53 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
           ],
         ),
       ),
+     bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.grass),
+                label: 'Trees',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.face),
+                label: 'About',
+                backgroundColor: Colors.blueAccent),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.qr_code_scanner_sharp),
+            //     label: 'Scan',
+            //     backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app),
+                label: 'Exit',
+                backgroundColor: Colors.blueAccent),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: (int index) {
+            switch (index) {
+              case 0:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              case 1:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => Trees()));
+              case 2:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => AboutUs()));
+              case 3:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+            }
+            setState(
+              () {
+                _selectedIndex = index;
+              },
+            );
+          },
+        ),
     );
   }
 }

@@ -5,34 +5,34 @@ import 'package:flutter/services.dart';
 import 'package:tree_tracer/components/treeImageListState.dart';
 import 'package:tree_tracer/models/image_data.dart';
 import 'package:tree_tracer/screens/about_us.dart';
-import 'package:tree_tracer/screens/mangroove.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_compare/image_compare.dart';
 import 'package:path/path.dart';
 import 'dart:typed_data';
 import 'package:sqflite_common/sqlite_api.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:tree_tracer/screens/admin.dart';
+import 'package:tree_tracer/screens/favorite.dart';
+import 'package:tree_tracer/screens/favourite.dart';
+import 'package:tree_tracer/screens/result.dart';
+import 'package:tree_tracer/screens/trees.dart';
+import 'package:tree_tracer/screens/user_tree_list.dart';
+import 'package:tree_tracer/services/database_helper.dart';
+import 'package:tree_tracer/ui_components/main_view.dart';
+
+import '../widgets/image_placeholder.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
-  sqfliteFfiInit(); // Initialize the sqflite_ffi library
-  databaseFactory = databaseFactoryFfi; // Initialize the databaseFactory
-
-  // Open the database and perform any necessary setup
-  final databasePath = await getDatabasesPath();
-  final path = join(databasePath, 'mangroove_main_db.db');
-
-  final database = await openDatabase(path);
 
   // Run your app within the runApp function
-  runApp(MyApp(database: database));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Database database;
 
-  MyApp({required this.database});
-  
+  MyApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,27 +47,192 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   late Database database; // Declare a variable to hold the database instance
   String searchQuery = '';
   int _selectedIndex = 0;
   int _selectedIdx = 0;
   final CarouselController _carouselController = CarouselController();
 
-      // Define a list of ImageData objects
-    List<ImageData> imageDataList = [
-      ImageData(
-        imagePath: "assets/images/coconut.jpeg",
-        name: "Image 1",
-        description: "This is the first image.",
-      ),
-      ImageData(
-        imagePath: "assets/images/narra.jpeg",
-        name: "Image 2",
-        description: "This is the second image.",
-      ),
-      // add more images here...
-    ];
+  static const IconData qr_code_scanner_rounded =
+  IconData(0xf00cc, fontFamily: 'MaterialIcons');
+  final picker = ImagePicker();
+  File? localImage;
+  File? takenImage;
+  double perceptualResult = 0.0;
+  List<Map>? mangroveImages;
+  List<Map<String, dynamic>> similarImages = [];
+  late MangroveDatabaseHelper dbHelper;
+  bool isErrorShow = false;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+      print("======= initState ===========");
+      dbHelper = MangroveDatabaseHelper.instance;
+      fetchData();
+  }
+
+  Future<void> fetchData() async {
+    mangroveImages = await dbHelper.getImagesFromMangrove();
+  }
+
+  Future _getFromGallery() async {
+    isLoading = true;
+    final pickedFileFromGallery = await ImagePicker().getImage(     /// Get from gallery
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    print('pickFile');
+    print(pickedFileFromGallery?.path);
+
+    print('mangroveImages');
+    print(mangroveImages!.length);
+
+    localImage = File(pickedFileFromGallery!.path);
+    Navigator.pop(this.context);
+
+    for (Map mangroveImage in mangroveImages!) {
+      String imagePath = mangroveImage['imagePath'];
+      print('mANGROVE imagePath');
+      print(imagePath);
+      print('mANGROVE localImage');
+      print(localImage);
+
+      print("mangroveImage['imageBlob']");
+      print(mangroveImage['imageBlob']);
+
+      final tempDir = await getTemporaryDirectory();
+      final tempPath = tempDir.path;
+      final file = File('$tempPath/temp_image.jpg');
+      if(mangroveImage['imageBlob'] != null) {
+        await file.writeAsBytes(mangroveImage['imageBlob']);
+      }
+      print('========== PASOK ========');
+
+      double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
+
+      if (imagePath.startsWith('assets/')) {
+        similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+      }
+
+      print("similarityScore $similarityScore.");
+
+      if (similarityScore <= 0.5) {
+        print("Gallery image is similar to $similarityScore.");
+
+        similarityScore = 100 - (similarityScore * 100);
+        Map<String, dynamic> imageInfo = {
+          "score": similarityScore,
+          "image": mangroveImage, // Add the image or any other relevant information here
+        };
+        similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
+        similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
+      }else{
+        similarityScore = 100 - (similarityScore * 100);
+        print("Gallery image is BELOW similar to $similarityScore.");
+      }
+    }
+
+    setState(() {
+      localImage = File(pickedFileFromGallery.path);  
+      similarImages = similarImages;
+
+      print("similarImages ${similarImages.length}");
+      isErrorShow = false;
+      isLoading = false;
+      if(similarImages.length > 0) {
+        Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+      } else {
+        isErrorShow = true;
+      }
+    });
+  }
+
+
+  checkImagePath(filePath) {
+    if (!filePath.startsWith('assets/')) {
+      return File(filePath);
+    }
+
+    return filePath;
+  }
+
+  Future _getImageFromCamera() async {    /// Get Image from Camera
+    isLoading = true;
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    print('pickFile');
+    print(pickedFile);
+
+    Navigator.pop(this.context);
+
+    for (Map mangroveImage in mangroveImages!) {
+      String imagePath = mangroveImage['imagePath'];
+
+      print('mANGROVE IMAGES');
+      print(imagePath);
+
+      double similarityScore = 1.0;
+
+      final tempDir = await getTemporaryDirectory();
+      final tempPath = tempDir.path;
+      final file = File('$tempPath/temp_image.jpg');
+      if(mangroveImage['imageBlob'] != null) {
+        await file.writeAsBytes(mangroveImage['imageBlob']);
+      }
+
+      if (imagePath.startsWith('assets/')) {
+        print('========= Una ========');
+        similarityScore = await compareImages(src1: File(pickedFile!.path), src2: file, algorithm: PerceptualHash());
+      } else {
+        print('========= Dalawa ========');
+        similarityScore = await compareImages(src1: File(pickedFile!.path), src2: File(imagePath), algorithm: PerceptualHash());
+      }
+
+      if (similarityScore <= 0.5) {
+        print("Gallery image is similar to $similarityScore.");
+        similarityScore = 100 - (similarityScore * 100);
+        Map<String, dynamic> imageInfo = {
+          "score": similarityScore,
+          "image": mangroveImage, // Add the image or any other relevant information here
+        };
+        similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
+        similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
+      }else{
+        print("Gallery image is BELOW similar to $similarityScore.");
+      }
+    }
+
+    if (pickedFile != null) {
+      setState(() {
+        takenImage = File(pickedFile.path);// Compare the images here and show the result
+        isErrorShow = false;
+        isLoading = false;
+        if(similarImages.length > 0) {
+          Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+        } else {
+          isErrorShow = true;
+        }
+      });
+    }
+  }
+
+
+  // Define a list of ImageData objects
+  List<ImageData> imageDataList = [
+    ImageData(
+      imagePath: "assets/images/app_logo.jpg",
+      name: "Image 1",
+      description: "This is the first image.",
+    ),
+    ImageData(
+      imagePath: "assets/images/app_logo.jpg",
+      name: "Image 2",
+      description: "This is the second image.",
+    ),
+    // add more images here...
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -90,224 +255,262 @@ class _HomeState extends State<Home> {
   }
 
   _drawerItemTapped(int index) {
-  setState(() {
-    _selectedIndex = index;
-  });
-}
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  _showModal() {
+  BuildContext context = this.context;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: Container(
+          height: 150,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _getFromGallery,
+                child: Text('Take Local Image'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _getImageFromCamera,
+                child: Text('      Scan Image     '),
+              ),
+              Visibility(
+                visible: isErrorShow,
+                child: Text(
+                "No Results Found",
+                style: TextStyle(
+                  color: Colors.red
+                ),
+              ) 
+              )
+              
+            ],
+          ),
+        ),
+        actions: <TextButton>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Close'),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      home:     Scaffold(
-      appBar: AppBar(
-        title: const Text('Tree Tracer'),
-        backgroundColor: Colors.green, // Set the background color here
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 20),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0), // Adjust the margin as needed
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                prefixIcon: Icon(Icons.search),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Home'),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue, Colors.lightBlue],
               ),
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                });
-              },
             ),
           ),
-          SizedBox(height: 20),
-          // Half of the screen with a green gradient
-          CarouselSlider(
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * 0.2, // Adjust the height as needed
-              enlargeCenterPage: true,
-              autoPlay: true, // Set to true if you want the carousel to auto-play
-              autoPlayInterval: Duration(seconds: 3), // Auto-play interval
-              autoPlayAnimationDuration: Duration(milliseconds: 800), // Animation duration
-              autoPlayCurve: Curves.fastOutSlowIn, // Animation curve
-              scrollDirection: Axis.horizontal, // Set to Axis.horizontal for a horizontal carousel
-            ),
-            items: [
-              // Add your carousel items here
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.green.shade300, Colors.green.shade700],
-                  ),
-                ),
-                child: Center(
-                  child: Text('Tree'),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade300, Colors.blue.shade700],
-                  ),
-                ),
-                child: Center(
-                  child: Text('Root'),
-                ),   
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade300, Colors.green.shade700],
-                  ),
-                ),
-                child: Center(
-                  child: Text('Flower'),
-                ),   
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade300, Colors.blue.shade700],
-                  ),
-                ),
-                child: Center(
-                  child: Text('Trunk'),
-                ),   
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade300, Colors.green.shade700],
-                  ),
-                ),
-                child: Center(
-                  child: Text('Leaf'),
-                ),   
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade300, Colors.blue.shade700],
-                  ),
-                ),
-                child: Center(
-                  child: Text('Fruit'),
-                ),   
-              ),
-              // Add more carousel items as needed
-            ],
-          ),
-          Expanded(
-            child: Center(
-              child: _getSelectedWidget(),
-            ),
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildDrawerItem(
-              title: 'Home',
-              index: 0,
-              onTap: () {
-                _drawerItemTapped(0);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
-              },
+            Image.asset(
+              'assets/images/app_logo.jpg',
             ),
-            _buildDrawerItem(
-              title: 'Mangrooves',
-              index: 1,
-              onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
-                // _drawerItemTapped(1);
-                // Navigator.pushNamed(context, '/mangrooves'); // Navigate to "Mangrooves" screen
-                // Navigator.pop(context);
-              },
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'TREE TRACER',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20
+                ),
+              ),
             ),
-            _buildDrawerItem(
-              title: 'About Us',
-              index: 2,
-              onTap: () {
-                // _drawerItemTapped(2);
-                // Navigator.pop(context);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AboutUs()));
-              },
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                onPressed: _showModal,
+                child: const Text("Scan"),
+              ),
             ),
-            _buildDrawerItem(
-              title: 'Exit',
-              index: 3,
-              onTap: () {
-                _drawerItemTapped(3);
-                Navigator.pop(context);
-              },
-            ),
+            SizedBox(height: 20),
+            Visibility(visible: isLoading, child: CircularProgressIndicator()),
+            SizedBox(height: 20),
+            Visibility(
+              visible: !isLoading && isErrorShow,
+              child: Text(
+                "No Results Found!",
+                style: TextStyle(color: Colors.red),
+              ))
           ],
         ),
+        endDrawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              _buildDrawerItem(
+                title: 'Home',
+                index: 0,
+                onTap: () {
+                  _drawerItemTapped(0);
+                  Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Favorite',
+                index: 1,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => FavoritePage()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Admin',
+                index: 2,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => MainView()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Tree List',
+                index: 3,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'About Us',
+                index: 4,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => AboutUs()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Exit',
+                index: 5,
+                onTap: () {
+                  _drawerItemTapped(3);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.grass),
+              label: 'Trees',
+              backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.face),
+              label: 'About',
+              backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.exit_to_app),
+              label: 'Exit',
+              backgroundColor: Colors.blueAccent),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: (int index) {
+            switch (index) {
+              case 0:
+                // _drawerItemTapped(0);
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              case 1:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
+              case 2:
+                // _drawerItemTapped(2);
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => AboutUs()));
+              case 3:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+            }
+            setState(
+              () {
+                _selectedIndex = index;
+              },
+            );
+          },
+        ),
       ),
-      floatingActionButton: MyFAB(),
-    ),
-    routes: {
-        '/mangrooves': (context) => Mangroove(),
-        '/about_us': (context) => Mangroove(),
+      routes: {
+        '/mangrooves': (context) => Trees(),
+        '/about_us': (context) => AboutUs(),
       },
     );
   }
 
-Widget _getSelectedWidget() {
-  switch (_selectedIndex) {
-    case 0:
-      // return TreeImageList(database: database);
-      // Filter the imageDataList based on the searchQuery
-      final filteredDataList = imageDataList
-          .where((data) =>
-              data.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
-              data.description.toLowerCase().contains(searchQuery.toLowerCase()))
-          .toList();
-
-      return ListView.separated(
-        itemCount: filteredDataList.length,
-        separatorBuilder: (BuildContext context, int index) =>
-            const Divider(),
-        itemBuilder: (BuildContext context, int index) {
-          final imageData = filteredDataList[index];
-          return ListTile(
-            leading: Container(
-              width: 100, // Adjust the width as needed
-              height: 100, // Adjust the height as needed
-              child: Image.asset(
-                imageData.imagePath,
-                fit: BoxFit.cover
-                ),
-            ),
-            title: Text(imageData.name),
-            subtitle: Text(imageData.description),
-          );
-        },
-      );
-    case 1:
-      return Mangroove();
-    case 2:
-      return AboutUs();
-    default:
-      return Text('Unknown Page');
+  Widget _getSelectedWidget() {
+    switch (_selectedIndex) {
+      case 0:
+        return _homePage();
+      case 1:
+        return Trees();
+      case 2:
+        return AboutUs();
+      default:
+        return Text('Unknown Page');
+    }
   }
-}
 
-   Widget _buildDrawerItem({
+  Widget _homePage() {
+    // return TreeImageList(database: database);
+    // Filter the imageDataList based on the searchQuery
+    final filteredDataList = imageDataList
+        .where((data) =>
+            data.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
+            data.description.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
+
+    return ListView.separated(
+      itemCount: filteredDataList.length,
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      itemBuilder: (BuildContext context, int index) {
+        final imageData = filteredDataList[index];
+        return ListTile(
+          leading: Container(
+            width: 100, // Adjust the width as needed
+            height: 100, // Adjust the height as needed
+            child: Image.asset(imageData.imagePath, fit: BoxFit.cover),
+          ),
+          title: Text(imageData.name),
+          subtitle: Text(imageData.description),
+        );
+      },
+    );
+  }
+
+  Widget _buildDrawerItem({
     required String title,
     required int index,
     VoidCallback? onTap,
@@ -319,134 +522,3 @@ Widget _getSelectedWidget() {
     );
   }
 }
-
-class MyFAB extends StatefulWidget {
-  @override
-  _MyFABState createState() => _MyFABState();
-}
-
-class _MyFABState extends State<MyFAB> {
-  static const IconData qr_code_scanner_rounded =
-      IconData(0xf00cc, fontFamily: 'MaterialIcons');
-  final picker = ImagePicker();
-  File? localImage;
-  File? takenImage;
-
-  double perceptualResult = 0.0;
-
-  /// Compare two images
-  Future compareTwoImages() async {
-    final perceptual = await compareImages(
-        src1: localImage, src2: takenImage, algorithm: PerceptualHash());
-
-    setState(() {
-      perceptualResult = 100 - (perceptual * 100);
-    });
-    print('Difference: ${perceptualResult}%');
-  }
-
-  /// Get from gallery
-  Future _getFromGallery() async {
-    final pickedFileFromGallery = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    print('pickFile');
-    print(pickedFileFromGallery);
-
-    if (pickedFileFromGallery != null) {
-      setState(() {
-        localImage = File(pickedFileFromGallery.path);
-      });
-    }
-  }
-
-  /// Get Image from Camera
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    print('pickFile');
-    print(pickedFile);
-
-    if (pickedFile != null) {
-      setState(() {
-        takenImage = File(pickedFile.path);
-        // Compare the images here and show the result
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return FloatingActionButton(
-      onPressed: () {
-        // Add your action here when the FAB is tapped.
-        // For example, you can open a dialog to add items to the list.
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Select'),
-              content: SingleChildScrollView(
-                // Wrap the Column with SingleChildScrollView
-                child: Column(
-                  children: [
-                    localImage != null
-                    ? Image.file(
-                        localImage!,
-                        height: 150,
-                      )
-                    : Text('Local Image Placeholder'),
-                    SizedBox(height: 10),
-                    takenImage != null
-                    ? Image.file(
-                        takenImage!,
-                        height: 150,
-                      )
-                    : Text('Taken Image Placeholder'),
-                    SizedBox(height: 10),
-                    Text('PerceptualHash ${perceptualResult.toInt().toString()} %'),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: compareTwoImages,
-                      child: Text('Compare Images'),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: _getFromGallery,
-                      child: Text('Take Local Image'),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: getImageFromCamera,
-                      child: Text('Take Image'),
-                    ),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text('Add'),
-                  onPressed: () {
-                    // Add your logic to add the item to the list here.
-                    // You can update the list using a Stateful widget or a state management solution like Provider or Riverpod.
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
-      child: const Icon(qr_code_scanner_rounded),
-    );
-  }
-}
-

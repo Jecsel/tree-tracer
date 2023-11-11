@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/screens/home.dart';
-import 'package:tree_tracer/screens/mangroove.dart';
+import 'package:tree_tracer/screens/trees.dart';
+import 'package:tree_tracer/screens/user_tree_list.dart';
 
 class AboutUs extends StatefulWidget {
 
@@ -36,27 +37,135 @@ class AboutUsState extends State<AboutUs>{
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tree Tracer'),
-        backgroundColor: Colors.green, // Set the background color here
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Center(
-          child: Column(
-            children:<Widget>[
-              Image.asset(
-                'assets/images/banner.png',
-              ),
-              SizedBox(height: 10),
-              Text("Description:"),
-              SizedBox(height: 10),
-              Text("Mangroves play a crucial role in coastal ecosystems, providing habitat, protecting shorelines, and sequestering carbon. Accurate identification of mangrove species is essential for monitoring their health and understanding their ecological contributions. 'Grovievision' is a novel standalone application developed to streamline and enhance the process of mangrove species identification."),
-              SizedBox(height: 10),
-              Text("This thesis explores the development and implementation of Grovievision, a user-friendly application designed to facilitate the identification of mangrove species through image recognition technology. The application harnesses the power of machine learning and computer vision algorithms to enable quick and accurate identification of mangrove species from photographs, making it an invaluable tool for researchers, conservationists, and field practitioners.")
-            ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue, Colors.lightBlue],
+            ),
           ),
         ),
       ),
-      drawer: Drawer(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Center(
+            child: Column(
+              children:<Widget>[
+                // Image.asset(
+                //   'assets/images/cresta_de_gallo.jpg',
+                // ),
+                // SizedBox(height: 10),
+                Text("Summary"),
+                SizedBox(height: 10),
+                Text("Tree identifier applications are software tools that utilize computer vision and machine learning algorithms to identify different species of trees based on their physical characteristics, such as leaf shape, bark texture, and overall appearance. These apps are designed to help people learn about the trees around them, whether they are in a city park, a suburban neighborhood, or a rural forest."),
+                SizedBox(height: 10),
+                Text("The need for tree identification apps has arisen due to the growing interest in environmental conservation, as well as the popularity of outdoor activities like hiking, birdwatching, and nature photography. By using a tree tracer app, users can quickly and accurately identify the trees they encounter in their travels and learn more about the ecological role and cultural significance of each species."),
+                SizedBox(height: 10),
+                Text("Tree Tracer apps work by using the camera on a user's smartphone or tablet to take a photo of a tree, which is then analyzed by the app's algorithms to determine its species. One of the main benefits of the tree tracer application is that it allows users to quickly and easily identify trees without having to be an expert in botany. Users can simply take a photo of the tree, and the app will provide information about the species, including its common name, scientific name, and other relevant details."),
+                SizedBox(height: 10),
+                Text("Overall, the tree tracer application is a valuable tool for anyone interested in learning about trees and the natural world. They provide a fun and interactive way to explore the environment and can help users deepen their knowledge and appreciation of the natural world."),
+                SizedBox(height: 10),
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Text(
+                          "Developers",
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(199, 99, 177, 9)),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20, left: 20),
+                              child: Image.asset(
+                                'assets/images/carl.jpg',
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                            Text("Carl Michael Orellana")
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20, left: 20),
+                              child: Image.asset(
+                                'assets/images/glenn.jpg',
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                            Text("Glenn Vincent Maestro")
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20, left: 20),
+                              child: Image.asset(
+                                'assets/images/joshua.jpg',
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                            Text("Jushua Fruelda")
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20, left: 20),
+                              child: Image.asset(
+                                'assets/images/clarence.jpg',
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                            Text("Clarence Jade Maduro Moaje ")
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20, left: 20),
+                              child: Image.asset(
+                                'assets/images/lawrenz.jpg',
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                            Text("Lawrenz Manipol")
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+              ],
+            ),
+          ),
+        )
+      ),
+      
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -69,10 +178,10 @@ class AboutUsState extends State<AboutUs>{
               },
             ),
             _buildDrawerItem(
-              title: 'Mangrooves',
+              title: 'Trees',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Mangroove()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> UserTreeList(searchKey: 'TREE', userType: 'User',)));
               },
             ),
             _buildDrawerItem(
@@ -94,6 +203,49 @@ class AboutUsState extends State<AboutUs>{
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.grass),
+                label: 'Trees',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.face),
+                label: 'About',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app),
+                label: 'Exit',
+                backgroundColor: Colors.blueAccent),
+          ],
+          currentIndex: 2,
+          selectedItemColor: Colors.amber[800],
+          onTap: (int index) {
+            switch (index) {
+              case 0:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              case 1:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
+              case 2:
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => AboutUs()));
+              case 3:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+            }
+            setState(
+              () {
+                _selectedIndex = index;
+              },
+            );
+          },
+        ),
     );
   }
 }
