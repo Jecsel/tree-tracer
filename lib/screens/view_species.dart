@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tree_tracer/models/favourite_model.dart';
 import 'package:tree_tracer/models/flower_model.dart';
 import 'package:tree_tracer/models/fruit_model.dart';
 import 'package:tree_tracer/models/leaf_model.dart';
@@ -33,6 +34,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
   FlowerModel? flowerData;
   FruitModel? fruitData;
   LeafModel? leafData;
+  List<File> tempTracerFileImageArray = [];
 
   @override
   void initState() {
@@ -50,15 +52,23 @@ class _ViewSpeciesState extends State<ViewSpecies> {
     LeafModel? leafResultData = await dbHelper.getOneLeafData(tracerId);
     FruitModel? fruitResultData = await dbHelper.getOneFruitData(tracerId);
 
+    List<FavouriteModel>? tracerFavs = await dbHelper.getFavouriteDataList(tracerId);
+
+    for (var imgPaths in tracerFavs) {
+      tempTracerFileImageArray.add(File(imgPaths.imagePath));
+    }
+
     setState(() {
+
       tracerData = mangroveResultData;
       rootData = rootResultData;
       fruitData = fruitResultData;
       leafData = leafResultData;
       flowerData = flowerResultData;
+      tempTracerFileImageArray = tempTracerFileImageArray;
 
-      print("========== rootData ===========");
-      print(rootData);
+      print("========== tempTracerFileImageArray ===========");
+      print(tempTracerFileImageArray);
     });
   }
 
@@ -157,6 +167,17 @@ class _ViewSpeciesState extends State<ViewSpecies> {
     );
   }
 
+  Future<void> removeImageInArray(int index)  async {
+
+    setState(() {
+      tempTracerFileImageArray.removeAt(index);
+
+      print('tempTracerFileImageArray');
+      print(tempTracerFileImageArray);
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var userType = widget.userType;
@@ -224,6 +245,50 @@ class _ViewSpeciesState extends State<ViewSpecies> {
           child: Center(
             child: Column(
               children: <Widget>[
+                // Container(
+                //       height: 150.0,
+                //       child: tempTracerFileImageArray.length > 0 ? 
+                //         ListView.builder(
+                //           scrollDirection: Axis.horizontal,
+                //           itemCount: tempTracerFileImageArray.length,
+                //           itemBuilder: (context, index) {
+                //             return Padding(
+                //               padding: EdgeInsets.all(8.0),
+                //               child: Stack(
+                //                 children: [
+                //                   Image.file(
+                //                     tempTracerFileImageArray[index],
+                //                     width: 150.0, // Adjust the width as needed
+                //                     height: 150.0, // Adjust the height as needed
+                //                     fit: BoxFit.cover,
+                //                   ),
+                //                   Positioned(
+                //                     top: 0,
+                //                     right: 0,
+                //                     child: GestureDetector(
+                //                       onTap: () {
+                //                         removeImageInArray(index);
+                //                       },
+                //                       child: Icon(
+                //                         Icons.remove_circle,
+                //                         color: Colors.red,
+                //                         size: 30.0,
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //             );
+                //           },
+                //         )
+
+                //         : Image.asset(
+                //             'assets/images/default_placeholder.png',
+                //             height: 150,
+                //             width: 150,
+                //           ),
+                //   ),
+
                 FutureBuilder<Widget>(
                   future: loadImageFromFile(tracerData?.imagePath ?? ''),
                   builder: (context, snapshot) {

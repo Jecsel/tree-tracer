@@ -501,9 +501,9 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     return imageData;
   }
 
-  Future<List<FavouriteModel>> getFavouriteDataList() async {
+  Future<List<FavouriteModel>> getFavouriteDataList(int tracerId) async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('favourite');
+    final List<Map<String, dynamic>> maps = await db.query('favourite', where: 'tracerId = ?', whereArgs: [tracerId]);
     return List.generate(maps.length, (i) {
       return FavouriteModel.fromMap(maps[i]);
     });

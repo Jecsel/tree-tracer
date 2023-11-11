@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tree_tracer/models/favourite_model.dart';
 import 'package:tree_tracer/models/flower_model.dart';
 import 'package:tree_tracer/models/fruit_model.dart';
 import 'package:tree_tracer/models/leaf_model.dart';
@@ -22,7 +23,9 @@ class _AddSpeciesState extends State<AddSpecies> {
   final picker = ImagePicker();
 
   List<File>? tracerFileImageArray;
+  // List<String>? tracerPathImageArray = ['/data/user/0/com.example.tree_tracer/cache/scaled_IMG20231111120429.jpg','/data/user/0/com.example.tree_tracer/cache/scaled_IMG20231111120429.jpg'];
   List<String>? tracerPathImageArray;
+  List<File> tempTracerFileImageArray = [];
 
   File? tracerImage;
   File? fruitImage;
@@ -119,6 +122,16 @@ class _AddSpeciesState extends State<AddSpecies> {
       
       final insertedMangrove = await dbHelper?.insertDBMangroveData(newMangroove);
 
+      
+      for (var tracerImgPath in tracerPathImageArray!) {
+        final fav = FavouriteModel(
+          tracerId: insertedMangrove ?? 1,
+          imagePath: tracerImgPath
+        );
+
+        final newFav = await dbHelper?.insertDBFavouriteData(fav);
+      }
+
       final newRoot = RootModel(
         imagePath: rootImagePath,
         tracerId: insertedMangrove ?? 0,
@@ -167,16 +180,15 @@ class _AddSpeciesState extends State<AddSpecies> {
     );
 
     if (pickedFileFromGallery != null) {
-
       setState(() {
         print('===******===== pickedFileFromGallery.path ===*****=====');
         print(pickedFileFromGallery.path);
 
         String imgPath = pickedFileFromGallery.path;
         tracerImage = File(imgPath);
-        
-        tracerFileImageArray!.add(tracerImage!);
-        tracerPathImageArray!.add(imgPath);
+
+        tracerFileImageArray?.add(tracerImage!);
+        tracerPathImageArray?.add(pickedFileFromGallery.path);
 
         treeImagePath = imgPath;
         treeImagePathList.add(imgPath);
@@ -188,8 +200,44 @@ class _AddSpeciesState extends State<AddSpecies> {
     }
   }
 
+  Future<Widget> loadImageFromFile(String filePath) async {
+    print('============ loadImageFromFile ===== ${filePath}');
+      if (filePath.startsWith('assets/')) {
+        // If the path starts with 'assets/', load from assets
+        return Image.asset(filePath, width: 60, height: 60);
+      } else {
+        final file = File(filePath);
+
+        if (await file.exists()) {
+          // If the file exists in local storage, load it
+          return Image.file(file, width: 60, height: 60,);
+        }
+      }
+
+    // If no valid image is found, return a default placeholder
+    return Image.asset("assets/images/default_placeholder.png", width: 60, height: 60,); // You can replace this with your placeholder image
+  }
+
+  Future<void> removeImageInArray(int index) async {
+
+    setState(() {
+      tempTracerFileImageArray.removeAt(index);
+
+      print('tempTracerFileImageArray');
+      print(tempTracerFileImageArray);
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    print("===tracerImage======= ${tracerImage} ===========");
+    if (tracerImage != null) {
+      tempTracerFileImageArray.add(tracerImage!);
+    }
+    
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -216,16 +264,60 @@ class _AddSpeciesState extends State<AddSpecies> {
                     SizedBox(
                       height: 10,
                     ),
-                    tracerImage != null
-                        ? Image.file(
-                            tracerImage!,
-                            height: 150,
-                          )
+                    Container(
+                      height: 150.0,
+                      child: tempTracerFileImageArray.length > 0 ? 
+                        ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: tempTracerFileImageArray.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Stack(
+                                children: [
+                                  Image.file(
+                                    tempTracerFileImageArray[index],
+                                    width: 150.0, // Adjust the width as needed
+                                    height: 150.0, // Adjust the height as needed
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        removeImageInArray(index);
+                                      },
+                                      child: Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.red,
+                                        size: 30.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        )
+
                         : Image.asset(
                             'assets/images/default_placeholder.png',
                             height: 150,
                             width: 150,
                           ),
+                    ),
+
+                    // tracerImage != null
+                    //     ? Image.file(
+                    //         tracerImage!,
+                    //         height: 150,
+                    //       )
+                    //     : Image.asset(
+                    //         'assets/images/default_placeholder.png',
+                    //         height: 150,
+                    //         width: 150,
+                    //       ),
                     SizedBox(height: 10),
                     Container(
                       width: double.infinity,
@@ -241,7 +333,7 @@ class _AddSpeciesState extends State<AddSpecies> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Upload Tree Image'),
+                              Text('Add Tree Image'),
                               Icon(Icons.add)
                             ],
                           ),
