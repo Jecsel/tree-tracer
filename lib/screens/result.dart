@@ -7,6 +7,7 @@ import 'package:image/image.dart' as img; // This is for decoding the image
 
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/screens/view_species.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
 class ResultPage extends StatefulWidget {
@@ -79,7 +80,7 @@ class _ResultPageState extends State<ResultPage> {
 
                 return GestureDetector(
                   onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(mangroveId: mangroveId ?? 0, category: searchKey, pageType: 'User',)));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: 'User',)));
                     //   final imageData = mangrooveData[index];
                     //   final snackBar = SnackBar(
                     //     content: Text('Tapped on ${imageData}'),
