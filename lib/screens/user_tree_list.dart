@@ -170,55 +170,16 @@ class _UserTreeListState extends State<UserTreeList> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height * 0.2, // Adjust the height as needed
-                enlargeCenterPage: true,
-                autoPlay: true, // Set to true if you want the carousel to auto-play
-                autoPlayInterval: Duration(seconds: 3), // Auto-play interval
-                autoPlayAnimationDuration: Duration(milliseconds: 800), // Animation duration
-                autoPlayCurve: Curves.fastOutSlowIn, // Animation curve
-                scrollDirection: Axis.horizontal, // Set to Axis.horizontal for a horizontal carousel
-              ),
-              items: carouselItems.map((item) {
-                return GestureDetector(
-                  onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: 'User',)));
-                  },
-                  child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color.fromARGB(255, 147, 144, 248), Color.fromARGB(227, 83, 56, 142)],
-                    ),
-                  ),
-                  child: Center(
-                    child: Stack(
-                      children: [
-                        Align( // Centered content
-                          alignment: Alignment.center,
-                          child: Text(
-                            item['name'],
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              backgroundColor: Colors.white38
-          
-                            ),
-                            ),
-                        ),
-                      ],
-                    ),
-                  ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Text(
+                "Tree Species List",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0
                 ),
-              );
-                
-              }).toList(),
+              ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(

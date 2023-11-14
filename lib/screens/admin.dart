@@ -162,6 +162,16 @@ class _AdminPageState extends State<AdminPage> {
         child:   Column(
           children: [
             Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Text(
+                "Tree Species List",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

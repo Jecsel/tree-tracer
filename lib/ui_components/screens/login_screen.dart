@@ -36,6 +36,24 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue, Colors.lightBlue],
+              ),
+            ),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back), // Add your arrow icon here
+            onPressed: () {
+              Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Home()));
+            },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -156,30 +174,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: const Text("Login"),
                   ),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: ClipRRect(
-                  //         borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  //         child: ElevatedButton(
-                  //           onPressed: () {},
-                  //           style: ElevatedButton.styleFrom(
-                  //             backgroundColor: const Color(0xFF9F7BFF),
-                  //           ),
-                  //           child: const Text(
-                  //             'Sign In',
-                  //             style: TextStyle(
-                  //               color: Colors.white,
-                  //               fontSize: 15,
-                  //               fontFamily: 'Poppins',
-                  //               fontWeight: FontWeight.w500,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
 
                   const SizedBox(
                     height: 15,
@@ -215,18 +209,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Forget Password?',
-                    style: TextStyle(
-                      color: Color(0xFF755DC1),
-                      fontSize: 13,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
-                    ),
                   ),
                 ],
               ),
