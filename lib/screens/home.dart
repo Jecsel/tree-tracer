@@ -456,8 +456,7 @@ class _HomeState extends State<Home> {
                 title: 'Exit',
                 index: 5,
                 onTap: () {
-                  _drawerItemTapped(3);
-                  Navigator.pop(context);
+                  _onBackPressed(context);
                 },
               ),
             ],
@@ -498,8 +497,7 @@ class _HomeState extends State<Home> {
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => AboutUs()));
               case 3:
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
+                _onBackPressed(context);
             }
             setState(
               () {
