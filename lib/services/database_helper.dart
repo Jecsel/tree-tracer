@@ -125,6 +125,7 @@ class MangroveDatabaseHelper {
       CREATE TABLE favourite (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         tracerId INTEGER,
+        imagePath TEXT,
         FOREIGN KEY (tracerId) REFERENCES tracer (id)
       )
     ''');
@@ -249,6 +250,19 @@ class MangroveDatabaseHelper {
 
     if (mangroveData.isNotEmpty) {
       return TracerModel.fromMap(mangroveData[0]);
+    } else {
+      return null; // Return null if no data is found for the given tracerId
+    }
+  }
+
+  Future<TracerModel?> getTracerImages(int tracerId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> tracerData = await db.query('favourite',
+      where: 'tracerId = ?',
+      whereArgs: [tracerId]);
+
+    if (tracerData.isNotEmpty) {
+      return TracerModel.fromMap(tracerData[0]);
     } else {
       return null; // Return null if no data is found for the given tracerId
     }
@@ -577,36 +591,41 @@ Future<RootModel?> getOneRootData(int tracerId) async {
       await setFlagInTempStorage();
 
       List<dynamic> mangrove_datas = [
-        // {
-        //   'path': 'assets/images/balobo.jpeg',
-        //   'local_name': 'Sample Local Name',
-        //   'scientific_name': 'Sample Scientific Name',
-        //   'description': 'Sample Description',
-        //   'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in felis vitae purus dignissim malesuada vel vitae ex. Mauris at purus ac urna dapibus hendrerit. Suspendisse tristique diam porta, mattis odio id, bibendum erat. Aliquam molestie metus aliquet ipsum condimentum, in fermentum leo varius. Suspendisse ante ante, tempus nec diam quis, aliquet ornare libero. Suspendisse finibus lectus enim, vel lobortis neque egestas nec. Phasellus semper mauris vel efficitur sollicitudin. In tempor justo id sapien hendrerit, et tincidunt enim condimentum. In volutpat nisl in ipsum malesuada suscipit. Duis magna lacus, fringilla malesuada nisi sit amet, lacinia pharetra diam. Maecenas mollis a nibh bibendum pellentesque.',
-        //   'family': 'Sample Family',
-        //   'benifits': 'Sample Benifits',
-        //   'uses': 'Sample Uses',
-        //   'root': {
-        //     'path': 'assets/images/balobo.jpeg',
-        //     'name': 'Root',
-        //     'description': 'Sample Description'
-        //   },
-        //   'flower': {
-        //     'path': 'assets/images/balobo.jpeg',
-        //     'name': 'Flower',
-        //     'description': 'Sample Description'
-        //   },
-        //   'leaf': {
-        //     'path': 'assets/images/balobo.jpeg',
-        //     'name': 'Leaf',
-        //     'description': 'Sample Description'
-        //   },
-        //   'fruit': {
-        //     'path': 'assets/images/balobo.jpeg',
-        //     'name': 'Fruit',
-        //     'description': 'Sample Description'
-        //   },
-        // }
+        {
+          'path': 'assets/images/balobo.jpeg',
+          'image_paths': [
+            'assets/images/balobo.jpeg',
+            'assets/images/balobo.jpeg',
+            'assets/images/balobo.jpeg'
+          ],
+          'local_name': 'Sample Local Name',
+          'scientific_name': 'Sample Scientific Name',
+          'description': 'Sample Description',
+          'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in felis vitae purus dignissim malesuada vel vitae ex. Mauris at purus ac urna dapibus hendrerit. Suspendisse tristique diam porta, mattis odio id, bibendum erat. Aliquam molestie metus aliquet ipsum condimentum, in fermentum leo varius. Suspendisse ante ante, tempus nec diam quis, aliquet ornare libero. Suspendisse finibus lectus enim, vel lobortis neque egestas nec. Phasellus semper mauris vel efficitur sollicitudin. In tempor justo id sapien hendrerit, et tincidunt enim condimentum. In volutpat nisl in ipsum malesuada suscipit. Duis magna lacus, fringilla malesuada nisi sit amet, lacinia pharetra diam. Maecenas mollis a nibh bibendum pellentesque.',
+          'family': 'Sample Family',
+          'benifits': 'Sample Benifits',
+          'uses': 'Sample Uses',
+          'root': {
+            'path': 'assets/images/balobo.jpeg',
+            'name': 'Root',
+            'description': 'Sample Description'
+          },
+          'flower': {
+            'path': 'assets/images/balobo.jpeg',
+            'name': 'Flower',
+            'description': 'Sample Description'
+          },
+          'leaf': {
+            'path': 'assets/images/balobo.jpeg',
+            'name': 'Leaf',
+            'description': 'Sample Description'
+          },
+          'fruit': {
+            'path': 'assets/images/balobo.jpeg',
+            'name': 'Fruit',
+            'description': 'Sample Description'
+          },
+        }
       
       ];
 
@@ -636,6 +655,16 @@ Future<RootModel?> getOneRootData(int tracerId) async {
 
         print("============newMangrooveId========");
         print(newMangrooveId);
+
+        for (var tracerImgPath in tracer['image_paths']) {
+          final fav = FavouriteModel(
+            tracerId: newMangrooveId,
+            imagePath: tracerImgPath
+          );
+
+          await dbHelper.insertDBFavouriteData(fav);
+        }
+
 
         final newRoot = RootModel(
           tracerId: newMangrooveId ?? 0,

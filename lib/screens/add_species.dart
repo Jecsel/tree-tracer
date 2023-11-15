@@ -24,7 +24,7 @@ class _AddSpeciesState extends State<AddSpecies> {
 
   List<File>? tracerFileImageArray;
   // List<String>? tracerPathImageArray = ['/data/user/0/com.example.tree_tracer/cache/scaled_IMG20231111120429.jpg','/data/user/0/com.example.tree_tracer/cache/scaled_IMG20231111120429.jpg'];
-  List<String>? tracerPathImageArray;
+  List<String> tracerPathImageArray = [];
   List<File> tempTracerFileImageArray = [];
 
   File? tracerImage;
@@ -123,7 +123,7 @@ class _AddSpeciesState extends State<AddSpecies> {
       final insertedMangrove = await dbHelper?.insertDBMangroveData(newMangroove);
 
       
-      for (var tracerImgPath in tracerPathImageArray!) {
+      for (var tracerImgPath in treeImagePathList) {
         final fav = FavouriteModel(
           tracerId: insertedMangrove ?? 1,
           imagePath: tracerImgPath
@@ -188,7 +188,7 @@ class _AddSpeciesState extends State<AddSpecies> {
         tracerImage = File(imgPath);
 
         tracerFileImageArray?.add(tracerImage!);
-        tracerPathImageArray?.add(pickedFileFromGallery.path);
+        tracerPathImageArray.add(pickedFileFromGallery.path);
 
         treeImagePath = imgPath;
         treeImagePathList.add(imgPath);

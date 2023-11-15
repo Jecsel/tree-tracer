@@ -112,10 +112,19 @@ class _HomeState extends State<Home> {
       }
       print('========== PASOK ========');
 
-      double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
-      print('========== Second ========');
+      // double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
+      // print('========== Second ========');
+      // if (imagePath.startsWith('assets/')) {
+      //   similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+      // }
+
+       double similarityScore = 1.0;
       if (imagePath.startsWith('assets/')) {
+        print('======== mANGROVE UNA ========');
         similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+      } else {
+        print('======== mANGROVE Pangalawa ========');
+        similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
       }
 
       print("similarityScore $similarityScore.");
@@ -320,6 +329,10 @@ class _HomeState extends State<Home> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
+
+              setState(() {
+                isLoading = false;
+              });
             },
             child: const Text('Close'),
           )
