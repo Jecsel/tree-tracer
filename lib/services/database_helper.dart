@@ -546,7 +546,7 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     );
   }
 
-  Future<void> deleteFavouriteeData(int id) async {
+  Future<void> deleteFavouriteData(int id) async {
     final db = await database;
     await db.delete(
       'favourite',

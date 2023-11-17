@@ -77,6 +77,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
   List<FlowerModel> flowerDataList = [];
   List<RootModel> rootDataList = [];
   List<File> tempTracerFileImageArray = [];
+  List<FavouriteModel>? tracerFavs = [];
 
   @override
   void initState() {
@@ -89,7 +90,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
     int mangroveId = widget.tracerId;
     TracerModel? tracerResultData = await dbHelper?.getOneTracerData(mangroveId);
 
-    List<FavouriteModel>? tracerFavs = await dbHelper?.getFavouriteDataList(mangroveId);
+     tracerFavs = await dbHelper?.getFavouriteDataList(mangroveId);
 
     for (var imgPaths in tracerFavs!) {
       tempTracerFileImageArray.add(File(imgPaths.imagePath));
@@ -173,6 +174,14 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
             tracerImage = File(pickedFileFromGallery.path);
             tracerImagePath = pickedFileFromGallery.path;
             tracerData!.imagePath = pickedFileFromGallery.path;
+
+            final fav = FavouriteModel(
+              tracerId: tracerData!.id ?? 1,
+              imagePath: pickedFileFromGallery.path
+            );
+            final newFav = dbHelper?.insertDBFavouriteData(fav);
+
+            tempTracerFileImageArray.add(tracerImage!);
             break;
           case "root":
             rootImage = File(pickedFileFromGallery.path);
@@ -200,6 +209,9 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
   }
 
   Future<void> removeImageInArray(int index)  async {
+
+    int tracerImgID = tracerFavs?[index].id ?? 1;
+    await dbHelper?.deleteFavouriteData(tracerImgID);
 
     setState(() {
       tempTracerFileImageArray.removeAt(index);

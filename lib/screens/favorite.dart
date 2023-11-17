@@ -95,15 +95,15 @@ class _ResultPageState extends State<FavoritePage> {
         child: Column(
           children: [
             Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  "List of your favorite trees",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.0
-                  ),
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Text(
+                "List of your favorite trees",
+                style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 20.0
                 ),
               ),
+            ),
             Expanded(
               child: searchResults!.length > 0 ?
                 ListView.builder(
