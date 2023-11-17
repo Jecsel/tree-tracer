@@ -12,9 +12,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
-  final TextEditingController _emailController = TextEditingController(text: 'admin');
-  final TextEditingController _passController = TextEditingController(text: '123123123');
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  // final TextEditingController _emailController = TextEditingController(text: 'admin');
+  // final TextEditingController _passController = TextEditingController(text: '123123123');
   var isLogin = false;
+  bool _obscurePassword = true;
 
   Future<void> _login() async {
     isLogin = await dbHelper.loginUser(_emailController.text, _passController.text);
@@ -125,39 +128,80 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
+                  TextFormField(
                     controller: _passController,
-                    textAlign: TextAlign.center,
+                    obscureText: _obscurePassword,
+                    keyboardType: TextInputType.visiblePassword,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      prefixIcon: const Icon(Icons.password_outlined),
                     style: const TextStyle(
                       color: Color(0xFF393939),
                       fontSize: 13,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w400,
                     ),
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        color: Color(0xFF755DC1),
-                        fontSize: 15,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                          icon: _obscurePassword
+                              ? const Icon(Icons.visibility_outlined)
+                              : const Icon(Icons.visibility_off_outlined)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Color(0xFF837E93),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Color(0xFF9F7BFF),
-                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
+                  // TextField(
+                  //   controller: _passController,
+                  //   obscureText: _obscurePassword,
+                  //   textAlign: TextAlign.center,
+                  //   style: const TextStyle(
+                  //     color: Color(0xFF393939),
+                  //     fontSize: 13,
+                  //     fontFamily: 'Poppins',
+                  //     fontWeight: FontWeight.w400,
+                  //   ),
+                  //   decoration: const InputDecoration(
+                  //     labelText: 'Password',
+                  //     labelStyle: TextStyle(
+                  //       color: Color(0xFF755DC1),
+                  //       fontSize: 15,
+                  //       fontFamily: 'Poppins',
+                  //       fontWeight: FontWeight.w600,
+                  //     ),
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                  //       borderSide: BorderSide(
+                  //         width: 1,
+                  //         color: Color(0xFF837E93),
+                  //       ),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                  //       borderSide: BorderSide(
+                  //         width: 1,
+                  //         color: Color(0xFF9F7BFF),
+                  //       ),
+                  //     ),
+                  //     prefixIcon: const Icon(Icons.password_outlined),
+                  //     // suffixIcon: IconButton(
+                  //     //     onPressed: () {
+                  //     //       setState(() {
+                  //     //         _obscurePassword = !_obscurePassword;
+                  //     //       });
+                  //     //     },
+                  //     //     icon: _obscurePassword ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off_outlined)
+                  //     // ),
+                  //   ),
+                  // ),
+                  
                   const SizedBox(
                     height: 15,
                   ),
