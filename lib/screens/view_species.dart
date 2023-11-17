@@ -245,60 +245,51 @@ class _ViewSpeciesState extends State<ViewSpecies> {
           child: Center(
             child: Column(
               children: <Widget>[
-                // Container(
-                //       height: 150.0,
-                //       child: tempTracerFileImageArray.length > 0 ? 
-                //         ListView.builder(
-                //           scrollDirection: Axis.horizontal,
-                //           itemCount: tempTracerFileImageArray.length,
-                //           itemBuilder: (context, index) {
-                //             return Padding(
-                //               padding: EdgeInsets.all(8.0),
-                //               child: Stack(
-                //                 children: [
-                //                   Image.file(
-                //                     tempTracerFileImageArray[index],
-                //                     width: 150.0, // Adjust the width as needed
-                //                     height: 150.0, // Adjust the height as needed
-                //                     fit: BoxFit.cover,
-                //                   ),
-                //                   Positioned(
-                //                     top: 0,
-                //                     right: 0,
-                //                     child: GestureDetector(
-                //                       onTap: () {
-                //                         removeImageInArray(index);
-                //                       },
-                //                       child: Icon(
-                //                         Icons.remove_circle,
-                //                         color: Colors.red,
-                //                         size: 30.0,
-                //                       ),
-                //                     ),
-                //                   ),
-                //                 ],
-                //               ),
-                //             );
-                //           },
-                //         )
+                Container(
+                      height: 150.0,
+                      child: tempTracerFileImageArray.length > 0 ? 
+                        ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: tempTracerFileImageArray.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Stack(
+                                children: [
 
-                //         : Image.asset(
-                //             'assets/images/default_placeholder.png',
-                //             height: 150,
-                //             width: 150,
-                //           ),
-                //   ),
+                                  FutureBuilder<Widget>(
+                                    future: loadImageFromFile(tempTracerFileImageArray[index].path),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.done) {
+                                        return snapshot.data ?? CircularProgressIndicator();
+                                      } else {
+                                        return CircularProgressIndicator(); // Or another loading indicator
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        )
 
-                FutureBuilder<Widget>(
-                  future: loadImageFromFile(tracerData?.imagePath ?? ''),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return snapshot.data ?? CircularProgressIndicator();
-                    } else {
-                      return CircularProgressIndicator(); // Or another loading indicator
-                    }
-                  },
-                ),
+                        : Image.asset(
+                            'assets/images/default_placeholder.png',
+                            height: 150,
+                            width: 150,
+                          ),
+                    ),
+
+                // FutureBuilder<Widget>(
+                //   future: loadImageFromFile(tracerData?.imagePath ?? ''),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.done) {
+                //       return snapshot.data ?? CircularProgressIndicator();
+                //     } else {
+                //       return CircularProgressIndicator(); // Or another loading indicator
+                //     }
+                //   },
+                // ),
                 SizedBox(height: 10),
                 Text(
                   tracerData?.local_name ?? 'No Local Name',

@@ -100,6 +100,34 @@ class _UserTreeListState extends State<UserTreeList> {
     });
   }
 
+    Future<bool> _onBackPressed(BuildContext context) async {
+    final confirmed = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Exit the app?'),
+          content: Text('Are you sure you want to exit the app?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    return confirmed ?? false; // Return false if the dialog is dismissed
+  }
+
   Future<Widget> loadImageFromFile(String filePath) async {
     print('============ loadImageFromFile ===== ${filePath}');
     if (filePath.startsWith('assets/')) {
@@ -148,265 +176,229 @@ class _UserTreeListState extends State<UserTreeList> {
       {'name': 'FRUIT', 'image': 'assets/images/fruit.png'},
     ];
 
-    return MaterialApp(
-      home: Scaffold(
-      appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.blue, Colors.lightBlue],
+    return WillPopScope(
+      child: MaterialApp(
+        home: Scaffold(
+        appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.blue, Colors.lightBlue],
+                ),
               ),
             ),
-          ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back), // Add your arrow icon here
-            onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
-            },
-          ),
-          title: Text('Tree List'), // Add your app title here
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height * 0.2, // Adjust the height as needed
-                enlargeCenterPage: true,
-                autoPlay: true, // Set to true if you want the carousel to auto-play
-                autoPlayInterval: Duration(seconds: 3), // Auto-play interval
-                autoPlayAnimationDuration: Duration(milliseconds: 800), // Animation duration
-                autoPlayCurve: Curves.fastOutSlowIn, // Animation curve
-                scrollDirection: Axis.horizontal, // Set to Axis.horizontal for a horizontal carousel
-              ),
-              items: carouselItems.map((item) {
-                return GestureDetector(
-                  onTap: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: 'User',)));
-                  },
-                  child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color.fromARGB(255, 147, 144, 248), Color.fromARGB(227, 83, 56, 142)],
-                    ),
-                  ),
-                  child: Center(
-                    child: Stack(
-                      children: [
-                        Align( // Centered content
-                          alignment: Alignment.center,
-                          child: Text(
-                            item['name'],
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              backgroundColor: Colors.white38
-          
-                            ),
-                            ),
-                        ),
-                      ],
-                    ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back), // Add your arrow icon here
+              onPressed: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+              },
+            ),
+            title: Text('Tree List'), // Add your app title here
+        ),
+        body: Column(
+          children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  "Tree Species List",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20.0
                   ),
                 ),
-              );
-                
-              }).toList(),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              onChanged: (value) {
-                search(value);
-              },
-              decoration: InputDecoration(
-                labelText: "Search Tree",
-                prefixIcon: Icon(Icons.image_search_rounded),
-                border: OutlineInputBorder(),
+              ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                onChanged: (value) {
+                  search(value);
+                },
+                decoration: InputDecoration(
+                  labelText: "Search Tree",
+                  prefixIcon: Icon(Icons.image_search_rounded),
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: searchKey == 'TREE' 
-            ? ListView.builder(
-              itemCount: mangrooveData.length,
-              itemBuilder: (context, index) {
-                final imageData = mangrooveData[index];
-                final mangroveId= mangrooveData[index].id;
+            Expanded(
+              child: searchKey == 'TREE' 
+              ? ListView.builder(
+                itemCount: mangrooveData.length,
+                itemBuilder: (context, index) {
+                  final imageData = mangrooveData[index];
+                  final mangroveId= mangrooveData[index].id;
 
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: userType,)));
-                      // final imageData = mangrooveData[index];
-                      // final snackBar = SnackBar(
-                      //   content: Text('Tapped on ${imageData}'),
-                      // );
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: userType,)));
+                        // final imageData = mangrooveData[index];
+                        // final snackBar = SnackBar(
+                        //   content: Text('Tapped on ${imageData}'),
+                        // );
+                        // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                    child: ListTile(
+                    title: Text('Local Name: ${imageData.local_name}'),
+                    subtitle: Text('Scientific Name: ${imageData.scientific_name}' ),
+                    leading: FutureBuilder<Widget>(
+                      future: loadImageFromFile(imageData.imagePath),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data ?? CircularProgressIndicator();
+                        } else {
+                          return CircularProgressIndicator(); // Or another loading indicator
+                        }
+                      },
+                    ),
+                  )
+                  );
+                },
+              )
+              : ListView.builder(
+                itemCount: mangrooveData.length,
+                itemBuilder: (context, index) {
+                  final imageDt = mangrooveData[index];
+                  final mangId= mangrooveData[index].mangroveId;
+
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangId ?? 0, category: searchKey, userType: userType)));
+                      // final snackBar = SnackBar(content: Text('Tapped on ${mangId}'),);
                       // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  child: ListTile(
-                  title: Text('Local Name: ${imageData.local_name}'),
-                  subtitle: Text('Scientific Name: ${imageData.scientific_name}' ),
-                  leading: FutureBuilder<Widget>(
-                    future: loadImageFromFile(imageData.imagePath),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return snapshot.data ?? CircularProgressIndicator();
-                      } else {
-                        return CircularProgressIndicator(); // Or another loading indicator
-                      }
                     },
-                  ),
-                )
-                );
-              },
+                    child: ListTile(  
+                    title: Text('Name: ${imageDt.name}'),
+                    leading: FutureBuilder<Widget>(
+                      future: loadImageFromFile(imageDt.imagePath),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data ?? CircularProgressIndicator();
+                        } else {
+                          return CircularProgressIndicator(); // Or another loading indicator
+                        }
+                      },
+                    ),
+                  )
+                  );
+                },
+              )
             )
-            : ListView.builder(
-              itemCount: mangrooveData.length,
-              itemBuilder: (context, index) {
-                final imageDt = mangrooveData[index];
-                final mangId= mangrooveData[index].mangroveId;
-
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangId ?? 0, category: searchKey, userType: userType)));
-                    // final snackBar = SnackBar(content: Text('Tapped on ${mangId}'),);
-                    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  child: ListTile(  
-                  title: Text('Name: ${imageDt.name}'),
-                  leading: FutureBuilder<Widget>(
-                    future: loadImageFromFile(imageDt.imagePath),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return snapshot.data ?? CircularProgressIndicator();
-                      } else {
-                        return CircularProgressIndicator(); // Or another loading indicator
-                      }
-                    },
-                  ),
-                )
-                );
-              },
-            )
-          )
-        ],
-      ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            _buildDrawerItem(
-              title: 'Home',
-              index: 0,
-              onTap: () {
-                _drawerItemTapped(0);
+          ],
+        ),
+        endDrawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              _buildDrawerItem(
+                title: 'Home',
+                index: 0,
+                onTap: () {
+                  _drawerItemTapped(0);
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => Home()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Favorite',
+                index: 1,
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => Trees()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Admin',
+                index: 2,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => MainView()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Tree List',
+                index: 3,
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserTreeList(
+                                searchKey: 'TREE',
+                                userType: 'User',
+                              )));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'About Us',
+                index: 4,
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => AboutUs()));
+                },
+              ),
+              _buildDrawerItem(
+                title: 'Exit',
+                index: 5,
+                onTap: () {
+                  _onBackPressed(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.grass),
+                label: 'Trees',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.face),
+                label: 'About',
+                backgroundColor: Colors.blueAccent),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app),
+                label: 'Exit',
+                backgroundColor: Colors.blueAccent),
+          ],
+          currentIndex: 1,
+          selectedItemColor: Colors.amber[800],
+          onTap: (int index) {
+            switch (index) {
+              case 0:
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) => Home()));
-              },
-            ),
-            _buildDrawerItem(
-              title: 'Favorite',
-              index: 1,
-              onTap: () {
+              case 1:
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Trees()));
-              },
-            ),
-            _buildDrawerItem(
-              title: 'Admin',
-              index: 2,
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => MainView()));
-              },
-            ),
-            _buildDrawerItem(
-              title: 'Tree List',
-              index: 3,
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserTreeList(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserTreeList(
                               searchKey: 'TREE',
                               userType: 'User',
                             )));
+              case 2:
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => AboutUs()));
+              case 3:
+                _onBackPressed(context);
+            }
+            setState(
+              () {
+                _selectedIndex = index;
               },
-            ),
-            _buildDrawerItem(
-              title: 'About Us',
-              index: 4,
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => AboutUs()));
-              },
-            ),
-            _buildDrawerItem(
-              title: 'Exit',
-              index: 5,
-              onTap: () {
-                _drawerItemTapped(3);
-                Navigator.pop(context);
-              },
-            ),
-          ],
+            );
+          },
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Colors.blueAccent),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.grass),
-              label: 'Trees',
-              backgroundColor: Colors.blueAccent),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.face),
-              label: 'About',
-              backgroundColor: Colors.blueAccent),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.exit_to_app),
-              label: 'Exit',
-              backgroundColor: Colors.blueAccent),
-        ],
-        currentIndex: 1,
-        selectedItemColor: Colors.amber[800],
-        onTap: (int index) {
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Home()));
-            case 1:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserTreeList(
-                            searchKey: 'TREE',
-                            userType: 'User',
-                          )));
-            case 2:
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => AboutUs()));
-            case 3:
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Home()));
-          }
-          setState(
-            () {
-              _selectedIndex = index;
-            },
-          );
-        },
-      ),
+      
+      ))
+  , 
+      onWillPop: () async { return _onBackPressed(context); },
+    );
     
-    ));
-  }
+    }
 }

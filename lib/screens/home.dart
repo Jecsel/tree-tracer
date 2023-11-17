@@ -13,7 +13,6 @@ import 'dart:typed_data';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/favorite.dart';
-import 'package:tree_tracer/screens/favourite.dart';
 import 'package:tree_tracer/screens/result.dart';
 import 'package:tree_tracer/screens/trees.dart';
 import 'package:tree_tracer/screens/user_tree_list.dart';
@@ -78,7 +77,9 @@ class _HomeState extends State<Home> {
   }
 
   Future _getFromGallery() async {
-    isLoading = true;
+    setState(() {
+      isLoading = true;
+    });
     final pickedFileFromGallery = await ImagePicker().getImage(     /// Get from gallery
       source: ImageSource.gallery,
       maxWidth: 1800,
@@ -89,9 +90,9 @@ class _HomeState extends State<Home> {
 
     print('mangroveImages');
     print(mangroveImages!.length);
+    Navigator.pop(this.context);
 
     localImage = File(pickedFileFromGallery!.path);
-    Navigator.pop(this.context);
 
     for (Map mangroveImage in mangroveImages!) {
       String imagePath = mangroveImage['imagePath'];
@@ -111,10 +112,19 @@ class _HomeState extends State<Home> {
       }
       print('========== PASOK ========');
 
-      double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
-      print('========== Second ========');
+      // double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
+      // print('========== Second ========');
+      // if (imagePath.startsWith('assets/')) {
+      //   similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+      // }
+
+       double similarityScore = 1.0;
       if (imagePath.startsWith('assets/')) {
+        print('======== mANGROVE UNA ========');
         similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+      } else {
+        print('======== mANGROVE Pangalawa ========');
+        similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
       }
 
       print("similarityScore $similarityScore.");
@@ -161,7 +171,9 @@ class _HomeState extends State<Home> {
   }
 
   Future _getImageFromCamera() async {    /// Get Image from Camera
-    isLoading = true;
+    setState(() {
+      isLoading = true;
+    });
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     print('pickFile');
     print(pickedFile);
@@ -263,7 +275,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-    Future<bool> _onBackPressed(BuildContext context) async {
+  Future<bool> _onBackPressed(BuildContext context) async {
     final confirmed = await showDialog(
       context: context,
       builder: (context) {
@@ -310,16 +322,6 @@ class _HomeState extends State<Home> {
                 onPressed: _getImageFromCamera,
                 child: Text('      Scan Image     '),
               ),
-              Visibility(
-                visible: isErrorShow,
-                child: Text(
-                "No Results Found",
-                style: TextStyle(
-                  color: Colors.red
-                ),
-              ) 
-              )
-              
             ],
           ),
         ),
@@ -327,6 +329,10 @@ class _HomeState extends State<Home> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
+
+              setState(() {
+                isLoading = false;
+              });
             },
             child: const Text('Close'),
           )
@@ -342,7 +348,7 @@ class _HomeState extends State<Home> {
       onWillPop: () async {
         return _onBackPressed(context);
         },
-      child:     MaterialApp(
+      child: MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
@@ -397,7 +403,14 @@ class _HomeState extends State<Home> {
 
 
             SizedBox(height: 20),
-            Visibility(visible: isLoading, child: CircularProgressIndicator()),
+            Visibility(
+              visible: isLoading, 
+              child: Image.asset(
+                "assets/images/loading.gif",
+                width: 35,  // Set both width and height to the same value
+                height: 35, // to create a perfect circle
+              ),
+            ),
             SizedBox(height: 20),
             Visibility(
               visible: !isLoading && isErrorShow,
@@ -456,8 +469,7 @@ class _HomeState extends State<Home> {
                 title: 'Exit',
                 index: 5,
                 onTap: () {
-                  _drawerItemTapped(3);
-                  Navigator.pop(context);
+                  _onBackPressed(context);
                 },
               ),
             ],
@@ -498,8 +510,7 @@ class _HomeState extends State<Home> {
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => AboutUs()));
               case 3:
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
+                _onBackPressed(context);
             }
             setState(
               () {

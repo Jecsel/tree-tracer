@@ -8,6 +8,7 @@ import 'package:image/image.dart' as img; // This is for decoding the image
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
 import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/screens/view_species.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -73,35 +74,70 @@ class _ResultPageState extends State<FavoritePage> {
     return MaterialApp(
       home: Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.green,
+         flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue, Colors.lightBlue],
+              ),
+            ),
+          ),
           leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Add your arrow icon here
+            icon: Icon(Icons.arrow_back), // Add your arrow icon here
             onPressed: () {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
             },
           ),
           title: Text('Favourite Page'), // Add your app title here
       ),
-      body: ListView.builder(
-              itemCount: searchResults!.length,
-              itemBuilder: (context, index) {
-
-                return ListTile(
-                title: Text('Local Name: ${searchResults![index].local_name}'),
-                subtitle: Text('Scientific Name: ${searchResults![index].scientific_name}' ),
-                leading: FutureBuilder<Widget>(
-                  future: loadImageFromFile(searchResults![index].imagePath ?? ''),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return snapshot.data ?? CircularProgressIndicator();
-                    } else {
-                      return CircularProgressIndicator(); // Or another loading indicator
-                    }
-                  },
+      body: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Text(
+                "List of your favorite trees",
+                style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 20.0
                 ),
-                );
-              },
+              ),
+            ),
+            Expanded(
+              child: searchResults!.length > 0 ?
+                ListView.builder(
+                itemCount: searchResults!.length,
+                itemBuilder: (context, index) {
+      
+                  return GestureDetector(
+                    onTap: () {
+                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: searchResults![index].id ?? 1, category: searchKey, userType: "User",)));
+                    },
+                    child: ListTile(
+                      title: Text('Local Name: ${searchResults![index].local_name}'),
+                      subtitle: Text('Scientific Name: ${searchResults![index].scientific_name}' ),
+                      leading: FutureBuilder<Widget>(
+                        future: loadImageFromFile(searchResults![index].imagePath ?? ''),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return snapshot.data ?? CircularProgressIndicator();
+                          } else {
+                            return CircularProgressIndicator(); // Or another loading indicator
+                          }
+                        },
+                      ),
+                      )
+                  );
+                },
+              ) :
+              Text("No Favourite to Show")
             )
-    ));
+          ],
+        ),
+      )
+      
+      )
+    );
   }
 }

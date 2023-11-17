@@ -58,26 +58,45 @@ class _TreeImageListState extends State<TreeImageList> {
       appBar: AppBar(
         title: Text('Tree Images'),
       ),
-      body: ListView.builder(
-        itemCount: treeDataList.length,
-        itemBuilder: (context, index) {
-          final tree = treeDataList[index];
-          final imageBytes = tree['image'] as Uint8List; // Retrieve image bytes
-
-          return ListTile(
-            title: Text(tree['name'] as String),
-            subtitle: Text(tree['description'] as String),
-            leading: Container(
-              width: 100, // Set the desired width
-              height: 100, // Set the desired height
-              child: Image.memory(
-                imageBytes,
-                fit: BoxFit.cover,
+      body: Column(
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Text(
+                "List of your favorite trees",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0
+                ),
               ),
             ),
-          );
-        },
-      ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: treeDataList.length,
+              itemBuilder: (context, index) {
+                final tree = treeDataList[index];
+                final imageBytes = tree['image'] as Uint8List; // Retrieve image bytes
+
+                return ListTile(
+                  title: Text(tree['name'] as String),
+                  subtitle: Text(tree['description'] as String),
+                  leading: Container(
+                    width: 100, // Set the desired width
+                    height: 100, // Set the desired height
+                    child: Image.memory(
+                      imageBytes,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      )
+      
+      
+
     );
   }
 }

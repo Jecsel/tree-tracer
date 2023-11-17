@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tree_tracer/models/favourite_model.dart';
 import 'package:tree_tracer/models/flower_model.dart';
 import 'package:tree_tracer/models/fruit_model.dart';
 import 'package:tree_tracer/models/leaf_model.dart';
@@ -75,6 +76,8 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
   List<LeafModel> leafDataList = [];
   List<FlowerModel> flowerDataList = [];
   List<RootModel> rootDataList = [];
+  List<File> tempTracerFileImageArray = [];
+  List<FavouriteModel>? tracerFavs = [];
 
   @override
   void initState() {
@@ -87,10 +90,18 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
     int mangroveId = widget.tracerId;
     TracerModel? tracerResultData = await dbHelper?.getOneTracerData(mangroveId);
 
+     tracerFavs = await dbHelper?.getFavouriteDataList(mangroveId);
+
+    for (var imgPaths in tracerFavs!) {
+      tempTracerFileImageArray.add(File(imgPaths.imagePath));
+    }
+
     setState(() {
       tracerData = tracerResultData;
       tracerImg = tracerData!.imageBlob;
       tracerImagePath = tracerData!.imagePath;
+
+      tempTracerFileImageArray = tempTracerFileImageArray;
 
       localNameController.text = tracerData!.local_name;
       scientificNameController.text = tracerData!.scientific_name;
@@ -163,6 +174,14 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
             tracerImage = File(pickedFileFromGallery.path);
             tracerImagePath = pickedFileFromGallery.path;
             tracerData!.imagePath = pickedFileFromGallery.path;
+
+            final fav = FavouriteModel(
+              tracerId: tracerData!.id ?? 1,
+              imagePath: pickedFileFromGallery.path
+            );
+            final newFav = dbHelper?.insertDBFavouriteData(fav);
+
+            tempTracerFileImageArray.add(tracerImage!);
             break;
           case "root":
             rootImage = File(pickedFileFromGallery.path);
@@ -187,6 +206,20 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
         
       });
     }
+  }
+
+  Future<void> removeImageInArray(int index)  async {
+
+    int tracerImgID = tracerFavs?[index].id ?? 1;
+    await dbHelper?.deleteFavouriteData(tracerImgID);
+
+    setState(() {
+      tempTracerFileImageArray.removeAt(index);
+
+      print('tempTracerFileImageArray');
+      print(tempTracerFileImageArray);
+
+    });
   }
 
   @override
@@ -217,16 +250,64 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                     SizedBox(
                       height: 10,
                     ),
-                    FutureBuilder<Widget>(
-                      future: loadImageFromFile(tracerData?.imagePath ?? ''),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return snapshot.data ?? CircularProgressIndicator();;
-                        } else {
-                          return CircularProgressIndicator(); // Or another loading indicator
-                        }
-                      },
+                    Container(
+                      height: 150.0,
+                      child: tempTracerFileImageArray.length > 0 ? 
+                        ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: tempTracerFileImageArray.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Stack(
+                                children: [
+
+                                  FutureBuilder<Widget>(
+                                    future: loadImageFromFile(tempTracerFileImageArray[index].path),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.done) {
+                                        return snapshot.data ?? CircularProgressIndicator();
+                                      } else {
+                                        return CircularProgressIndicator(); // Or another loading indicator
+                                      }
+                                    },
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        removeImageInArray(index);
+                                      },
+                                      child: Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.red,
+                                        size: 30.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        )
+
+                        : Image.asset(
+                            'assets/images/default_placeholder.png',
+                            height: 150,
+                            width: 150,
+                          ),
                     ),
+                    // FutureBuilder<Widget>(
+                    //   future: loadImageFromFile(tracerData?.imagePath ?? ''),
+                    //   builder: (context, snapshot) {
+                    //     if (snapshot.connectionState == ConnectionState.done) {
+                    //       return snapshot.data ?? CircularProgressIndicator();;
+                    //     } else {
+                    //       return CircularProgressIndicator(); // Or another loading indicator
+                    //     }
+                    //   },
+                    // ),
                     // tracerImage != null
                     //     ? Image.file(
                     //         tracerImage!,
