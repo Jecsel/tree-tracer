@@ -135,12 +135,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                       labelText: "Password",
                       prefixIcon: const Icon(Icons.password_outlined),
-                    style: const TextStyle(
-                      color: Color(0xFF393939),
-                      fontSize: 13,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w400,
-                    ),
                       suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
