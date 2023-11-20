@@ -590,7 +590,23 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     } else {
       await setFlagInTempStorage();
 
-      List<dynamic> mangrove_datas = [
+      List<dynamic> tree_datas = [
+        {
+          'path': 'assets/images/balobo.jpeg',
+          'image_paths': [
+            'assets/images/balobo.jpeg',
+            'assets/images/balobo.jpeg',
+            'assets/images/balobo.jpeg',
+            'assets/images/balobo.jpeg'
+          ],
+          'local_name': 'Sample Local Name',
+          'scientific_name': 'Sample Scientific Name',
+          'description': 'Sample Description',
+          'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in felis vitae purus dignissim malesuada vel vitae ex. Mauris at purus ac urna dapibus hendrerit. Suspendisse tristique diam porta, mattis odio id, bibendum erat. Aliquam molestie metus aliquet ipsum condimentum, in fermentum leo varius. Suspendisse ante ante, tempus nec diam quis, aliquet ornare libero. Suspendisse finibus lectus enim, vel lobortis neque egestas nec. Phasellus semper mauris vel efficitur sollicitudin. In tempor justo id sapien hendrerit, et tincidunt enim condimentum. In volutpat nisl in ipsum malesuada suscipit. Duis magna lacus, fringilla malesuada nisi sit amet, lacinia pharetra diam. Maecenas mollis a nibh bibendum pellentesque.',
+          'family': 'Sample Family',
+          'benifits': 'Sample Benifits',
+          'uses': 'Sample Uses'
+        },
         {
           'path': 'assets/images/balobo.jpeg',
           'image_paths': [
@@ -609,12 +625,8 @@ Future<RootModel?> getOneRootData(int tracerId) async {
       
       ];
 
-      for (var tracer in mangrove_datas) {
+      for (var tracer in tree_datas) {
         final Uint8List tracerImageBytes = await loadImageAsUint8List(tracer['path']);
-        final Uint8List fruitImageBytes = await loadImageAsUint8List(tracer['path']);
-        final Uint8List rootImageBytes = await loadImageAsUint8List(tracer['path']);
-        final Uint8List leafImageBytes = await loadImageAsUint8List(tracer['path']);
-        final Uint8List flowerImageBytes = await loadImageAsUint8List(tracer['path']);
 
         // final Uint8List tracerImageBytes = await fileToUint8List(File(tracer['path']));
 
@@ -631,57 +643,19 @@ Future<RootModel?> getOneRootData(int tracerId) async {
           favourite: 0
         );
 
-        int newMangrooveId = await dbHelper.insertDBMangroveData(newMangroove);
+        int newTreeId = await dbHelper.insertDBMangroveData(newMangroove);
 
-        print("============newMangrooveId========");
-        print(newMangrooveId);
+        print("============newTreeId========");
+        print(newTreeId);
 
         for (var tracerImgPath in tracer['image_paths']) {
           final fav = FavouriteModel(
-            tracerId: newMangrooveId,
+            tracerId: newTreeId,
             imagePath: tracerImgPath
           );
 
           await dbHelper.insertDBFavouriteData(fav);
         }
-
-
-        final newRoot = RootModel(
-          tracerId: newMangrooveId ?? 0,
-          imageBlob: rootImageBytes, 
-          imagePath: tracer['path'],
-          name: tracer['root']['name'],
-          description: tracer['root']['description'],
-        );
-
-        final newFlower = FlowerModel(
-          tracerId: newMangrooveId ?? 0,
-          imageBlob: flowerImageBytes, 
-          imagePath: tracer['path'],
-          name: tracer['flower']['name'],
-          description: tracer['flower']['description']
-        );
-
-        final newLeaf = LeafModel(
-          tracerId: newMangrooveId ?? 0,
-          imageBlob: leafImageBytes, 
-          imagePath: tracer['path'],
-          name: tracer['leaf']['name'],
-          description: tracer['leaf']['description']
-        );
-
-        final newFruit = FruitModel(
-          tracerId: newMangrooveId ?? 0,
-          imageBlob:  fruitImageBytes, 
-          imagePath: tracer['path'],
-          name: tracer['fruit']['name'],
-          description: tracer['fruit']['description']
-        );
-
-        final root_id = dbHelper.insertDBRootData(newRoot);
-        final flower_id = dbHelper.insertDBFlowerData(newFlower);
-        final leaf_id = dbHelper.insertDBLeafData(newLeaf);
-        final fruit_id = dbHelper.insertDBFruitData(newFruit);
       }
     }
   }

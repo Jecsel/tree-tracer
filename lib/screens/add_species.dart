@@ -247,8 +247,16 @@ class _AddSpeciesState extends State<AddSpecies> {
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => AdminPage(searchKey: 'TREE', userType: 'User',)));
               },
-              
             ),
+            flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
+              ),
+            ),
+          ),
             title: Text('Search Tree')
             ),
             body: SingleChildScrollView(
@@ -329,7 +337,9 @@ class _AddSpeciesState extends State<AddSpecies> {
                           },
                           style: ElevatedButton.styleFrom(
                               textStyle: TextStyle(fontSize: 20),
-                              minimumSize: Size(double.infinity, 60)),
+                              minimumSize: Size(double.infinity, 60),
+                              backgroundColor: Colors.green
+                            ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

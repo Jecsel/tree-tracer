@@ -357,7 +357,7 @@ class _HomeState extends State<Home> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.blue, Colors.lightBlue],
+                colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
               ),
             ),
           ),
@@ -393,6 +393,7 @@ class _HomeState extends State<Home> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
+                      backgroundColor: Colors.green
                     ),
                     onPressed: _showModal,
                     child: const Text("Scan"),
@@ -480,19 +481,19 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
-              backgroundColor: Colors.blueAccent),
+              backgroundColor: Colors.green),
             BottomNavigationBarItem(
               icon: Icon(Icons.grass),
               label: 'Trees',
-              backgroundColor: Colors.blueAccent),
+              backgroundColor: Colors.green),
             BottomNavigationBarItem(
               icon: Icon(Icons.face),
               label: 'About',
-              backgroundColor: Colors.blueAccent),
+              backgroundColor: Colors.green),
             BottomNavigationBarItem(
               icon: Icon(Icons.exit_to_app),
               label: 'Exit',
-              backgroundColor: Colors.blueAccent),
+              backgroundColor: Colors.green),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],

@@ -145,7 +145,7 @@ class _AdminPageState extends State<AdminPage> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.blue, Colors.lightBlue],
+                colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
               ),
             ),
           ),
@@ -179,6 +179,7 @@ class _AdminPageState extends State<AdminPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  backgroundColor: Colors.green
                 ),
                 onPressed: () => {_gotoAddSpecies()},
                 child: const Text("Add Tree"),

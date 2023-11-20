@@ -73,7 +73,7 @@ class AboutUsState extends State<AboutUs>{
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.blue, Colors.lightBlue],
+                colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
               ),
             ),
           ),
@@ -250,19 +250,19 @@ class AboutUsState extends State<AboutUs>{
               BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',
-                  backgroundColor: Colors.blueAccent),
+                  backgroundColor: Colors.green),
               BottomNavigationBarItem(
                   icon: Icon(Icons.grass),
                   label: 'Trees',
-                  backgroundColor: Colors.blueAccent),
+                  backgroundColor: Colors.green),
               BottomNavigationBarItem(
                   icon: Icon(Icons.face),
                   label: 'About',
-                  backgroundColor: Colors.blueAccent),
+                  backgroundColor: Colors.green),
               BottomNavigationBarItem(
                   icon: Icon(Icons.exit_to_app),
                   label: 'Exit',
-                  backgroundColor: Colors.blueAccent),
+                  backgroundColor: Colors.green),
             ],
             currentIndex: 2,
             selectedItemColor: Colors.amber[800],

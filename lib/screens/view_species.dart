@@ -341,10 +341,10 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                           ),
                         ),
                         Text(tracerData?.uses ?? 'No Uses'),
-                        ElevatedButton(
-                          onPressed: () => _gotoSimilarTrees(),
-                          child: Text('Similar Trees'),
-                        ),
+                        // ElevatedButton(
+                        //   onPressed: () => _gotoSimilarTrees(),
+                        //   child: Text('Similar Trees'),
+                        // ),
                       ],
                   )
 ,
