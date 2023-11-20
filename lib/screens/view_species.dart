@@ -13,6 +13,7 @@ import 'package:tree_tracer/models/tracer_model.dart';
 import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/home.dart';
 import 'package:tree_tracer/screens/update_species.dart';
+import 'package:tree_tracer/screens/user_tree_list.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
 class ViewSpecies extends StatefulWidget {
@@ -134,6 +135,10 @@ class _ViewSpeciesState extends State<ViewSpecies> {
 
     // If no valid image is found, return a default placeholder
     return Image.asset("assets/images/default_placeholder.png"); // You can replace this with your placeholder image
+  }
+
+  Future<void> _gotoSimilarTrees() async {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserTreeList(searchKey:'TREE', userType: 'User')));
   }
 
   Future<Widget> loadImage(String filePath) async {
@@ -336,6 +341,10 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                           ),
                         ),
                         Text(tracerData?.uses ?? 'No Uses'),
+                        ElevatedButton(
+                          onPressed: () => _gotoSimilarTrees(),
+                          child: Text('Similar Trees'),
+                        ),
                       ],
                   )
 ,
