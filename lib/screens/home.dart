@@ -470,6 +470,7 @@ class _HomeState extends State<Home> {
                 title: 'Exit',
                 index: 5,
                 onTap: () {
+                    Navigator.pop(context);
                   _onBackPressed(context);
                 },
               ),

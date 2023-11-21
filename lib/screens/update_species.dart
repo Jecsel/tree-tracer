@@ -227,6 +227,15 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
+                ),
+              ),
+            ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back), // Add your arrow icon here
               onPressed: () {
@@ -235,7 +244,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
               },
               
             ),
-            title: Text('Search Tree')
+            title: Text('Update Tree')
             ),
             body: SingleChildScrollView(
               child: Center(
