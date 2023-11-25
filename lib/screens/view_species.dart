@@ -17,8 +17,8 @@ import 'package:tree_tracer/screens/user_tree_list.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
 class ViewSpecies extends StatefulWidget {
-  final int tracerId; // Mangrove Id
-  final String category; // What category of mangrove, if TREE, ROOT, ETC.
+  final int tracerId;
+  final String category; // What category of TREE, ROOT, ETC.
   final String userType; //What type of User
 
   ViewSpecies({required this.tracerId, required this.category, required this.userType}); // Constructor that accepts data
@@ -29,7 +29,7 @@ class ViewSpecies extends StatefulWidget {
 
 class _ViewSpeciesState extends State<ViewSpecies> {
   int _selectedIndex = 0;
-  MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
+  TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
   TracerModel? tracerData;
   RootModel? rootData;
   FlowerModel? flowerData;
@@ -40,7 +40,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
   @override
   void initState() {
     super.initState();
-    dbHelper = MangroveDatabaseHelper.instance;
+    dbHelper = TracerDatabaseHelper.instance;
     fetchData();
   }
 
@@ -227,7 +227,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                 deleteTracer();
                 _gotoSearchList();
                 final snackBar = SnackBar(
-                  content: Text('Mangrove Delete!'),
+                  content: Text('Tracer Delete!'),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },

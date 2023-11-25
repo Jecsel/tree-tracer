@@ -24,7 +24,7 @@ class _ResultPageState extends State<ResultPage> {
   String query = "";
   List<String> searchResults = [];
 
-  late MangroveDatabaseHelper dbHelper;
+  late TracerDatabaseHelper dbHelper;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     var searchKey = widget.searchKey;
-    List<dynamic> mangrooveData = widget.results;
+    List<dynamic> tracerData = widget.results;
 
     return MaterialApp(
       home: Scaffold(
@@ -72,16 +72,16 @@ class _ResultPageState extends State<ResultPage> {
           Expanded(
             child: searchKey == 'TREE' 
             ? ListView.builder(
-              itemCount: mangrooveData.length,
+              itemCount: tracerData.length,
               itemBuilder: (context, index) {
-                final imageData = mangrooveData[index]['image'];
-                final mangroveId= mangrooveData[index]['image']['id'];
-                print('====== Similarity Score: ${mangrooveData[index]['score']}');
+                final imageData = tracerData[index]['image'];
+                final mangroveId= tracerData[index]['image']['id'];
+                print('====== Similarity Score: ${tracerData[index]['score']}');
 
                 return GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: 'User',)));
-                    //   final imageData = mangrooveData[index];
+                    //   final imageData = tracerData[index];
                     //   final snackBar = SnackBar(
                     //     content: Text('Tapped on ${imageData}'),
                     //   );
@@ -89,7 +89,7 @@ class _ResultPageState extends State<ResultPage> {
                   },
                   child: ListTile(
                   title: Text('Local Name: ${imageData['local_name']}'),
-                  subtitle: Text('Score: ${mangrooveData[index]['score']}%' ),
+                  subtitle: Text('Score: ${tracerData[index]['score']}%' ),
                   leading: FutureBuilder<Widget>(
                     future: loadImageFromFile(imageData['imagePath']),
                     builder: (context, snapshot) {
@@ -105,10 +105,10 @@ class _ResultPageState extends State<ResultPage> {
               },
             )
             : ListView.builder(
-              itemCount: mangrooveData.length,
+              itemCount: tracerData.length,
               itemBuilder: (context, index) {
-                final imageDt = mangrooveData[index]['image'];
-                final mangId= mangrooveData[index]['image']['mangroveId'];
+                final imageDt = tracerData[index]['image'];
+                final mangId= tracerData[index]['image']['mangroveId'];
 
                 return GestureDetector(
                   // onTap: () {
@@ -120,7 +120,7 @@ class _ResultPageState extends State<ResultPage> {
                   // },
                   child: ListTile(  
                   title: Text('Name: ${imageDt['name']}'),
-                  subtitle: Text('Score: ${mangrooveData[index]['score']}%' ),
+                  subtitle: Text('Score: ${tracerData[index]['score']}%' ),
                   leading: FutureBuilder<Widget>(
                     future: loadImageFromFile(imageDt['imagePath']),
                     builder: (context, snapshot) {

@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
+  TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
 
   @override
   void initState() {
@@ -25,8 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     dbHelper.initiateUserData(dbHelper);
     print("============initiateUserData====done=====");
-    dbHelper.initiateMangrooveData(dbHelper);
-    print("============initiateMangrooveData====done=====");
+    dbHelper.initiateTracerData(dbHelper);
+    print("============initiateTracerData====done=====");
     _navigateToHome();
   }
 

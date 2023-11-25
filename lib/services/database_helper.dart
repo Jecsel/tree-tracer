@@ -16,11 +16,11 @@ import 'package:tree_tracer/models/leaf_model.dart';
 import 'package:tree_tracer/models/tracer_model.dart';
 import 'package:tree_tracer/models/root_model.dart';
 
-class MangroveDatabaseHelper {
-  static final MangroveDatabaseHelper instance = MangroveDatabaseHelper._init();
+class TracerDatabaseHelper {
+  static final TracerDatabaseHelper instance = TracerDatabaseHelper._init();
   static Database? _database;
 
-  MangroveDatabaseHelper._init();
+  TracerDatabaseHelper._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -163,10 +163,10 @@ class MangroveDatabaseHelper {
   }
 
 
-  Future<int> insertDBMangroveData(TracerModel mangrooveData) async {
+  Future<int> insertDBTracerData(TracerModel tracerData) async {
     final db = await database;
-    final mangrooveReturnData = await db.insert('tracer', mangrooveData.toMap());
-    return mangrooveReturnData;
+    final tracerReturnData = await db.insert('tracer', tracerData.toMap());
+    return tracerReturnData;
   }
 
   Future<RootModel> insertDBRootData(RootModel rootData) async {
@@ -244,12 +244,12 @@ class MangroveDatabaseHelper {
 
   Future<TracerModel?> getOneTracerData(int tracerId) async {
     final db = await database;
-    final List<Map<String, dynamic>> mangroveData = await db.query('tracer',
+    final List<Map<String, dynamic>> tracerData = await db.query('tracer',
       where: 'id = ?',
       whereArgs: [tracerId]);
 
-    if (mangroveData.isNotEmpty) {
-      return TracerModel.fromMap(mangroveData[0]);
+    if (tracerData.isNotEmpty) {
+      return TracerModel.fromMap(tracerData[0]);
     } else {
       return null; // Return null if no data is found for the given tracerId
     }
@@ -270,12 +270,12 @@ class MangroveDatabaseHelper {
 
 Future<RootModel?> getOneRootData(int tracerId) async {
     final db = await database;
-    final List<Map<String, dynamic>> mangroveData = await db.query('root',
+    final List<Map<String, dynamic>> tracerData = await db.query('root',
       where: 'tracerId = ?',
       whereArgs: [tracerId]);
 
-    if (mangroveData.isNotEmpty) {
-      return RootModel.fromMap(mangroveData[0]);
+    if (tracerData.isNotEmpty) {
+      return RootModel.fromMap(tracerData[0]);
     } else {
       return null; // Return null if no data is found for the given tracerId
     }
@@ -283,12 +283,12 @@ Future<RootModel?> getOneRootData(int tracerId) async {
 
   Future<FlowerModel?> getOneFlowerData(int tracerId) async {
     final db = await database;
-    final List<Map<String, dynamic>> mangroveData = await db.query('flower',
+    final List<Map<String, dynamic>> tracerData = await db.query('flower',
       where: 'tracerId = ?',
       whereArgs: [tracerId]);
 
-    if (mangroveData.isNotEmpty) {
-      return FlowerModel.fromMap(mangroveData[0]);
+    if (tracerData.isNotEmpty) {
+      return FlowerModel.fromMap(tracerData[0]);
     } else {
       return null; // Return null if no data is found for the given tracerId
     }
@@ -296,12 +296,12 @@ Future<RootModel?> getOneRootData(int tracerId) async {
 
   Future<LeafModel?> getOneLeafData(int tracerId) async {
     final db = await database;
-    final List<Map<String, dynamic>> mangroveData = await db.query('leaf',
+    final List<Map<String, dynamic>> tracerData = await db.query('leaf',
       where: 'tracerId = ?',
       whereArgs: [tracerId]);
 
-    if (mangroveData.isNotEmpty) {
-      return LeafModel.fromMap(mangroveData[0]);
+    if (tracerData.isNotEmpty) {
+      return LeafModel.fromMap(tracerData[0]);
     } else {
       return null; // Return null if no data is found for the given tracerId
     }
@@ -309,22 +309,22 @@ Future<RootModel?> getOneRootData(int tracerId) async {
 
     Future<FruitModel?> getOneFruitData(int tracerId) async {
     final db = await database;
-    final List<Map<String, dynamic>> mangroveData = await db.query('fruit',
+    final List<Map<String, dynamic>> tracerData = await db.query('fruit',
       where: 'tracerId = ?',
       whereArgs: [tracerId]);
 
-    if (mangroveData.isNotEmpty) {
-      return FruitModel.fromMap(mangroveData[0]);
+    if (tracerData.isNotEmpty) {
+      return FruitModel.fromMap(tracerData[0]);
     } else {
       return null; // Return null if no data is found for the given tracerId
     }
   }
 
-  Future<List<Map<String, dynamic>>?> getMangroveAndData(int tracerId) async {
+  Future<List<Map<String, dynamic>>?> getTracerAndData(int tracerId) async {
     final db = await database;
 
     // Query the tracer table based on the tracerId
-    final mangroveData = await db.query('tracer',
+    final tracerData = await db.query('tracer',
         where: 'id = ?',
         whereArgs: [tracerId]);
 
@@ -347,7 +347,7 @@ Future<RootModel?> getOneRootData(int tracerId) async {
 
     // Combine the tracer and Root data into a single list
     List<Map<String, dynamic>> combinedData = [];
-    combinedData.add(mangroveData.first);
+    combinedData.add(tracerData.first);
     combinedData.addAll(rootData);
     combinedData.addAll(flowerData);
     combinedData.addAll(leafData);
@@ -366,13 +366,13 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     );
   }
 
-  Future<void> updateTracerData(TracerModel mangrooveData) async {
+  Future<void> updateTracerData(TracerModel tracerData) async {
     final db = await database;
     await db.update(
       'tracer',
-      mangrooveData.toMap(),
+      tracerData.toMap(),
       where: 'id = ?',
-      whereArgs: [mangrooveData.id],
+      whereArgs: [tracerData.id],
     );
   }
 
@@ -560,8 +560,8 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     db.close();
   }
 
-  Future<void> initiateUserData(MangroveDatabaseHelper dbHelper) async {
-    // MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
+  Future<void> initiateUserData(TracerDatabaseHelper dbHelper) async {
+    // TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
     final newUser = UserModel(username: 'admin', password: '123123123');
     final registeredUser = await dbHelper.registerUser(newUser);
 
@@ -582,7 +582,7 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     return uint8List;
   }
 
-  Future<void> initiateMangrooveData(MangroveDatabaseHelper dbHelper) async {
+  Future<void> initiateTracerData(TracerDatabaseHelper dbHelper) async {
 
     if(await getFlagFromTempStorage()) {
       print("already initialize");
@@ -630,7 +630,7 @@ Future<RootModel?> getOneRootData(int tracerId) async {
 
         // final Uint8List tracerImageBytes = await fileToUint8List(File(tracer['path']));
 
-        var newMangroove = TracerModel(
+        var newTracer = TracerModel(
           imageBlob: tracerImageBytes, 
           imagePath: tracer['path'],
           local_name: tracer['local_name'], 
@@ -643,7 +643,7 @@ Future<RootModel?> getOneRootData(int tracerId) async {
           favourite: 0
         );
 
-        int newTreeId = await dbHelper.insertDBMangroveData(newMangroove);
+        int newTreeId = await dbHelper.insertDBTracerData(newTracer);
 
         print("============newTreeId========");
         print(newTreeId);
@@ -675,10 +675,10 @@ Future<RootModel?> getOneRootData(int tracerId) async {
     await prefs.setBool('is_seed', newValue);
   }
 
-  Future<List<Map>> getImagesFromMangrove() async {
+  Future<List<Map>> getImagesFromTracer() async {
     final db = await database;
-    List<Map> mangroveImages = await db.rawQuery('SELECT id, imageBlob, imagePath, local_name, scientific_name FROM tracer');
+    List<Map> tracerImages = await db.rawQuery('SELECT id, imageBlob, imagePath, local_name, scientific_name FROM tracer');
 
-    return mangroveImages;
+    return tracerImages;
   }
 }

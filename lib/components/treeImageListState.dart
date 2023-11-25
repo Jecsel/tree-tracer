@@ -26,12 +26,12 @@ class _TreeImageListState extends State<TreeImageList> {
   Future<void> copyDatabase() async {
     // Get a reference to the database
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'mangroove_main_db.db');
+    final path = join(databasePath, 'tracer_main_db.db');
 
     // Check if the database file already exists
     if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
       // Copy the database from assets to the device's local storage
-      final ByteData data = await rootBundle.load('assets/databases/mangroove_main_db.db');
+      final ByteData data = await rootBundle.load('assets/databases/tracer_main_db.db');
       final List<int> bytes = data.buffer.asUint8List();
       await File(path).writeAsBytes(bytes, flush: true);
     }
@@ -41,7 +41,7 @@ class _TreeImageListState extends State<TreeImageList> {
   Future<void> loadTreeData() async {
     // Open the database
     final database = await openDatabase(
-      join(await getDatabasesPath(), 'mangroove_main_db.db'),
+      join(await getDatabasesPath(), 'tracer_main_db.db'),
     );
 
     // Query the Tree table

@@ -10,7 +10,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
+  TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _repassController = TextEditingController();

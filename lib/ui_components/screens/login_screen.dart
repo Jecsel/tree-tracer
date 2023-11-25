@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  MangroveDatabaseHelper dbHelper = MangroveDatabaseHelper.instance;
+  TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   // final TextEditingController _emailController = TextEditingController(text: 'admin');

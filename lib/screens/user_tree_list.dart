@@ -33,8 +33,8 @@ class _UserTreeListState extends State<UserTreeList> {
   String query = "";
   List<String> searchResults = [];
 
-  late MangroveDatabaseHelper dbHelper;
-  List<dynamic> mangrooveData = [];
+  late TracerDatabaseHelper dbHelper;
+  List<dynamic> tracerData = [];
 
   int _selectedIndex = 0;
 
@@ -59,7 +59,7 @@ class _UserTreeListState extends State<UserTreeList> {
   void initState() {
     super.initState();
       print("======= initState ===========");
-      dbHelper = MangroveDatabaseHelper.instance;
+      dbHelper = TracerDatabaseHelper.instance;
       fetchData();
   }
 
@@ -79,22 +79,22 @@ class _UserTreeListState extends State<UserTreeList> {
     setState(() {
       switch (searchKey) {
         case 'TREE':
-            mangrooveData = result;
+            tracerData = result;
           break;
         case 'ROOT':
-            mangrooveData = roots;
+            tracerData = roots;
           break;
         case 'FRUIT':
-            mangrooveData = fruits;
+            tracerData = fruits;
           break;
         case 'LEAF':
-            mangrooveData = leaves;
+            tracerData = leaves;
           break;
         case 'FLOWER':
-            mangrooveData = flowers;
+            tracerData = flowers;
           break;
         default:
-          mangrooveData = result;
+          tracerData = result;
       }
     
     });
@@ -150,7 +150,7 @@ class _UserTreeListState extends State<UserTreeList> {
     List<TracerModel> filteredData = [];
 
     // Iterate through the original data and add matching items to the filtered list
-    for (var item in mangrooveData) {
+    for (var item in tracerData) {
       if (item.local_name.toLowerCase().contains(keyword.toLowerCase()) ||
           item.scientific_name.toLowerCase().contains(keyword.toLowerCase())) {
         filteredData.add(item);
@@ -158,8 +158,8 @@ class _UserTreeListState extends State<UserTreeList> {
     }
 
     setState(() {
-      // Update the mangrooveData with the filtered data
-      mangrooveData = filteredData;
+      // Update the tracerData with the filtered data
+      tracerData = filteredData;
     });
   }
 
@@ -225,15 +225,15 @@ class _UserTreeListState extends State<UserTreeList> {
             Expanded(
               child: searchKey == 'TREE' 
               ? ListView.builder(
-                itemCount: mangrooveData.length,
+                itemCount: tracerData.length,
                 itemBuilder: (context, index) {
-                  final imageData = mangrooveData[index];
-                  final mangroveId= mangrooveData[index].id;
+                  final imageData = tracerData[index];
+                  final mangroveId= tracerData[index].id;
 
                   return GestureDetector(
                     onTap: () {
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: userType,)));
-                        // final imageData = mangrooveData[index];
+                        // final imageData = tracerData[index];
                         // final snackBar = SnackBar(
                         //   content: Text('Tapped on ${imageData}'),
                         // );
@@ -257,10 +257,10 @@ class _UserTreeListState extends State<UserTreeList> {
                 },
               )
               : ListView.builder(
-                itemCount: mangrooveData.length,
+                itemCount: tracerData.length,
                 itemBuilder: (context, index) {
-                  final imageDt = mangrooveData[index];
-                  final mangId= mangrooveData[index].mangroveId;
+                  final imageDt = tracerData[index];
+                  final mangId= tracerData[index].mangroveId;
 
                   return GestureDetector(
                     onTap: () {
