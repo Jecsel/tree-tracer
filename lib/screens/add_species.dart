@@ -66,8 +66,8 @@ class _AddSpeciesState extends State<AddSpecies> {
   TextEditingController fruitDescInput = TextEditingController();
   TextEditingController fruitImputInput = TextEditingController();
 
-  MangroveDatabaseHelper? dbHelper;
-  List<TracerModel> mangroveDataList = [];
+  TracerDatabaseHelper? dbHelper;
+  List<TracerModel> tracerDataList = [];
   List<FruitModel> fruitDataList = [];
   List<LeafModel> leafDataList = [];
   List<FlowerModel> flowerDataList = [];
@@ -76,7 +76,7 @@ class _AddSpeciesState extends State<AddSpecies> {
   @override
   void initState() {
     super.initState();
-    dbHelper = MangroveDatabaseHelper.instance;
+    dbHelper = TracerDatabaseHelper.instance;
   }
 
   Future<Uint8List> fileToUint8List(File file) async {
@@ -89,12 +89,12 @@ class _AddSpeciesState extends State<AddSpecies> {
     return Uint8List.fromList(bytes);
   }
 
-  Future<void> _insertMangrooveData() async {
+  Future<void> _insertTracerData() async {
     print('======== tracerImage ========');
     print(tracerImage);
 
     if(tracerImage != null){
-      print('======== mangroveImages is not null ========');
+      print('======== tracerImages is not null ========');
 
       final List<int> bytes = await tracerImage!.readAsBytes();
       final List<int> rootBytes = await tracerImage!.readAsBytes();
@@ -108,7 +108,7 @@ class _AddSpeciesState extends State<AddSpecies> {
       final Uint8List leafImageBytes =  Uint8List.fromList(leafBytes);
       final Uint8List fruitImageBytes =  Uint8List.fromList(fruitBytes);
 
-      final newMangroove = TracerModel(
+      final newTracer = TracerModel(
         imagePath: treeImagePath,
         local_name: localNameController.text,
         scientific_name: scientificNameController.text,
@@ -120,12 +120,12 @@ class _AddSpeciesState extends State<AddSpecies> {
         favourite: 0
       );
       
-      final insertedMangrove = await dbHelper?.insertDBMangroveData(newMangroove);
+      final insertedTracer = await dbHelper?.insertDBTracerData(newTracer);
 
       
       for (var tracerImgPath in treeImagePathList) {
         final fav = FavouriteModel(
-          tracerId: insertedMangrove ?? 1,
+          tracerId: insertedTracer ?? 1,
           imagePath: tracerImgPath
         );
 
@@ -134,28 +134,28 @@ class _AddSpeciesState extends State<AddSpecies> {
 
       final newRoot = RootModel(
         imagePath: rootImagePath,
-        tracerId: insertedMangrove ?? 0,
+        tracerId: insertedTracer ?? 0,
         name: rootNameInput.text,
         description: rootDescInput.text,
       );
 
       final newFlower = FlowerModel(
         imagePath: flowerImagePath,
-        tracerId: insertedMangrove ?? 0,
+        tracerId: insertedTracer ?? 0,
         name: flowerNameInput.text,
         description: flowerDescInput.text
       );
 
       final newLeaf = LeafModel(
         imagePath: leafImagePath,
-        tracerId: insertedMangrove ?? 0,
+        tracerId: insertedTracer ?? 0,
         name: leafNameInput.text,
         description: leafDescInput.text,
       );
 
       final newFruit = FruitModel(
         imagePath: fruitImagePath,
-        tracerId: insertedMangrove ?? 0,
+        tracerId: insertedTracer ?? 0,
         name: fruitNameInput.text,
         description: fruitDescInput.text,
       );
@@ -406,7 +406,7 @@ class _AddSpeciesState extends State<AddSpecies> {
                         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                         child: ElevatedButton(
                           onPressed: () {
-                            _insertMangrooveData();
+                            _insertTracerData();
                             _gotoSearchList();
                           },
                           style: ElevatedButton.styleFrom(

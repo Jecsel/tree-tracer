@@ -58,9 +58,9 @@ class _HomeState extends State<Home> {
   File? localImage;
   File? takenImage;
   double perceptualResult = 0.0;
-  List<Map>? mangroveImages;
+  List<Map>? tracerImages;
   List<Map<String, dynamic>> similarImages = [];
-  late MangroveDatabaseHelper dbHelper;
+  late TracerDatabaseHelper dbHelper;
   bool isErrorShow = false;
   bool isLoading = false;
 
@@ -68,12 +68,12 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
       print("======= initState ===========");
-      dbHelper = MangroveDatabaseHelper.instance;
+      dbHelper = TracerDatabaseHelper.instance;
       fetchData();
   }
 
   Future<void> fetchData() async {
-    mangroveImages = await dbHelper.getImagesFromMangrove();
+    tracerImages = await dbHelper.getImagesFromTracer();
   }
 
   Future _getFromGallery() async {
@@ -88,17 +88,17 @@ class _HomeState extends State<Home> {
     print('pickFile');
     print(pickedFileFromGallery?.path);
 
-    print('mangroveImages');
-    print(mangroveImages!.length);
+    print('tracerImages');
+    print(tracerImages!.length);
     Navigator.pop(this.context);
 
     localImage = File(pickedFileFromGallery!.path);
 
-    for (Map mangroveImage in mangroveImages!) {
+    for (Map mangroveImage in tracerImages!) {
       String imagePath = mangroveImage['imagePath'];
-      print('mANGROVE imagePath');
+      print('TRACER imagePath');
       print(imagePath);
-      print('mANGROVE localImage');
+      print('TRACER localImage');
       print(localImage);
 
       print("mangroveImage['imageBlob']");
@@ -120,10 +120,10 @@ class _HomeState extends State<Home> {
 
        double similarityScore = 1.0;
       if (imagePath.startsWith('assets/')) {
-        print('======== mANGROVE UNA ========');
+        print('======== TRACER UNA ========');
         similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
       } else {
-        print('======== mANGROVE Pangalawa ========');
+        print('======== TRACER Pangalawa ========');
         similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
       }
 
@@ -180,10 +180,10 @@ class _HomeState extends State<Home> {
 
     Navigator.pop(this.context);
 
-    for (Map mangroveImage in mangroveImages!) {
+    for (Map mangroveImage in tracerImages!) {
       String imagePath = mangroveImage['imagePath'];
 
-      print('mANGROVE IMAGES');
+      print('TRACER IMAGES');
       print(imagePath);
 
       double similarityScore = 1.0;
@@ -523,7 +523,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       routes: {
-        '/mangrooves': (context) => Trees(),
+        '/tracers': (context) => Trees(),
         '/about_us': (context) => AboutUs(),
       },
     )

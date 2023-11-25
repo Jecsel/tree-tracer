@@ -23,13 +23,13 @@ class _ResultPageState extends State<FavoritePage> {
   String query = "";
  List<TracerModel>? searchResults;
 
-  late MangroveDatabaseHelper dbHelper;
+  late TracerDatabaseHelper dbHelper;
 
   @override
   void initState() {
     super.initState();
       print("======= initState ===========");
-       dbHelper = MangroveDatabaseHelper.instance;
+       dbHelper = TracerDatabaseHelper.instance;
        fetchData();
   }
 

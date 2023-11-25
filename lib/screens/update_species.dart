@@ -70,8 +70,8 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
   TextEditingController fruitDescInput = TextEditingController();
   TextEditingController fruitImputInput = TextEditingController();
 
-  MangroveDatabaseHelper? dbHelper;
-  List<TracerModel> mangroveDataList = [];
+  TracerDatabaseHelper? dbHelper;
+  List<TracerModel> tracerDataList = [];
   List<FruitModel> fruitDataList = [];
   List<LeafModel> leafDataList = [];
   List<FlowerModel> flowerDataList = [];
@@ -82,7 +82,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
   @override
   void initState() {
     super.initState();
-    dbHelper = MangroveDatabaseHelper.instance;
+    dbHelper = TracerDatabaseHelper.instance;
     fetchData();
   }
 
@@ -133,7 +133,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
       favourite: 0
     );
 
-    final insertedMangrove = await dbHelper?.updateTracerData(tracerUpdatedData);
+    final insertedTracer = await dbHelper?.updateTracerData(tracerUpdatedData);
   }
 
   _gotoSearchList() {
