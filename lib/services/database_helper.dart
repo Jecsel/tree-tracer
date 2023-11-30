@@ -604,6 +604,25 @@ Future<RootModel?> getOneRootData(int tracerId) async {
           'description': 'Sample Description',
           'family': 'Sample Family',
           'benifits': 'Sample Benifits',
+          'summary': '',
+          'uses': ''
+        },
+        {
+          'path': 'assets/images/alagau1.jpeg',
+          'image_paths': [
+            'assets/images/alagau1.jpeg',
+            'assets/images/alagau2.jpeg',
+            'assets/images/alagau3.jpeg',
+            'assets/images/alagau4.jpeg',
+            'assets/images/alagau5.jpeg',
+          ],
+          'local_name': 'Alagau',
+          'scientific_name': 'Sample Scientific Name',
+          'description': 'Sample Description',
+          'family': 'Sample Family',
+          'benifits': 'Sample Benifits',
+          'summary': '',
+          'uses': ''
         }
 
       ];
