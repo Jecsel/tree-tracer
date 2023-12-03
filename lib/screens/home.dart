@@ -287,12 +287,15 @@ class _HomeState extends State<Home> {
               child: Text('No'),
               onPressed: () {
                 Navigator.of(context).pop(false);
+                // Navigator.pushReplacement(
+                //   context, MaterialPageRoute(builder: (context) => Home()));
               },
             ),
             TextButton(
               child: Text('Yes'),
               onPressed: () {
-                Navigator.of(context).pop(true);
+                // Navigator.of(context).pop(true);
+                exit(0);
               },
             ),
           ],
@@ -470,7 +473,7 @@ class _HomeState extends State<Home> {
                 title: 'Exit',
                 index: 5,
                 onTap: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
                   _onBackPressed(context);
                 },
               ),

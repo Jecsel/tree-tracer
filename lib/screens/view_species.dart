@@ -221,7 +221,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                           AdminPage(userType: userType, searchKey: searchKey)));
             } else {
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Home()));
+                context, MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'user' )));
             }
           },
         ),
@@ -347,7 +347,7 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Benifits',
+                            tracerData?.benifits != '' ? 'Benifits' : '',
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Text(tracerData?.benifits ?? 'No Benifits'),

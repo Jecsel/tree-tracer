@@ -150,17 +150,22 @@ class _UserTreeListState extends State<UserTreeList> {
     List<TracerModel> filteredData = [];
 
     // Iterate through the original data and add matching items to the filtered list
-    for (var item in tracerData) {
-      if (item.local_name.toLowerCase().contains(keyword.toLowerCase()) ||
-          item.scientific_name.toLowerCase().contains(keyword.toLowerCase())) {
-        filteredData.add(item);
+    if(keyword != '') {
+      for (var item in tracerData) {
+        if (item.local_name.toLowerCase().contains(keyword.toLowerCase())) {
+          filteredData.add(item);
+        }
       }
+
+      setState(() {
+        // Update the tracerData with the filtered data
+        tracerData = filteredData;
+      });
+    } else {
+      fetchData();
+      
     }
 
-    setState(() {
-      // Update the tracerData with the filtered data
-      tracerData = filteredData;
-    });
   }
 
   @override
