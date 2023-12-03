@@ -21,7 +21,10 @@ class ViewSpecies extends StatefulWidget {
   final String category; // What category of TREE, ROOT, ETC.
   final String userType; //What type of User
 
-  ViewSpecies({required this.tracerId, required this.category, required this.userType}); // Constructor that accepts data
+  ViewSpecies(
+      {required this.tracerId,
+      required this.category,
+      required this.userType}); // Constructor that accepts data
 
   @override
   State<StatefulWidget> createState() => _ViewSpeciesState();
@@ -46,21 +49,20 @@ class _ViewSpeciesState extends State<ViewSpecies> {
 
   Future<void> fetchData() async {
     int tracerId = widget.tracerId;
-    TracerModel? mangroveResultData =
-        await dbHelper.getOneTracerData(tracerId);
+    TracerModel? mangroveResultData = await dbHelper.getOneTracerData(tracerId);
     RootModel? rootResultData = await dbHelper.getOneRootData(tracerId);
     FlowerModel? flowerResultData = await dbHelper.getOneFlowerData(tracerId);
     LeafModel? leafResultData = await dbHelper.getOneLeafData(tracerId);
     FruitModel? fruitResultData = await dbHelper.getOneFruitData(tracerId);
 
-    List<FavouriteModel>? tracerFavs = await dbHelper.getFavouriteDataList(tracerId);
+    List<FavouriteModel>? tracerFavs =
+        await dbHelper.getFavouriteDataList(tracerId);
 
     for (var imgPaths in tracerFavs) {
       tempTracerFileImageArray.add(File(imgPaths.imagePath));
     }
 
     setState(() {
-
       tracerData = mangroveResultData;
       rootData = rootResultData;
       fruitData = fruitResultData;
@@ -85,12 +87,15 @@ class _ViewSpeciesState extends State<ViewSpecies> {
   Future<void> addToFavourite() async {
     tracerData?.favourite = tracerData!.favourite == 0 ? 1 : 0;
 
-    var msg = tracerData!.favourite == 1 ? "Added to Favourite!" : "Removed to Favourite!";
+    var msg = tracerData!.favourite == 1
+        ? "Added to Favourite!"
+        : "Removed to Favourite!";
 
     final snackBar = SnackBar(content: Text(msg));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-    await dbHelper.updateFavouriteStatus(tracerData!.id ?? 1, tracerData?.favourite ?? 1);
+    await dbHelper.updateFavouriteStatus(
+        tracerData!.id ?? 1, tracerData?.favourite ?? 1);
 
     setState(() {
       tracerData!.favourite = tracerData!.favourite;
@@ -106,18 +111,18 @@ class _ViewSpeciesState extends State<ViewSpecies> {
   _gotoSearchList() {
     String userType = widget.userType;
     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-            AdminPage(searchKey: 'TREE', userType: userType)));
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                AdminPage(searchKey: 'TREE', userType: userType)));
   }
 
   _gotoUpdateSpecies() {
     int tracerId = widget.tracerId;
     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => UpdateSpecies(tracerId: tracerId)));
+        context,
+        MaterialPageRoute(
+            builder: (context) => UpdateSpecies(tracerId: tracerId)));
   }
 
   Future<Widget> loadImageFromFile(String filePath) async {
@@ -134,11 +139,16 @@ class _ViewSpeciesState extends State<ViewSpecies> {
     }
 
     // If no valid image is found, return a default placeholder
-    return Image.asset("assets/images/default_placeholder.png"); // You can replace this with your placeholder image
+    return Image.asset(
+        "assets/images/default_placeholder.png"); // You can replace this with your placeholder image
   }
 
   Future<void> _gotoSimilarTrees() async {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserTreeList(searchKey:'TREE', userType: 'User')));
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                UserTreeList(searchKey: 'TREE', userType: 'User')));
   }
 
   Future<Widget> loadImage(String filePath) async {
@@ -156,8 +166,8 @@ class _ViewSpeciesState extends State<ViewSpecies> {
 
     // If no valid image is found, return a default placeholder
     return Image.asset("assets/images/default_placeholder.png",
-      width: 80,
-      height: 80); // You can replace this with your placeholder image
+        width: 80,
+        height: 80); // You can replace this with your placeholder image
   }
 
   Widget _buildDrawerItem({
@@ -172,14 +182,12 @@ class _ViewSpeciesState extends State<ViewSpecies> {
     );
   }
 
-  Future<void> removeImageInArray(int index)  async {
-
+  Future<void> removeImageInArray(int index) async {
     setState(() {
       tempTracerFileImageArray.removeAt(index);
 
       print('tempTracerFileImageArray');
       print(tempTracerFileImageArray);
-
     });
   }
 
@@ -191,24 +199,32 @@ class _ViewSpeciesState extends State<ViewSpecies> {
       appBar: AppBar(
         title: const Text('Tree Info'),
         flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
-              ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 24, 122, 0),
+                Color.fromARGB(255, 82, 209, 90)
+              ],
             ),
           ),
+        ),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back), // Add your arrow icon here
-            onPressed: () {
-              if(userType == 'Admin') {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminPage(userType: userType, searchKey: searchKey)));
-              } else {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
-              }
-            },
-          ),
+          icon: Icon(Icons.arrow_back), // Add your arrow icon here
+          onPressed: () {
+            if (userType == 'Admin') {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AdminPage(userType: userType, searchKey: searchKey)));
+            } else {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            }
+          },
+        ),
         actions: <Widget>[
           Visibility(
             visible: userType == 'Admin',
@@ -236,7 +252,12 @@ class _ViewSpeciesState extends State<ViewSpecies> {
           Visibility(
             visible: userType != 'Admin' && tracerData != null,
             child: IconButton(
-              icon: tracerData?.favourite == 1 ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border),
+              icon: tracerData?.favourite == 1
+                  ? Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    )
+                  : Icon(Icons.favorite_border),
               onPressed: () {
                 addToFavourite();
               },
@@ -251,9 +272,9 @@ class _ViewSpeciesState extends State<ViewSpecies> {
             child: Column(
               children: <Widget>[
                 Container(
-                      height: 150.0,
-                      child: tempTracerFileImageArray.length > 0 ? 
-                        ListView.builder(
+                  height: 150.0,
+                  child: tempTracerFileImageArray.length > 0
+                      ? ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: tempTracerFileImageArray.length,
                           itemBuilder: (context, index) {
@@ -261,12 +282,14 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                               padding: EdgeInsets.all(8.0),
                               child: Stack(
                                 children: [
-
                                   FutureBuilder<Widget>(
-                                    future: loadImageFromFile(tempTracerFileImageArray[index].path),
+                                    future: loadImageFromFile(
+                                        tempTracerFileImageArray[index].path),
                                     builder: (context, snapshot) {
-                                      if (snapshot.connectionState == ConnectionState.done) {
-                                        return snapshot.data ?? CircularProgressIndicator();
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        return snapshot.data ??
+                                            CircularProgressIndicator();
                                       } else {
                                         return CircularProgressIndicator(); // Or another loading indicator
                                       }
@@ -277,13 +300,12 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                             );
                           },
                         )
-
-                        : Image.asset(
-                            'assets/images/default_placeholder.png',
-                            height: 150,
-                            width: 150,
-                          ),
-                    ),
+                      : Image.asset(
+                          'assets/images/default_placeholder.png',
+                          height: 150,
+                          width: 150,
+                        ),
+                ),
 
                 // FutureBuilder<Widget>(
                 //   future: loadImageFromFile(tracerData?.imagePath ?? ''),
@@ -302,56 +324,46 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Scientific Name: ${tracerData?.scientific_name}' ?? 'No Scientific Name',
+                  'Scientific Name: ${tracerData?.scientific_name}' ??
+                      'No Scientific Name',
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontStyle: FontStyle.italic
-                  ),
+                      color: Colors.grey, fontStyle: FontStyle.italic),
                 ),
                 Text(
                   'Family: ${tracerData?.family}' ?? 'No Family',
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontStyle: FontStyle.italic
-                  ),
+                      color: Colors.grey, fontStyle: FontStyle.italic),
                 ),
                 SizedBox(height: 10),
                 Text(tracerData?.description ?? 'No Description'),
 
                 SizedBox(height: 20),
                 Container(
-                  width: double.infinity,
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Benifits',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600
+                    width: double.infinity,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Benifits',
+                            style: TextStyle(fontWeight: FontWeight.w600),
                           ),
-                        ),
-                        Text(tracerData?.benifits ?? 'No Benifits'),
-                        Text(
-                          'Uses',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600
+                          Text(tracerData?.benifits ?? 'No Benifits'),
+                          Text(
+                            tracerData?.uses != '' ? 'Uses' : '',
+                            style: TextStyle(fontWeight: FontWeight.w600),
                           ),
-                        ),
-                        Text(tracerData?.uses ?? 'No Uses'),
-                        // ElevatedButton(
-                        //   onPressed: () => _gotoSimilarTrees(),
-                        //   child: Text('Similar Trees'),
-                        // ),
-                      ],
-                  )
-,
-                  )
-                   
-                ),
-                ],
+                          Text(tracerData?.uses ?? 'No Uses'),
+                          // ElevatedButton(
+                          //   onPressed: () => _gotoSimilarTrees(),
+                          //   child: Text('Similar Trees'),
+                          // ),
+                        ],
+                      ),
+                    )),
+              ],
             ),
           ),
         ),
