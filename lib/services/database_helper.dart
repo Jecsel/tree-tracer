@@ -615,6 +615,23 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/alauihau1.jpeg',
+          'image_paths': [
+            'assets/images/alauihau1.jpeg',
+            'assets/images/alauihau2.jpeg',
+            'assets/images/alauihau3.jpeg',
+          ],
+          'local_name': 'Alauihau',
+          'scientific_name': 'Aglaia cumingiana Turez.',
+          'description':
+              'Alauihau is a tree native to Southeast Asia. It belongs to the Meliacee family. The tree is known for its hardwood and has various uses in traditional practices. In some regions, its parts are employed for medicinal purposes, while the timber is utilized in construction and woodworking. Additionally, the tree might have cultural significance in certain communities.',
+          'family': 'Meliacee',
+          'benifits':
+              'Alauihau provides valuable benefits, including high-quality timber for construction and furniture, while its traditional medicinal uses contribute to local healthcare practices in Southeast Asia.',
+          'summary': '',
+          'uses': '',
+        },
+        {
           'path': 'assets/images/apitong1.jpeg',
           'image_paths': [
             'assets/images/apitong1.jpeg',
@@ -666,6 +683,23 @@ class TracerDatabaseHelper {
               'Balinghasay fruits are edible but not so tasty.  Therefore these are not sold but are popularly eaten by local people and aborigines.',
           'summary': '',
           'uses': '',
+        },
+        {
+          'path': 'assets/images/balit1.jpeg',
+          'image_paths': [
+            'assets/images/balit1.jpeg',
+            'assets/images/balit2.jpeg',
+            'assets/images/balit3.jpeg',
+          ],
+          'local_name': 'Balit',
+          'scientific_name': 'Matthaea sancta Blume var vensulosa Perk.',
+          'description':
+              'Shrub or small tree, rarely to 15 m; Leaves lanceolate-oblong to oblong, 15.5-31 by 3.5-9.5 cm, acuminate, base broadly cuneate, truncate or rounded, chartaceous, often somewhat bullate, margin entire or dentate distally, glabrous; Inflorescences axillary, solitary or fascicled.',
+          'family': 'Monimiaceae',
+          'benifits': '',
+          'summary': '',
+          'uses':
+              'The wood is heavy and branches are used in building houses. The leaves are smoked with tobacco to relieve headaches.',
         },
         {
           'path': 'assets/images/batikuling1.jpeg',
@@ -735,6 +769,24 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/batitinan1.jpeg',
+          'image_paths': [
+            'assets/images/batitinan1.jpeg',
+            'assets/images/batitinan2.jpeg',
+            'assets/images/batitinan3.jpeg',
+          ],
+          'local_name': 'Batitinan',
+          'scientific_name': 'Lagerstroemia pyriformis Koehne',
+          'description':
+              'Batitinan commonly known as the pear-shaped Lagerstroemia or Pyriform Crapemyrtle, is a species of flowering tree native to Southeast Asia, particularly found in Vietnam. It belongs to the family Lythraceae. This deciduous tree is known for its attractive, peeling bark and clusters of showy, pear-shaped flower buds that resemble small fruits. The flowers bloom into white or pale pink blossoms, adding ornamental value to the tree. In addition to its aesthetic appeal, Lagerstroemia pyriformis is cultivated for its hardiness and ability to adapt to various soil types.',
+          'family': 'Lythraceae',
+          'benifits':
+              'It provides ornamental value with its attractive peeling bark and clusters of pear-shaped flower buds, making it a popular choice in landscaping, while its adaptability to different soil types, resilience, and potential to offer shade contribute to its environmental and aesthetic benefits. Additionally, the tree may serve as habitat for wildlife, assist in soil erosion control, and hold cultural significance in certain regions.',
+          'summary': '',
+          'uses':
+              'The heartwood is a light olive gray to dark grayish brown; the sapwood is whitish when fresh, turning grayish brown on exposure, it is sometimes a thin band 1 - 2cm wide and sharply demarcated, whilst at other times it can be 4 - 6cm wide and merging gradually into the heartwood. In wood from young, fast-growing trees the sapwood is hardly distinguishable from the heartwood after seasoning. The texture is fine and dense; the grain generally straight, sometimes with a short, very regular wave. The wood is hard; heavy; very durable, being rarely attacked even by termites or toredo. It seasons with little warping, but is liable to split badly at the ends; logs and freshly trimmed ends of sawn lumber should be painted to prevent splitting. The wood is rather difficult to work, but takes a beautifully smooth surface under sharp tools. It is used for purposes such as ship, wharf, and bridge building, including salt-water piles; ties; paving blocks; sills; posts; beams, joists, rafters; flooring, interior finish; furniture, cabinetwork.',
+        },
+        {
           'path': 'assets/images/binukau1.jpg',
           'image_paths': [
             'assets/images/binukau1.jpg',
@@ -767,6 +819,24 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Wood used for fancy woodwork and furniture. Bark has reported medicinal properties.',
+        },
+        {
+          'path': 'assets/images/busisi1.jpeg',
+          'image_paths': [
+            'assets/images/busisi1.jpeg',
+            'assets/images/busisi2.jpeg',
+            'assets/images/busisi3.jpeg',
+          ],
+          'local_name': 'Busisi',
+          'scientific_name': 'Melastoma malabathricum',
+          'description':
+              'Busisi is a spreading shrub growing to a height of 2 meters. Twigs and flower stalks are rough with small, triangular, upward pointing scales. Leaves are broadly lanceolate, 7 to 12 centimeters long, slightly rough and hairy on both surfaces. Flowers are 4 to 7 centimeters across, clustered, and mauve purple. Calyx is closely set with short, chaffy, silky or silvery scales. Fruit is ovoid, about 6 millimeters wide and pulpy within.',
+          'family': 'Melastomataceae',
+          'benifits':
+              'Melastoma malabathricum is believed to offer potential health benefits, as some traditional practices use its parts for medicinal purposes, suggesting antioxidant and anti-inflammatory properties that may contribute to overall well-being.',
+          'summary': '',
+          'uses':
+              'The Melastoma malabathricum tree has diverse uses, with its leaves and roots being employed in traditional medicine for treating ailments, while its berries are utilized in culinary practices or as a source of natural dyes in certain regions.',
         },
         {
           'path': 'assets/images/dalingdingan1.jpg',
@@ -1044,6 +1114,23 @@ class TracerDatabaseHelper {
           'description': '',
           'family': 'Lauraceae',
           'benifits': '',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/malasantol1.jpeg',
+          'image_paths': [
+            'assets/images/malasantol1.jpeg',
+            'assets/images/malasantol2.jpeg',
+            'assets/images/malasantol3.jpeg',
+          ],
+          'local_name': 'Malasantol',
+          'scientific_name': 'Sandoricum vidalii Merr.',
+          'description':
+              'Santol is a large, ornamental evergreen tree with a dense, narrowly oval crown; it usually grows around 25 metres tall but with some specimens up to 50 metres. The bole, which is sometimes straight but often crooked or fluted, is branchless for up to 18 metres; has a diameter up to 100 cm; and buttresses up to 3 metres high[303, 459]. The tree yields an edible fruit that is popular in parts of the tropics. It also has a wide range of traditional medicinal uses and produces a useful timber. It is often cultivated in tropical areas, especially for its edible fruit and as an ornamental in parks, along roads etc.',
+          'family': 'Meliaceae',
+          'benifits':
+              'Sandoricum vidalii Merr. is valued for its fruit, which, when consumed, may provide essential nutrients and potential health-promoting compounds, contributing to a balanced diet and overall well-being. Additionally, the tree may have applications in traditional medicine or local practices, although the extent of such uses can vary regionally.',
           'summary': '',
           'uses': '',
         },
