@@ -689,7 +689,7 @@ class TracerDatabaseHelper {
           'image_paths': [
             'assets/images/balit1.jpeg',
             'assets/images/balit2.jpeg',
-            'assets/images/balit3.jpeg',
+            'assets/images/balit3.jpg',
           ],
           'local_name': 'Balit',
           'scientific_name': 'Matthaea sancta Blume var vensulosa Perk.',
@@ -825,7 +825,7 @@ class TracerDatabaseHelper {
           'image_paths': [
             'assets/images/busisi1.jpeg',
             'assets/images/busisi2.jpeg',
-            'assets/images/busisi3.jpeg',
+            'assets/images/busisi3.jpg',
           ],
           'local_name': 'Busisi',
           'scientific_name': 'Melastoma malabathricum',
