@@ -1348,8 +1348,9 @@ class TracerDatabaseHelper {
               'The wood is used for temporary construction and cheap grades of veneer and plywood; it is also used for making canoes.',
         },
         {
-          'path': 'assets/images/malapaho1.png',
+          'path': 'assets/images/malapaho.png',
           'image_paths': [
+            'assets/images/malapaho1.png',
             'assets/images/malapaho2.png',
           ],
           'local_name': 'Malapaho',
