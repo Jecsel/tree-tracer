@@ -552,7 +552,7 @@ class TracerDatabaseHelper {
 
   Future<void> initiateUserData(TracerDatabaseHelper dbHelper) async {
     // TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
-    final newUser = UserModel(username: 'admin', password: '123123123');
+    final newUser = UserModel(username: 'treetracer2023', password: '88888888');
     final registeredUser = await dbHelper.registerUser(newUser);
   }
 
@@ -615,19 +615,39 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
-          'path': 'assets/images/alauihau1.jpeg',
+          'path': 'assets/images/alakaakpula1.jpeg',
           'image_paths': [
-            'assets/images/alauihau1.jpeg',
-            'assets/images/alauihau2.jpeg',
-            'assets/images/alauihau3.jpeg',
+            'assets/images/alakaakpula1.jpeg',
+            'assets/images/alakaakpula2.jpeg',
+            'assets/images/alakaakpula3.jpeg',
+            'assets/images/alakaakpula4.jpeg',
+            'assets/images/alakaakpula5.jpeg',
           ],
-          'local_name': 'Alauihau',
-          'scientific_name': 'Aglaia cumingiana Turez.',
+          'local_name': 'Alakaak Pula',
+          'scientific_name': 'Palaqium aureum Elm. Ex Merr.',
           'description':
-              'Alauihau is a tree native to Southeast Asia. It belongs to the Meliacee family. The tree is known for its hardwood and has various uses in traditional practices. In some regions, its parts are employed for medicinal purposes, while the timber is utilized in construction and woodworking. Additionally, the tree might have cultural significance in certain communities.',
-          'family': 'Meliacee',
+              'Palaquium aureum is a hardwood tree that can reach heights of up to 25 meters. It is known for its valuable timber, which is used in various applications, including construction, furniture making, and boat building. The wood has a reddish-brown to dark brown color and is prized for its durability and resistance to decay. This tree species is found in various regions of the Philippines, particularly in lowland and mountain forests. The conservation status of Palaquium aureum may vary, but like many native tree species in the Philippines, it may face conservation challenges due to deforestation and habitat loss.',
+          'family': 'Sapotaceae',
+          'benifits': '',
+          'summary': '',
+          'uses':
+              'The timber of Palaquium aureum is highly valued in the Philippines for its strength and resistance to termites. It is commonly used in traditional house construction, furniture, and other woodworking applications.',
+        },
+        {
+          'path': 'assets/images/alim1.jpg',
+          'image_paths': [
+            'assets/images/alim1.jpg',
+            'assets/images/alim4.jpg',
+            'assets/images/alim5.jpg',
+            'assets/images/alim6.jpg',
+          ],
+          'local_name': 'Alim',
+          'scientific_name': 'Melanolepis multiglandulosa var',
+          'description':
+              'Alim is a shrub or small tree, 4 to 10 meters high, with stellate hairs giving a velvety appearance. Leaves are large, orbicular-ovate, 10 to 25 centimeters long, very broad, with a heart-shaped base, pointed at the tip, and often deeply three- to five-lobed, with coarsely toothed margins. Flowers are greenish yellow.',
+          'family': 'Euphorbiaceae',
           'benifits':
-              'Alauihau provides valuable benefits, including high-quality timber for construction and furniture, while its traditional medicinal uses contribute to local healthcare practices in Southeast Asia.',
+              'Decoction of leaves used as vermifuge. - Bark used for chest pains; leaves or flowers on the wrist for fever. - In Papua, New Guinea, one of the plants used to treat centipede and snake bites. Bark is chewed, juice swallowed or rubbed on affected area.',
           'summary': '',
           'uses': '',
         },
@@ -648,6 +668,24 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/bago1.jpg',
+          'image_paths': [
+            'assets/images/bago1.jpg',
+            'assets/images/bago2.jpg',
+            'assets/images/bago3.jpg',
+          ],
+          'local_name': 'Bago',
+          'scientific_name': 'Gnetum gnemon L. Var',
+          'description':
+              'The bago tree is characterized by its glossy, elliptical leaves and can grow up to 25 meters in height. It produces small, yellowish-green flowers and oval-shaped fruits that are about 2-3 centimeters long. Melinjo is native to Southeast Asia and is commonly found in countries like Indonesia, Malaysia, and the Philippines.',
+          'family': 'Gnetaceae',
+          'benifits':
+              'The seeds of *Gnetum gnemon* are the most valuable part. Known as belinjo or emping, these seeds are edible and have a slightly bitter taste. They are often used in various culinary preparations. The seeds are rich in protein, healthy fats, and essential minerals. They also contain antioxidants. In traditional medicine, various parts of the melinjo tree are used for their potential medicinal properties. Extracts from the leaves and bark have been studied for their antioxidant and anti-inflammatory effects.',
+          'summary': '',
+          'uses':
+              'Bago seeds are commonly used in Indonesian cuisine. They are often processed into chips (emping) or used in traditional dishes, adding a unique flavor to the food. The seeds can be pressed to extract melinjo oil, which is used for cooking and has potential health benefits due to its nutritional content. Different parts of the tree, including leaves and bark, are used in traditional medicine for various purposes, including treating skin conditions and inflammation.',
+        },
+        {
           'path': 'assets/images/bagwakmorado1.jpeg',
           'image_paths': [
             'assets/images/bagwakmorado1.jpeg',
@@ -665,6 +703,22 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Bagawak Morado is known to have various traditional medicinal uses in the Philippines and other regions where it is found. Feer Reduction: The leaves of Bagawak Morado are sometimes used to prepare herbal remedies for reducing fever. They may be brewed into a tea or decoction and consumed for their potential antipyretic (fever-reducing) properties. Pain Relief: In traditional medicine, parts of the tree, including the leaves and bark, may be used to alleviate pain, such as headaches and body aches. Anti-Inflammatory: Some preparations made from Bagawak Morado are believed to have anti-inflammatory properties and may be used to treat inflammatory conditions. Antioxidant: The plant may contain compounds with antioxidant properties, which could help protect cells from oxidative stress and related health issues. Digestive Ailments In some traditional remedies, Bagawak Morado may be used to address digestive problems, such as indigestion or stomach discomfort. Wound Healing: Extracts or poultices made from various parts of the tree are sometimes applied topically to wounds or skin irritations to promote healing.',
+        },
+        {
+          'path': 'assets/images/bahai1.jpg',
+          'image_paths': [
+            'assets/images/bahai1.jpg',
+            'assets/images/bahai2.jpg',
+            'assets/images/bahai3.jpeg',
+          ],
+          'local_name': 'Bahai',
+          'scientific_name': 'Ormosia calavensis',
+          'description':
+              'Small sub-canopy tree (up to 20 m high); Bole cylindrical (up to 60 cm diam.); straight (bole up to 8 m long); buttresses buttresses present; spines spines absent; aerial roots aerial roots absent; stilt roots stilt roots absent; Bark grey or dark brown, rough, fissured or pustular, lenticels elongated vertically; Subrhytidome (under-bark) pale yellow; less than 25 mm thick; bark blaze with two layers; faintly to non-aromatic; outer blaze pale yellow, with stripes (brown); inner blaze white (cream-coloured), with stripes (brown); bark exudate (sap) absent; terminal buds not enclosed by leaves.',
+          'family': 'Fabaceae/Papilionaceae',
+          'benifits': '',
+          'summary': '',
+          'uses': '',
         },
         {
           'path': 'assets/images/balinghasay1.jpg',
@@ -720,6 +774,94 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/batitinan1.jpeg',
+          'image_paths': [
+            'assets/images/batitinan1.jpeg',
+            'assets/images/batitinan2.jpeg',
+            'assets/images/batitinan3.jpeg',
+          ],
+          'local_name': 'Batitinan',
+          'scientific_name': 'Lagerstroemia pyriformis Koehne',
+          'description':
+              'Batitinan commonly known as the pear-shaped Lagerstroemia or Pyriform Crapemyrtle, is a species of flowering tree native to Southeast Asia, particularly found in Vietnam. It belongs to the family Lythraceae. This deciduous tree is known for its attractive, peeling bark and clusters of showy, pear-shaped flower buds that resemble small fruits. The flowers bloom into white or pale pink blossoms, adding ornamental value to the tree. In addition to its aesthetic appeal, Lagerstroemia pyriformis is cultivated for its hardiness and ability to adapt to various soil types.',
+          'family': 'Lythraceae',
+          'benifits':
+              'It provides ornamental value with its attractive peeling bark and clusters of pear-shaped flower buds, making it a popular choice in landscaping, while its adaptability to different soil types, resilience, and potential to offer shade contribute to its environmental and aesthetic benefits. Additionally, the tree may serve as habitat for wildlife, assist in soil erosion control, and hold cultural significance in certain regions.',
+          'summary': '',
+          'uses':
+              'The heartwood is a light olive gray to dark grayish brown; the sapwood is whitish when fresh, turning grayish brown on exposure, it is sometimes a thin band 1 - 2cm wide and sharply demarcated, whilst at other times it can be 4 - 6cm wide and merging gradually into the heartwood. In wood from young, fast-growing trees the sapwood is hardly distinguishable from the heartwood after seasoning. The texture is fine and dense; the grain generally straight, sometimes with a short, very regular wave. The wood is hard; heavy; very durable, being rarely attacked even by termites or toredo. It seasons with little warping, but is liable to split badly at the ends; logs and freshly trimmed ends of sawn lumber should be painted to prevent splitting. The wood is rather difficult to work, but takes a beautifully smooth surface under sharp tools. It is used for purposes such as ship, wharf, and bridge building, including salt-water piles; ties; paving blocks; sills; posts; beams, joists, rafters; flooring, interior finish; furniture, cabinetwork.',
+        },
+        {
+          'path': 'assets/images/batobato1.jpg',
+          'image_paths': [
+            'assets/images/batobato1.jpg',
+            'assets/images/batobato2.jpg',
+            'assets/images/batobato3.jpg',
+            'assets/images/batobato4.jpg',
+          ],
+          'local_name': 'Bato-bato',
+          'scientific_name': 'Drypetes littoralis Pax & K. Hoffm.',
+          'description':
+              'Trees; branches terete, glabrous. Petiole stout, 3-6 mm; leaf blade oblong to oblong-ovate, falcate, 6-10 by 3.5-5 cm, leathery, base acute or broadly cuneate, margin entire, apex obtuse or acute. Flowers not seen. Drupes solitary or 3- or 4-clustered, ellipsoid-ovoid, 12-15 by 8-10 mm; exocarp leathery, appressed-pubescent. Fr. May-Jun.',
+          'family': 'Euphorbiaceae',
+          'benifits': '',
+          'summary': '',
+          'uses':
+              'To protect food against pests, as an aphrodisiac, a stimulant/depressant, a rodenticide and a fish poison, against insect bites, to induce conception and for general healing.',
+        },
+        {
+          'path': 'assets/images/betis.jpeg',
+          'image_paths': [
+            'assets/images/betis.jpeg',
+            'assets/images/betis2.jpg',
+            'assets/images/betis3.jpeg',
+          ],
+          'local_name': 'Betis',
+          'scientific_name': 'Madhuca betis Macbr. & Merr.',
+          'description':
+              'Betis is a good-sized tree reaching a height of 30 meters. Bark is brown and ridged. Leaves are clustered at the ends of the branchlets, oblong-obovate, 20 to 25 centimeters long, 7 to 9 centimeters wide, smooth on the upper surface, very hairy beneath, pointed at both ends. Flowers are numerous, hairy, pale white, borne in rounded clusters. Fruit is ellipsoid, brownish, grows upon thickened smooth stalks, 3 to 4 centimeters long, with a large and shiny seed. Madhuca betis is a deciduous tree growing up to 35 metres tall. The bole can be up to 80cm in diameter.',
+          'family': 'Sapotaceae',
+          'benifits':
+              'The bark and the leaves are used as a treatment for stomach pains in children. A latex obtained from the inner bark is applied to the abdomen in order to expel worms. The powdered bark is used as a snuff to provoke sneezing. The plant is listed as Vulnerable in the IUCN Red List of Threatened Species(1998) due to overexploitation and habitat destruction.',
+          'summary': '',
+          'uses':
+              'Its fruit is gathered from the wild for local use as an oil for lamps etc. The timber is exploited locally.',
+        },
+        {
+          'path': 'assets/images/bilis.jpeg',
+          'image_paths': [
+            'assets/images/bilis.jpeg',
+            'assets/images/bilis2.jpeg',
+            'assets/images/bilis3.jpeg',
+          ],
+          'local_name': 'Bilis',
+          'scientific_name': 'Heterospathe sibuyanensis',
+          'description':
+              'Heterospathe is a monoecious genus of flowering plant in the palm family found in Oceania, where it is called sagisi palm. With 39 species, Heterospathe is named from a Greek combination of "various" and "spathe", which describes the two distinct bract types.',
+          'family': 'Palmaceae',
+          'benifits': '',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/binayuyu.jpg',
+          'image_paths': [
+            'assets/images/binayuyu.jpg',
+            'assets/images/binayuyu2.jpeg',
+            'assets/images/binayuyu3.jpeg',
+          ],
+          'local_name': 'Binayuyu',
+          'scientific_name': 'Antidesma ghaesembilla',
+          'description':
+              'Binayuyo is a small deciduous tree growing to a height of 16 meters. Bark is light grey. Leaves are simple, alternate, shortly petioled, broadly elliptic or orbicular obovate, 6 to 11 centimeters long; margins entire and pubescent; base rounded, rarely obtuse; apex rounded, sometimes mucronate. Male flowers are yellowish green, grouped into much branched spikes. Sepals usually 5, with 4 to 5, 2 to 2.5 millimeters long stamens with filaments free. Female flowers are many, grouped in branched racemes with very short pedicels. Drupes are small, about 4.5 millimeters in diameter, dark purple when ripe and agreeably acid. A tree up to 20 m tall; young twigs pubescent. Stipules needlelike, 3-6 by 0.5-1 mm, pubescent, caducous; petiole 4-10 mm, pubescent; leaf blade oblong, more rarely ovate or obovate, 3-7 by 3-5 cm, papery to thinly leathery, pubescent to glabrous especially adaxially, often only major veins and margin pubescent, dull or shiny adaxially, dull abaxially, drying olive green to reddish green, base rounded to cordate, rarely obtuse, apex rounded, more rarely obtuse or acute, sometimes mucronate or retuse; domatia sometimes present; midvein flat adaxially, lateral veins 5-7 pairs, tertiary veins reticulate to weakly percurrent. Inflorescences axillary and terminal, axes reddish pubescent, males 4-8 cm, 1-20 branched, females 2-3 10-20 branched; fruiting 4-7 cm. Male flowers sessile; sepals  4 or 5, free, 0.5-1 mm, deltoid to oblong, pubescent outside, glabrous inside, apex acute to obtuse; disk consisting of 4-7 free alternistaminal obconical lobes, pubescent; stamens 4 or 5, 2-2.5 m; rudimentary ovary obconical. Female including fruiting pedicels 0-1 mm; sepals as in male; disk glabrous to pubescent especially at margin; ovary pubescent; stigmas  2 or 3. Drupes ellipsoid, laterally compressed, 3-4 by 2.5-3 mm, sparsely pubescent; style terminal to more rarely subterminal. ',
+          'family': 'Phyllanthaceae',
+          'benifits':
+              'Leaves and fruits are edible. Fully ripe fruit can be eaten raw, cooked, pickled, or made into jams and jellies. In India, leaves used as vegetable in rural areas of Western Ghats. In Odisha, fruits used as ingredient in meat and fish curry preparations. Fruits are crushed and soaked in water to make a cordial-like drink. When eaten or drunk, lips and tongues are stained a blue-purple color. ',
+          'summary': '',
+          'uses':
+              'Wood: Used for construction. fences, industrial and domestic woodware, tool handles. Calendar plant: In Australia, it is a calendar plant: during Gaynwarr, the cuckoo birds, dowo min (Mangarrrayi) or jowogban (Yangman) calls out during the buildup, telling the people that the fruit is ready for harvest. ',
+        },
+        {
           'path': 'assets/images/bakan1.jpeg',
           'image_paths': [
             'assets/images/bakan1.jpeg',
@@ -737,9 +879,25 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
-          'path': 'assets/images/banaibanai1.png',
+          'path': 'assets/images/balakat1.jpeg',
           'image_paths': [
-            'assets/images/banaibanai1.png',
+            'assets/images/balakat1.jpeg',
+            'assets/images/balakat2.jpeg',
+            'assets/images/balakat3.jpeg',
+          ],
+          'local_name': 'Balakat-gubat',
+          'scientific_name': 'Sapium luzonicum',
+          'description':
+              'Balakat Gubat, is a medium-sized tree native to the Philippines, belonging to the Euphorbiaceae family; it reaches heights of about 15 meters, and its wood is utilized for construction and furniture, while certain parts are employed in traditional medicine by local communities. This tree is known for its timber and medicinal uses. ',
+          'family': 'Euphorbiaceae',
+          'benifits':
+              'Balakat Gubat, offers several benefits. Its wood is valuable for construction and furniture, and parts of the tree are used in traditional medicine for their potential therapeutic properties. Additionally, the tree may have cultural significance in certain regions.',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/banaibanai2.png',
+          'image_paths': [
             'assets/images/banaibanai2.png',
           ],
           'local_name': 'Banai-banai',
@@ -748,6 +906,23 @@ class TracerDatabaseHelper {
               'It is a small tree with 30 cm diameter in the average. The bole is generally straight and regular, 8 to 12 m long. Buttresses up to 2 m high.',
           'family': 'Bignoniaceae',
           'benifits': '',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/basan1.jpg',
+          'image_paths': [
+            'assets/images/basan1.jpg',
+            'assets/images/basan2.jpg',
+            'assets/images/basan3.png',
+          ],
+          'local_name': 'Basan',
+          'scientific_name': 'Garcinia garciae Scheff.',
+          'description':
+              'Basan commonly known as Malabar tamarind or Garcinia cambogia it is a tropical evergreen tree native to Southeast Asia. It produces small, pumpkin-shaped fruits that are yellow or green when ripe. ',
+          'family': 'Guttiferae',
+          'benifits':
+              'The fruit is utilized in cooking, particularly in traditional South Asian dishes. It adds a sour flavor to curries and chutneys. Garcinia cambogia gained popularity for its alleged weight loss benefits. The peel of the fruit contains hydroxycitric acid (HCA), which some believe may help in weight management. The fruit is rich in antioxidants, which can help combat oxidative stress in the body. Garcinia cambogia has been used as a natural preservative for fish and other perishable foods due to its antimicrobial properties. It is essential to note that while some people believe in the weight loss benefits of Garcinia cambogia, scientific evidence supporting its effectiveness is limited, and its consumption should be approached with caution. Always consult with a healthcare professional before using it for medicinal purposes.',
           'summary': '',
           'uses': '',
         },
@@ -769,24 +944,6 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
-          'path': 'assets/images/batitinan1.jpeg',
-          'image_paths': [
-            'assets/images/batitinan1.jpeg',
-            'assets/images/batitinan2.jpeg',
-            'assets/images/batitinan3.jpeg',
-          ],
-          'local_name': 'Batitinan',
-          'scientific_name': 'Lagerstroemia pyriformis Koehne',
-          'description':
-              'Batitinan commonly known as the pear-shaped Lagerstroemia or Pyriform Crapemyrtle, is a species of flowering tree native to Southeast Asia, particularly found in Vietnam. It belongs to the family Lythraceae. This deciduous tree is known for its attractive, peeling bark and clusters of showy, pear-shaped flower buds that resemble small fruits. The flowers bloom into white or pale pink blossoms, adding ornamental value to the tree. In addition to its aesthetic appeal, Lagerstroemia pyriformis is cultivated for its hardiness and ability to adapt to various soil types.',
-          'family': 'Lythraceae',
-          'benifits':
-              'It provides ornamental value with its attractive peeling bark and clusters of pear-shaped flower buds, making it a popular choice in landscaping, while its adaptability to different soil types, resilience, and potential to offer shade contribute to its environmental and aesthetic benefits. Additionally, the tree may serve as habitat for wildlife, assist in soil erosion control, and hold cultural significance in certain regions.',
-          'summary': '',
-          'uses':
-              'The heartwood is a light olive gray to dark grayish brown; the sapwood is whitish when fresh, turning grayish brown on exposure, it is sometimes a thin band 1 - 2cm wide and sharply demarcated, whilst at other times it can be 4 - 6cm wide and merging gradually into the heartwood. In wood from young, fast-growing trees the sapwood is hardly distinguishable from the heartwood after seasoning. The texture is fine and dense; the grain generally straight, sometimes with a short, very regular wave. The wood is hard; heavy; very durable, being rarely attacked even by termites or toredo. It seasons with little warping, but is liable to split badly at the ends; logs and freshly trimmed ends of sawn lumber should be painted to prevent splitting. The wood is rather difficult to work, but takes a beautifully smooth surface under sharp tools. It is used for purposes such as ship, wharf, and bridge building, including salt-water piles; ties; paving blocks; sills; posts; beams, joists, rafters; flooring, interior finish; furniture, cabinetwork.',
-        },
-        {
           'path': 'assets/images/binukau1.jpg',
           'image_paths': [
             'assets/images/binukau1.jpg',
@@ -801,6 +958,24 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
+        },
+        {
+          'path': 'assets/images/binunga1.jpg',
+          'image_paths': [
+            'assets/images/binunga1.jpg',
+            'assets/images/binunga2.jpg',
+            'assets/images/binunga3.jpg',
+          ],
+          'local_name': 'Binunga',
+          'scientific_name': 'Macaranga tanarius',
+          'description':
+              'The binunga tree, scientifically known as Mangifera caesia, is native to Southeast Asia. It is commonly found in countries like Indonesia, Malaysia, and the Philippines. This evergreen tree can reach heights of 15-30 meters and has distinctive, elliptical leaves.',
+          'family': 'Euphorbiaceae',
+          'benifits':
+              'Binunga trees contribute to the biodiversity of their native ecosystems by providing habitat and food for various wildlife species. ',
+          'summary': '',
+          'uses':
+              'Binunga trees produce a fruit known as "binjai" or "wani" with a sweet and tangy taste. The fruit is consumed fresh or used in traditional dishes and desserts. Various parts of the binunga tree, including the bark and leaves, have been utilized in traditional medicine. They are believed to have properties that may help with conditions like diarrhea, skin issues, and fever. The timber from binunga trees is used for construction and making furniture due to its durability and resistance to termites.',
         },
         {
           'path': 'assets/images/bolongeta1.jpg',
@@ -842,6 +1017,8 @@ class TracerDatabaseHelper {
           'path': 'assets/images/dalingdingan1.jpg',
           'image_paths': [
             'assets/images/dalingdingan1.jpg',
+            'assets/images/dalingdingan2.jpg',
+            'assets/images/dalingdingan3.jpg',
           ],
           'local_name': 'Dalingdingan',
           'scientific_name': 'Hopea foxworthyi Elem.',
@@ -884,6 +1061,23 @@ class TracerDatabaseHelper {
           'family': 'Moraceae',
           'benifits':
               'Fruits are edible, although with little flavor, sometimes eaten with sugar and cream. Leaves used in the treatment of allergy, asthma, diarrhea, diabetes, tumor and cancer. Scouring: Young leaves are used to clean cooking utensils and to scour wood floors, stairs, etc. Broiler supplement: Study showed applicability and benefits for use of the fruit as supplements to commercial mash, which resulted in significant weight gain and better animal performance. Repellent: Ayta people of Pampanga burn leaves and stem as mosquito repellent. Wood: Used for crafts and furniture making.',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/kahoydalaga2.jpeg',
+          'image_paths': [
+            'assets/images/kahoydalaga2.jpeg',
+            'assets/images/kahoydalaga3.jpeg',
+            'assets/images/kahoydalaga4.jpeg',
+            'assets/images/kahoydalaga5.jpeg',
+          ],
+          'local_name': 'Kahoy dalaga',
+          'scientific_name': 'Mussaenda magallanensis Elm. Ex Merr.',
+          'description':
+              'Kahoy dalaga is a genus of flowering plants in the family Rubiaceae. They are native to the African and Asian tropics and subtropics. Several species are cultivated as ornamental plants.',
+          'family': 'Rubiaceae',
+          'benifits': '',
           'summary': '',
           'uses': '',
         },
@@ -935,6 +1129,24 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The plant is harvested from the wild for local use as a food and source of fibre.',
+        },
+        {
+          'path': 'assets/images/kansilay1.jpg',
+          'image_paths': [
+            'assets/images/kansilay1.jpg',
+            'assets/images/kansilay2.jpg',
+            'assets/images/kansilay3.jpg',
+          ],
+          'local_name': 'Kansilay',
+          'scientific_name': 'Cratoxylum sumatranum',
+          'description':
+              'Kalansilay, commonly known as the Vietnamese Pear or Sawtooth Oak, is a tree native to Southeast Asia. It is a deciduous tree with distinctive serrated leaves, the tree can reach a height of 25 meters. Flowers are small and greenish, and the fruit is a capsule containing seeds. ',
+          'family': 'Hypericaceae',
+          'benifits':
+              'Various parts of the tree, including the bark and leaves, are used in traditional medicine for treating ailments such as fever, diarrhea, and inflammation. The timber from Cratoxylum sumatranum is used in construction and furniture making due to its durability and resistance to decay. ',
+          'summary': '',
+          'uses':
+              'In some regions, parts of the tree are used in local cuisines, and the fruit can be consumed. The tree contributes to environmental conservation by providing shade and supporting biodiversity.',
         },
         {
           'path': 'assets/images/kubi1.jpeg',
@@ -1002,6 +1214,89 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/malaruhatpula1.jpeg',
+          'image_paths': [
+            'assets/images/malaruhatpula1.jpeg',
+            'assets/images/malaruhatpula2.jpg',
+          ],
+          'local_name': 'Malaruhat pula',
+          'scientific_name': 'Syzygium decipiens',
+          'description':
+              'Syzygium decipiens is a tree that can grow from 15 - 30 metres tall. The straight, cylindrical bole can be free of branches for more than half the trees height, 20 - 30cm in diameter with buttresses. The tree is sometimes harvested from the wild for its wood, which is traded.',
+          'family': 'Myrtaceae',
+          'benifits': '',
+          'summary': '',
+          'uses':
+              'The heartwood is a golden brown, greyish brown or brown, with pink or purplish glints; it is not clearly demarcated from the 1 - 4cm wide band of sapwood. The texture is fine; the grain slightly interlocked, sometimes wavy or irregular; there are resin deposits. The wood is heavy; moderately hard; somewhat durable, being moderately resistant to fungi and termites, but susceptible to dry wood borers. It seasons slowly, with a high risk of checking and distortion; once dry it is moderately stable in service. It works well with ordinary tools, nailing and screwing are good so long as the wood is pre-bored; gluing is correct. The wood is used for musical instruments, tool handles, furniture components, ship building, heavy carpentry, flooring, joinery etc.',
+        },
+        {
+          'path': 'assets/images/malaruhatputi1.jpeg',
+          'image_paths': [
+            'assets/images/malaruhatputi1.jpeg',
+            'assets/images/malaruhatputi2.jpeg',
+            'assets/images/malaruhatputi3.jpeg',
+          ],
+          'local_name': 'Malaruhat puti',
+          'scientific_name': 'Syzygium bordenii',
+          'description': '',
+          'family': 'Myrtaceae',
+          'benifits': '',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/malasantol1.jpeg',
+          'image_paths': [
+            'assets/images/malasantol1.jpeg',
+            'assets/images/malasantol2.jpeg',
+            'assets/images/malasantol3.jpeg',
+          ],
+          'local_name': 'Malasantol',
+          'scientific_name': 'Sandoricum vidalii Merr.',
+          'description':
+              'Santol is a large, ornamental evergreen tree with a dense, narrowly oval crown; it usually grows around 25 metres tall but with some specimens up to 50 metres. The bole, which is sometimes straight but often crooked or fluted, is branchless for up to 18 metres; has a diameter up to 100 cm; and buttresses up to 3 metres high[303, 459]. The tree yields an edible fruit that is popular in parts of the tropics. It also has a wide range of traditional medicinal uses and produces a useful timber. It is often cultivated in tropical areas, especially for its edible fruit and as an ornamental in parks, along roads etc.',
+          'family': 'Meliaceae',
+          'benifits':
+              'Sandoricum vidalii Merr. is valued for its fruit, which, when consumed, may provide essential nutrients and potential health-promoting compounds, contributing to a balanced diet and overall well-being. Additionally, the tree may have applications in traditional medicine or local practices, although the extent of such uses can vary regionally.',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/mangasinoro1.jpg',
+          'image_paths': [
+            'assets/images/mangasinoro1.jpg',
+            'assets/images/mangasinoro2.jpg',
+            'assets/images/mangasinoro3.jpg',
+          ],
+          'local_name': 'Mangasinoro',
+          'scientific_name': 'Hopea philippinensis Brandis',
+          'description':
+              'Hopea philippinensis is a small tree. The bole is buttressed .Although somewhat on the small size, the tree is still harvested commercially for its wood, which is used localy as a source of merawan.The tree is threatened by habitat destruction due to human activity. The plant is classified as Critically Endangered in the IUCN Red List of Threatened Species.',
+          'family': 'Dipterocarpaceae',
+          'benifits': '',
+          'summary': '',
+          'uses':
+              'The tree is a source of merawan timbe.We have no more specific information for this tree at present, but the general description of merawan wood is as follows:- The heartwood is yellow-brown to chocolate reddish-brown, with an occasional dark striping; it is not clearly demarcated from the 5 - 7cm wide band of light yellow-brown sapwood. The texture is fine to medium; the grain straight or interlocked; lustre is rather low; without distinctive odour or taste. The wood is moderately heavy; moderately hard; moderately durable, being resistant to dry wood borers, moderately resistant to fungi but susceptible to termites. It seasons slowly, with a high risk of checking and distortion; once dry it is moderately stable in service. It can be worked with ordinary tools; it is moderately easy to resaw and cross-cut; planing is fairly easy and the surface produced is smooth; the wood tends to split when nailing or screwing and nail holding is poor; gluing is correct; there is some resistance to acids. The wood has a wide range of applications, for purposes such as light construction, door and window frames, carpentry, flooring, joinery, turnery and veneer.',
+        },
+        {
+          'path': 'assets/images/manggachapui1.jpg',
+          'image_paths': [
+            'assets/images/manggachapui1.jpg',
+            'assets/images/manggachapui2.jpg',
+            'assets/images/manggachapui3.jpg',
+            'assets/images/manggachapui4.jpg',
+          ],
+          'local_name': 'Manggachapui',
+          'scientific_name': 'Hopea acuminata',
+          'description':
+              'Outer bark brown, smooth when young fissured to flaky when mature; inner bark light brown. Leaves alternate, simple, elliptical-falcate to ovate-lanceolate, 4.5-12 x 2-4.5 cm; base unequal and wedge-shaped, apex acuminate; lateral nerves 9-12 pairs; petiole 6-10 mm long. Flowers axillary or terminal, panicles, 3.5cm long, each branchlet with 3-9 flowers; stamens 10. Fruits with pedicels 2mm long, with two prominent long wings 2-55 x 6-10 mm, spatulate, obtuse, narrowed towards the base, green, turning dark brown when dry; the three other fruit sepals shorter than the nut; nut (6x4mm) broadly ovoid.',
+          'family': 'Dipterocarpaceae',
+          'benifits': '',
+          'summary': '',
+          'uses':
+              'WOOD USES: For bridges and heavy construction for which wood of great strength is required. It is preferred for door and window frames, and it is often used in place of Guijo for high grade construction. NON-WOOD USES: Bark contains tannin which can be used for leather production and in tannin-formaldehyde adhesive ENVIRONMENTAL SERVICES: Windbreaks and good for soil erosion control.',
+        },
+        {
           'path': 'assets/images/maganhop1.jpg',
           'image_paths': [
             'assets/images/maganhop1.jpg',
@@ -1055,7 +1350,6 @@ class TracerDatabaseHelper {
         {
           'path': 'assets/images/malapaho1.png',
           'image_paths': [
-            'assets/images/malapaho1.png',
             'assets/images/malapaho2.png',
           ],
           'local_name': 'Malapaho',
@@ -1103,6 +1397,23 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/malagbignai1.jpg',
+          'image_paths': [
+            'assets/images/malagbignai1.jpg',
+            'assets/images/malagbignai2.jpg',
+          ],
+          'local_name': 'Malabignai',
+          'scientific_name': 'Aporosa symplocifolia Merr',
+          'description':
+              'Malagbignai commonly known as Merr tree, is a tropical tree found in Southeast Asia. Typically found in lowland and montane forests. Medium-sized tree with simple, alternate leaves. The bark is often smooth, and the tree may bear small flowers and fruits. It is essential to note that specific uses and benefits can vary across cultures, and further scientific research may be needed to fully understand the potential applications of Aporosa symplocifolia.',
+          'family': 'Euphorbiaceae',
+          'benifits':
+              'Some communities use parts of Aporosa symplocifolia for traditional medicinal purposes. The bark or leaves may be employed in herbal remedies. The tree contributes to the ecological diversity of its habitat, providing resources for various organisms.',
+          'summary': '',
+          'uses':
+              'In some cases, the wood may be used for local construction or crafting purposes. ',
+        },
+        {
           'path': 'assets/images/malakadios1.jpeg',
           'image_paths': [
             'assets/images/malakadios1.jpeg',
@@ -1118,19 +1429,17 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
-          'path': 'assets/images/malasantol1.jpeg',
+          'path': 'assets/images/malakape.jpg',
           'image_paths': [
-            'assets/images/malasantol1.jpeg',
-            'assets/images/malasantol2.jpeg',
-            'assets/images/malasantol3.jpeg',
+            'assets/images/malakape.jpg',
+            'assets/images/malakape2.jpeg',
+            'assets/images/malakape3.jpeg',
           ],
-          'local_name': 'Malasantol',
-          'scientific_name': 'Sandoricum vidalii Merr.',
-          'description':
-              'Santol is a large, ornamental evergreen tree with a dense, narrowly oval crown; it usually grows around 25 metres tall but with some specimens up to 50 metres. The bole, which is sometimes straight but often crooked or fluted, is branchless for up to 18 metres; has a diameter up to 100 cm; and buttresses up to 3 metres high[303, 459]. The tree yields an edible fruit that is popular in parts of the tropics. It also has a wide range of traditional medicinal uses and produces a useful timber. It is often cultivated in tropical areas, especially for its edible fruit and as an ornamental in parks, along roads etc.',
-          'family': 'Meliaceae',
-          'benifits':
-              'Sandoricum vidalii Merr. is valued for its fruit, which, when consumed, may provide essential nutrients and potential health-promoting compounds, contributing to a balanced diet and overall well-being. Additionally, the tree may have applications in traditional medicine or local practices, although the extent of such uses can vary regionally.',
+          'local_name': 'Malakape',
+          'scientific_name': 'Canthium decocum',
+          'description': '',
+          'family': 'Rubiaceae',
+          'benifits': '',
           'summary': '',
           'uses': '',
         },
@@ -1150,6 +1459,37 @@ class TracerDatabaseHelper {
               'It can also be used to make jams, jellies, or other sweet treats. Additionally, the leaves of the Marang tree are sometimes used to wrap foods, adding flavor and keeping the food fresh. The Marang fruit is a good source of several vitamins and minerals, including vitamin C, vitamin A, folate, and potassium.',
           'summary': '',
           'uses': '',
+        },
+        {
+          'path': 'assets/images/molato.jpeg',
+          'image_paths': [
+            'assets/images/molato.jpeg',
+            'assets/images/molato2.jpeg',
+          ],
+          'local_name': 'Molato',
+          'scientific_name': 'Palaquium dubardii Elm',
+          'description': '',
+          'family': 'Sapotaceae',
+          'benifits': '',
+          'summary': '',
+          'uses': '',
+        },
+        {
+          'path': 'assets/images/nangkaon1.jpg',
+          'image_paths': [
+            'assets/images/nangkaon1.jpg',
+            'assets/images/nangkaon2.jpg',
+          ],
+          'local_name': 'Nangkaon',
+          'scientific_name': 'Elaeocarpus candollei Elm.',
+          'description':
+              'It is commonly known as "Wild Olive," is a tree native to Southeast Asia. Its elliptical leaves are dark green, and it produces small, white flowers followed by olive-like fruits.',
+          'family': 'Elaeocarpaceae',
+          'benifits':
+              'In traditional medicine, various parts of the tree, such as the bark and leaves, are used for their potential health benefits.',
+          'summary': '',
+          'uses':
+              ' These may include anti-inflammatory properties and the treatment of ailments like diarrhea and skin disorders. However, scientific research on its medicinal properties is limited, so it is essential to consult with a healthcare professional before using it for therapeutic purposes.',
         },
         {
           'path': 'assets/images/mangasinoro1.jpg',
@@ -1316,6 +1656,24 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/sukalpi1.jpg',
+          'image_paths': [
+            'assets/images/sukalpi1.jpg',
+            'assets/images/sukalpi2.jpg',
+            'assets/images/sukalpi3.jpg',
+          ],
+          'local_name': 'Sukalpi',
+          'scientific_name': 'Dimorphocalyx denticulatus Merr.',
+          'description':
+              'Sukalpi is a tree native to Southeast Asia. It is a medium-sized evergreen tree with glossy, elliptical leaves and small, fragrant flowers. The bark is often smooth and grayish-brown.',
+          'family': 'Euphorbiaceae',
+          'benifits':
+              'Some traditional medicinal practices may use parts of Dimorphocalyx denticulatus for treating certain ailments. However, specific uses would depend on regional traditional knowledge. Like many trees, it potentially contributes to carbon sequestration and helps maintain ecological balance.',
+          'summary': '',
+          'uses':
+              'The wood of this tree may be utilized for various purposes, such as construction, carpentry, or as a source of fuel. Due to its attractive foliage and fragrant flowers, Dimorphocalyx denticulatus may be planted for ornamental purposes in parks and gardens. The tree could contribute to local biodiversity by providing habitat and food for various wildlife species. ',
+        },
+        {
           'path': 'assets/images/tagotoi1.jpg',
           'image_paths': [
             'assets/images/tagotoi1.jpg',
@@ -1330,6 +1688,24 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'In some regions, the timber from this tree is used for construction and woodworking. Additionally, various parts of the tree may have traditional uses in indigenous cultures. It is important to note that conservation efforts are ongoing in the Philippines to protect native tree species like Palaquium foxworthyi due to their ecological significance and cultural value. If you have specific questions or require more detailed information about this tree species, local conservation efforts, or its uses, you may want to reach out to local environmental organizations or botanical experts in the Philippines. This tree is endemic to the Philippines and is found in certain regions of the country, particularly in Luzon and Mindanao.',
+        },
+        {
+          'path': 'assets/images/tamayuan.jpeg',
+          'image_paths': [
+            'assets/images/tamayuan.jpeg',
+            'assets/images/tamayuan1.jpeg',
+            'assets/images/tamayuan2.jpeg',
+            'assets/images/tamayuan4.jpeg',
+          ],
+          'local_name': 'Tamayuan',
+          'scientific_name': 'Strombosia philippinensis (Baill.) Rolfe',
+          'description':
+              'Tree 5-28 m; Branchlets slender, glabrous. Leaves subdistichous, ovate-oblong to oblong, rarely lanceolate, apex shortly subacutely acuminate, base cuneate to the petiole, thin-charta-ceous, smooth above, finely wrinkled above, green to brownish and rather dull in dry specimens, glabrous, hardly or not pellucid-punctulate, (6-) 8-12 (-16) by (3-) 4-6 (-7.5) cm; Flowers on axillary very short multibracteolate subglobular axes, 5-8 per cluster; Petals 5, linear-oblong, greenish-white, glabrous outside, hairy at apex inside, 2 by 0.5 mm. Stamens 5; Ovary superior, subglobose; Strombosia philippinensis is a shrub or a tree growing 5 - 28 metres tall. The bole can be up to 30cm in diameter. The tree is harvested from the wild for its wood, which is used locally.',
+          'family': 'Olacaceae',
+          'benifits': '',
+          'summary': '',
+          'uses':
+              'The dull yellowish to pinkish wood is heavy. It is used for house building. The wood is used for fuel. The plant is used as an antidote for Lophopetalum poisoning. Timber heavy, dull yellowish to pinkish, used for house building.',
         },
         {
           'path': 'assets/images/tibig1.jpeg',
@@ -1366,6 +1742,24 @@ class TracerDatabaseHelper {
           'uses': '',
         },
         {
+          'path': 'assets/images/tugbak1.jpg',
+          'image_paths': [
+            'assets/images/tugbak1.jpg',
+            'assets/images/tugbak2.jpg',
+            'assets/images/tugbak3.jpg',
+          ],
+          'local_name': 'Tugbak',
+          'scientific_name': 'Stremonurus gitingensis elm.',
+          'description':
+              'The name of a plant defined with Alpinia elegans in various botanical sources. This page contains potential references in Ayurveda, modern medicine, and other folk traditions or local practices It has the synonym Hellenia gracilis (Blanco) Hausskn. (among others).',
+          'family': 'Icacinaceae',
+          'benifits':
+              'Tumaneng and Castillo found that the chrondroprotective activity of Tagbak leaf extracts “is attributed to its ability to inhibit reactive oxygen species, while [maintaining] the antioxidant enzymes.” This leads to “the suppression of pro-inflammatory cytokines and matrix degrading enzymes due to the presence of putative compounds, specifically polyphenols and flavonoids.”',
+          'summary': '',
+          'uses':
+              'Fruit rind is edible, a little woody in texture. Decoction of rhizomes used for hemoptysis. Pounded leaves, mixed with a little salt rubbed on paralyzed extremities. Juice from macerated young stems used for urticaria. Reported use for musculoskeletal diseases in the Surigao del Sur mountain range. Used for musculoskeletal diseases, migraines, stomachaches, and as anti-relapse treatment for women. ',
+        },
+        {
           'path': 'assets/images/whitelauan1.jpg',
           'image_paths': [
             'assets/images/whitelauan1.jpg',
@@ -1380,6 +1774,24 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
+        },
+        {
+          'path': 'assets/images/yakalgisok1.jpg',
+          'image_paths': [
+            'assets/images/yakalgisok1.jpg',
+            'assets/images/yakalgisok2.jpg',
+            'assets/images/yakalgisok3.jpg',
+          ],
+          'local_name': 'Yakal gisok',
+          'scientific_name': 'Shorea gisok',
+          'description':
+              'Yakal gisok also known as Gisok or Philippine Mahogany, is native to Southeast Asia. It belongs to the Dipterocarpaceae family and is known for its durable hardwood. Shorea gisok trees typically reach heights of 30 to 40 meters. They have straight trunks with a grayish-brown bark. The leaves are glossy and elliptical in shape. Due to the high demand for its timber, some species of Shorea, including Shorea gisok, face challenges related to deforestation and conservation. Sustainable forestry practices are essential to ensure the continued availability of this valuable hardwood.',
+          'family': 'Dipterocarpaceae',
+          'benifits':
+              'The wood of Shorea gisok is highly valued for its strength and durability. It is resistant to decay, making it suitable for various construction purposes. The timber is also used in boat building and for making furniture.',
+          'summary': '',
+          'uses':
+              'Common applications of Shorea gisok wood include crafting furniture, flooring, and outdoor structures. Its resistance to decay makes it ideal for use in marine environments, such as boat construction. Additionally, the trees resin is utilized in traditional medicine in some regions.',
         },
       ];
 
