@@ -1348,10 +1348,11 @@ class TracerDatabaseHelper {
               'The wood is used for temporary construction and cheap grades of veneer and plywood; it is also used for making canoes.',
         },
         {
-          'path': 'assets/images/malapaho.png',
+          'path': 'assets/images/malapaho2.png',
           'image_paths': [
-            'assets/images/malapaho1.png',
             'assets/images/malapaho2.png',
+            'assets/images/malapaho3.png',
+            'assets/images/malapaho.png',
           ],
           'local_name': 'Malapaho',
           'scientific_name': 'Mangifera monandra Merr',
@@ -1613,6 +1614,7 @@ class TracerDatabaseHelper {
             'assets/images/putat2.jpg',
             'assets/images/putat3.jpeg',
             'assets/images/putat4.jpeg',
+            'assets/images/putat.png',
           ],
           'local_name': 'Putat',
           'scientific_name': 'Barringtonia racemosa Blume ex DC',
