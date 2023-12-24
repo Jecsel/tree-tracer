@@ -391,13 +391,13 @@ class _HomeState extends State<Home> {
                 child: SizedBox(
                   width: 200,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: Colors.green
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
+                    backgroundColor: Colors.green
+                  ),
                     onPressed: _showModal,
                     child: const Text("Scan", style: TextStyle(color: Colors.white)),
                   ),
