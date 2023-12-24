@@ -132,18 +132,35 @@ class _UserTreeListState extends State<UserTreeList> {
     print('============ loadImageFromFile ===== ${filePath}');
     if (filePath.startsWith('assets/')) {
       // If the path starts with 'assets/', load from assets
-      return Image.asset(filePath, width: 60, height: 60);
+      return SizedBox(
+        width: 70,
+        height: 70,
+        child: Image.asset(filePath, fit: BoxFit.cover,)
+      );
     } else {
       final file = File(filePath);
 
       if (await file.exists()) {
         // If the file exists in local storage, load it
-        return Image.file(file, width: 60, height: 60,);
+        return SizedBox(
+          width: 70,
+          height: 70,
+          child: Image.file(
+            file, fit: BoxFit.cover,
+          ),
+        );
       }
     }
 
   // If no valid image is found, return a default placeholder
-  return Image.asset("assets/images/default_placeholder.png", width: 60, height: 60,); // You can replace this with your placeholder image
+  return SizedBox(
+    width: 70,
+    height: 70,
+    child: Image.asset(
+        "assets/images/default_placeholder.png",
+        fit: BoxFit.cover,
+      ),
+  ); // You can replace this with your placeholder image
 }
   void search(String keyword) {
     // Create a new list to store the filtered data

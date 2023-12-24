@@ -10,7 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_compare/image_compare.dart';
 import 'package:path/path.dart';
 import 'dart:typed_data';
-import 'package:sqflite_common/sqlite_api.dart';
+// import 'package:sqflite_common/sqlite_api.dart';
 import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/favorite.dart';
 import 'package:tree_tracer/screens/result.dart';
@@ -46,7 +46,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late Database database; // Declare a variable to hold the database instance
+  // late Database database; // Declare a variable to hold the database instance
   String searchQuery = '';
   int _selectedIndex = 0;
   int _selectedIdx = 0;
@@ -399,7 +399,7 @@ class _HomeState extends State<Home> {
                       backgroundColor: Colors.green
                     ),
                     onPressed: _showModal,
-                    child: const Text("Scan"),
+                    child: const Text("Scan", style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ),

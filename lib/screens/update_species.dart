@@ -143,18 +143,30 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
   Future<Widget> loadImageFromFile(String filePath) async {
     if (filePath.startsWith('assets/')) {
       // If the path starts with 'assets/', load from assets
-      return Image.asset(filePath);
+      return SizedBox(
+        width: 300,
+        height: 250,
+        child: Image.asset(filePath, fit: BoxFit.cover)
+      );
     } else {
       final file = File(filePath);
 
       if (await file.exists()) {
         // If the file exists in local storage, load it
-        return Image.file(file);
+        return SizedBox(
+          width: 300,
+          height: 250,
+          child: Image.file(file, fit: BoxFit.cover,)
+        );
       }
     }
 
     // If no valid image is found, return a default placeholder
-    return Image.asset("assets/images/default_placeholder.png"); // You can replace this with your placeholder image
+    return SizedBox(
+      width: 300,
+      height: 250,
+      child: Image.asset("assets/images/default_placeholder.png", fit: BoxFit.cover)
+    ); // You can replace this with your placeholder image
   }
 
   Future _getFromGallery(fromField) async {
@@ -260,7 +272,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                       height: 10,
                     ),
                     Container(
-                      height: 150.0,
+                      height: 250.0,
                       child: tempTracerFileImageArray.length > 0 ? 
                         ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -409,10 +421,13 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                             _gotoSearchList();
                           },
                           style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              backgroundColor:  Color.fromARGB(255, 2, 191, 5),
-                              minimumSize: Size(double.infinity, 60)),
-                          child: Text('UPDATE')
+                            minimumSize: const Size.fromHeight(50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            backgroundColor: Colors.green
+                          ),
+                          child: const Text('UPDATE', style: TextStyle(color: Colors.white),)
                         ),
                       ),
                     ),
