@@ -1,8 +1,5 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -169,25 +166,25 @@ class TracerDatabaseHelper {
 
   Future<RootModel> insertDBRootData(RootModel rootData) async {
     final db = await database;
-    final id = await db.insert('root', rootData.toMap());
+    await db.insert('root', rootData.toMap());
     return rootData;
   }
 
   Future<FlowerModel> insertDBFlowerData(FlowerModel flowerData) async {
     final db = await database;
-    final id = await db.insert('flower', flowerData.toMap());
+    await db.insert('flower', flowerData.toMap());
     return flowerData;
   }
 
   Future<LeafModel> insertDBLeafData(LeafModel leafData) async {
     final db = await database;
-    final id = await db.insert('leaf', leafData.toMap());
+    await db.insert('leaf', leafData.toMap());
     return leafData;
   }
 
   Future<FruitModel> insertDBFruitData(FruitModel fruitData) async {
     final db = await database;
-    final id = await db.insert('fruit', fruitData.toMap());
+    await db.insert('fruit', fruitData.toMap());
     return fruitData;
   }
 
@@ -455,7 +452,7 @@ class TracerDatabaseHelper {
   //Tree Image Query Services
   Future<ImageModel> insertDBTreeImageData(ImageModel imageData) async {
     final db = await database;
-    final id = await db.insert('tree_image', imageData.toMap());
+    await db.insert('tree_image', imageData.toMap());
     return imageData;
   }
 
@@ -501,7 +498,7 @@ class TracerDatabaseHelper {
   //Favourite Query Services
   Future<FavouriteModel> insertDBFavouriteData(FavouriteModel imageData) async {
     final db = await database;
-    final id = await db.insert('favourite', imageData.toMap());
+    await db.insert('favourite', imageData.toMap());
     return imageData;
   }
 
@@ -553,7 +550,7 @@ class TracerDatabaseHelper {
   Future<void> initiateUserData(TracerDatabaseHelper dbHelper) async {
     // TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
     final newUser = UserModel(username: 'treetracer2023', password: '88888888');
-    final registeredUser = await dbHelper.registerUser(newUser);
+    await dbHelper.registerUser(newUser);
   }
 
   Future<Uint8List> fileToUint8List(File file) async {

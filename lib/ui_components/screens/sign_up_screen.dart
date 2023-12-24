@@ -13,7 +13,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TracerDatabaseHelper dbHelper = TracerDatabaseHelper.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
-  final TextEditingController _repassController = TextEditingController();
 
     Future<void> _registerUser() async {
     final newUser = UserModel(username: _emailController.text, password: _passController.text);

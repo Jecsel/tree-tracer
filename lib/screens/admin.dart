@@ -83,18 +83,30 @@ class _AdminPageState extends State<AdminPage> {
     print('============ loadImageFromFile ===== ${filePath}');
     if (filePath.startsWith('assets/')) {
       // If the path starts with 'assets/', load from assets
-      return Image.asset(filePath, width: 60, height: 60);
+      return SizedBox(
+        width: 70,
+        height: 70,
+        child: Image.asset(filePath, fit: BoxFit.cover,)
+        );
     } else {
       final file = File(filePath);
 
       if (await file.exists()) {
         // If the file exists in local storage, load it
-        return Image.file(file, width: 60, height: 60,);
+        return SizedBox(
+          width: 70,
+          height: 70,
+          child: Image.file(file, fit: BoxFit.cover,)
+          );
       }
     }
 
   // If no valid image is found, return a default placeholder
-  return Image.asset("assets/images/default_placeholder.png", width: 60, height: 60,); // You can replace this with your placeholder image
+  return SizedBox(
+    width: 70,
+    height: 70,
+    child: Image.asset("assets/images/default_placeholder.png", fit: BoxFit.cover,)
+    ); // You can replace this with your placeholder image
 }
 
   _gotoAddSpecies() {
@@ -104,7 +116,7 @@ class _AdminPageState extends State<AdminPage> {
   Future<void> _handleRefresh() async {
     // Simulate a refresh action (e.g., fetch new data from a server)
     fetchData();
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
   }
   
   void search(String keyword) {
@@ -141,7 +153,7 @@ class _AdminPageState extends State<AdminPage> {
       home: Scaffold(
       appBar: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -150,19 +162,19 @@ class _AdminPageState extends State<AdminPage> {
             ),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back), // Add your arrow icon here
+            icon: const Icon(Icons.arrow_back), // Add your arrow icon here
             onPressed: () {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
             },
           ),
-          title: Text('Admin Page'), // Add your app title here
+          title: const Text('Admin Page'), // Add your app title here
       ),
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
         child:   Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
+            const Padding(
+              padding: EdgeInsets.only(top: 20),
               child: Text(
                 "Tree Species List",
                 style: TextStyle(
@@ -182,7 +194,7 @@ class _AdminPageState extends State<AdminPage> {
                   backgroundColor: Colors.green
                 ),
                 onPressed: () => {_gotoAddSpecies()},
-                child: const Text("Add Tree"),
+                child: const Text("Add Tree", style: TextStyle(color: Colors.white),),
               ),
             ),
             Padding(
@@ -191,7 +203,7 @@ class _AdminPageState extends State<AdminPage> {
                 onChanged: (value) {
                   search(value);
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Search Tree",
                   prefixIcon: Icon(Icons.image_search_rounded),
                   border: OutlineInputBorder(),
@@ -222,9 +234,9 @@ class _AdminPageState extends State<AdminPage> {
                       future: loadImageFromFile(imageData.imagePath),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          return snapshot.data ?? CircularProgressIndicator();
+                          return snapshot.data ?? const CircularProgressIndicator();
                         } else {
-                          return CircularProgressIndicator(); // Or another loading indicator
+                          return const CircularProgressIndicator(); // Or another loading indicator
                         }
                       },
                     ),
@@ -252,9 +264,9 @@ class _AdminPageState extends State<AdminPage> {
                       future: loadImageFromFile(imageDt.imagePath),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          return snapshot.data ?? CircularProgressIndicator();
+                          return snapshot.data ?? const CircularProgressIndicator();
                         } else {
-                          return CircularProgressIndicator(); // Or another loading indicator
+                          return const CircularProgressIndicator(); // Or another loading indicator
                         }
                       },
                     ),
