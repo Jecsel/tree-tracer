@@ -51,13 +51,23 @@ class ExtendInfo extends StatefulWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+         flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
+              ),
+            ),
+          ),
           leading: IconButton(
             onPressed: () {
               _backtoViewSpecies();
             }, 
             icon: const Icon(Icons.arrow_back)
           ),
-        ),
+          title: const Text('Favourite Page'), // Add your app title here
+      ),
         body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -84,7 +94,7 @@ class ExtendInfo extends StatefulWidget {
                           RichText(
                             textAlign: TextAlign.justify,
                             text: TextSpan(
-                              style: DefaultTextStyle.of(context).style,
+                              style: const TextStyle(color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: tracerData?.benifits ?? 'No Benifits'

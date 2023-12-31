@@ -240,7 +240,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
       home: Scaffold(
         appBar: AppBar(
             flexibleSpace: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -249,37 +249,37 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
               ),
             ),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back), // Add your arrow icon here
+              icon: const Icon(Icons.arrow_back), // Add your arrow icon here
               onPressed: () {
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => AdminPage(searchKey: 'TREE', userType: 'User',)));
               },
               
             ),
-            title: Text('Update Tree')
+            title: const Text('Update Tree')
             ),
             body: SingleChildScrollView(
               child: Center(
                 child: Column(
                   children: [
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "Tree",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Container(
+                    SizedBox(
                       height: 250.0,
-                      child: tempTracerFileImageArray.length > 0 ? 
+                      child: tempTracerFileImageArray.isNotEmpty ? 
                         ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: tempTracerFileImageArray.length,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Stack(
                                 children: [
 
@@ -287,9 +287,9 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                                     future: loadImageFromFile(tempTracerFileImageArray[index].path),
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState == ConnectionState.done) {
-                                        return snapshot.data ?? CircularProgressIndicator();
+                                        return snapshot.data ?? const CircularProgressIndicator();
                                       } else {
-                                        return CircularProgressIndicator(); // Or another loading indicator
+                                        return const CircularProgressIndicator(); // Or another loading indicator
                                       }
                                     },
                                   ),
@@ -300,7 +300,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                                       onTap: () {
                                         removeImageInArray(index);
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.remove_circle,
                                         color: Colors.red,
                                         size: 30.0,
@@ -339,8 +339,8 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                     //         height: 150,
                     //         width: 150,
                     //       ),
-                    SizedBox(height: 10),
-                    Container(
+                    const SizedBox(height: 10),
+                    SizedBox(
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -349,24 +349,24 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                             _getFromGallery('tree');
                           },
                           style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              minimumSize: Size(double.infinity, 60)),
-                          child: Row(
+                              textStyle: const TextStyle(fontSize: 20),
+                              minimumSize: const Size(double.infinity, 60)),
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Upload Tree Image'),
+                              Text('Add Tree Image'),
                               Icon(Icons.add)
                             ],
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: localNameController,
-                        decoration: InputDecoration(labelText: 'Common Name'),
+                        decoration: const InputDecoration(labelText: 'Common Name'),
                       ),
                     ),
                     Padding(
@@ -374,14 +374,14 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                       child: TextField(
                         controller: scientificNameController,
                         decoration:
-                            InputDecoration(labelText: 'Scientific Name'),
+                            const InputDecoration(labelText: 'Scientific Name'),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: familyController,
-                        decoration: InputDecoration(labelText: 'Family'),
+                        decoration: const InputDecoration(labelText: 'Family'),
                         maxLines: 2, // You can adjust the number of lines
                       ),
                     ),
@@ -389,7 +389,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: descriptionController,
-                        decoration: InputDecoration(labelText: 'Description'),
+                        decoration: const InputDecoration(labelText: 'Description'),
                         maxLines: 2, // You can adjust the number of lines
                       ),
                     ),
@@ -397,7 +397,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: benifitsController,
-                        decoration: InputDecoration(labelText: 'Benifits'),
+                        decoration: const InputDecoration(labelText: 'Benifits'),
                         maxLines: 4, // You can adjust the number of lines
                       ),
                     ),
@@ -405,13 +405,13 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: usesController,
-                        decoration: InputDecoration(labelText: 'Uses'),
+                        decoration: const InputDecoration(labelText: 'Uses'),
                         maxLines: 4, // You can adjust the number of lines
                       ),
                     ),
                     
-                    SizedBox(height: 30),
-                    Container(
+                    const SizedBox(height: 30),
+                    SizedBox(
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),

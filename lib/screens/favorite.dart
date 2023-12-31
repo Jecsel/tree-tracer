@@ -75,7 +75,7 @@ class _ResultPageState extends State<FavoritePage> {
       home: Scaffold(
       appBar: AppBar(
          flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -84,18 +84,18 @@ class _ResultPageState extends State<FavoritePage> {
             ),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back), // Add your arrow icon here
+            icon: const Icon(Icons.arrow_back), // Add your arrow icon here
             onPressed: () {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
             },
           ),
-          title: Text('Favourite Page'), // Add your app title here
+          title: const Text('Favourite Page'), // Add your app title here
       ),
       body: Center(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
+            const Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 20),
               child: Text(
                 "List of your favorite trees",
                 style: TextStyle(
@@ -121,9 +121,9 @@ class _ResultPageState extends State<FavoritePage> {
                         future: loadImageFromFile(searchResults![index].imagePath ?? ''),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.done) {
-                            return snapshot.data ?? CircularProgressIndicator();
+                            return snapshot.data ?? const CircularProgressIndicator();
                           } else {
-                            return CircularProgressIndicator(); // Or another loading indicator
+                            return const CircularProgressIndicator(); // Or another loading indicator
                           }
                         },
                       ),
@@ -131,7 +131,7 @@ class _ResultPageState extends State<FavoritePage> {
                   );
                 },
               ) :
-              Text("No Favourite to Show")
+              const Text("No Favourite to Show")
             )
           ],
         ),
