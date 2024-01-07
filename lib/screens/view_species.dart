@@ -303,6 +303,11 @@ class _ViewSpeciesState extends State<ViewSpecies> {
                           scrollDirection: Axis.horizontal,
                           itemCount: tempTracerFileImageArray.length,
                           itemBuilder: (context, index) {
+
+                            if (index > 3) {
+                              return const SizedBox.shrink(); // Skip the remaining results
+                            }
+                            
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Stack(
