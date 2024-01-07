@@ -12,13 +12,13 @@ class TriviaQuiz extends StatefulWidget {
 }
 
 class _TriviaQuizState extends State<TriviaQuiz> {
-  AudioCache audioCache = AudioCache();
   var score = 0;
   int currentQuestionIndex = 0;
   late List<Question> questions;
   late List<int?> selectedAnswers;
   bool showExplanation = false;
   bool isWrongAnswer = false;
+  final player = AudioPlayer();
 
   int questionIndexSelected = 0;
   int choiceIndexSelected = 0;
@@ -28,8 +28,6 @@ class _TriviaQuizState extends State<TriviaQuiz> {
   void initState() {
     super.initState();
 
-    audioCache.load('correct.mp3');
-    audioCache.load('wrong.mp3');
 
     questions = [
       Question(
@@ -83,7 +81,8 @@ class _TriviaQuizState extends State<TriviaQuiz> {
       if (selectedAnswers[questionIndex] == questions[questionIndex].correctAnswerIndex) {
         showExplanation = true;
         isWrongAnswer = false;
-        audioCache.play('correct.mp3');
+        // audioCache.play('correct.mp3');
+        player.play(UrlSource('correct.mp3'));
 
         Future.delayed(const Duration(seconds: 5), () {
           setState(() {
@@ -97,7 +96,8 @@ class _TriviaQuizState extends State<TriviaQuiz> {
           });
         });
       } else {
-        audioCache.play('wrong.mp3');
+        // audioCache.play('wrong.mp3');
+        player.play(UrlSource('wrong.mp3'));
         questions[questionIndex].choices.asMap().forEach((index, choice) {
           if (index == choiceIndex) {
             isWrongAnswer = true;
