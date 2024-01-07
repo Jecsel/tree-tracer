@@ -15,6 +15,7 @@ import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/favorite.dart';
 import 'package:tree_tracer/screens/result.dart';
 import 'package:tree_tracer/screens/trees.dart';
+import 'package:tree_tracer/screens/trivia_home.dart';
 import 'package:tree_tracer/screens/user_tree_list.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 import 'package:tree_tracer/ui_components/main_view.dart';
@@ -171,7 +172,7 @@ class _HomeState extends State<Home> {
   }
 
   _goToTrivia(){
-    Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context) => Home()));
+    Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context) => const TriviaHome()));
   }
 
   Future _getImageFromCamera() async {    /// Get Image from Camera
@@ -388,7 +389,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Center(
@@ -402,7 +403,7 @@ class _HomeState extends State<Home> {
                     ),
                     backgroundColor: Colors.green
                   ),
-                    onPressed: _goToTrivia(),
+                    onPressed: _goToTrivia,
                     child: const Text("Trivia", style: TextStyle(color: Colors.white)),
                   ),
                 ),
