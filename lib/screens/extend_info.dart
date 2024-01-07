@@ -127,12 +127,18 @@ class ExtendInfo extends StatefulWidget {
                           const SizedBox(height: 10.0),
                           Text(
                             tracerData?.uses != '' ? 'Uses' : '',
-                            style: const TextStyle(fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 25.0
+                            ),
                           ),
                           RichText(
                             textAlign: TextAlign.justify,
                             text: TextSpan(
-                              style: const TextStyle(color: Colors.black),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0
+                              ),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: tracerData?.uses ?? 'No Uses'

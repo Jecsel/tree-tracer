@@ -308,12 +308,7 @@ class _HomeState extends State<Home> {
               ElevatedButton(
                 onPressed: _getImageFromCamera,
                 child: Text('      Scan Image     '),
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _goToTrivia,
-                child: Text('      Trivia     '),
-              ),
+              )
             ],
           ),
         ),
@@ -389,6 +384,26 @@ class _HomeState extends State<Home> {
                   ),
                     onPressed: _showModal,
                     child: const Text("Scan", style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Center(
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Colors.green
+                  ),
+                    onPressed: _goToTrivia(),
+                    child: const Text("Trivia", style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ),
