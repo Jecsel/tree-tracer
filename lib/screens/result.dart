@@ -74,6 +74,11 @@ class _ResultPageState extends State<ResultPage> {
             ? ListView.builder(
               itemCount: tracerData.length,
               itemBuilder: (context, index) {
+                // Check if the first result has already been displayed
+                if (index > 0) {
+                  return const SizedBox.shrink(); // Skip the remaining results
+                }
+
                 final imageData = tracerData[index]['image'];
                 final mangroveId= tracerData[index]['image']['id'];
                 print('====== Similarity Score: ${tracerData[index]['score']}');
@@ -81,11 +86,6 @@ class _ResultPageState extends State<ResultPage> {
                 return GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: 'User',)));
-                    //   final imageData = tracerData[index];
-                    //   final snackBar = SnackBar(
-                    //     content: Text('Tapped on ${imageData}'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   child: ListTile(
                   title: Text('Local Name: ${imageData['local_name']}'),
@@ -109,6 +109,10 @@ class _ResultPageState extends State<ResultPage> {
               itemBuilder: (context, index) {
                 final imageDt = tracerData[index]['image'];
                 final mangId= tracerData[index]['image']['mangroveId'];
+
+                if (index > 0) {
+                  return const SizedBox.shrink(); // Skip the remaining results
+                }
 
                 return GestureDetector(
                   // onTap: () {

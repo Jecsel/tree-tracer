@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/screens/home.dart';
+import 'package:tree_tracer/screens/trivia_home.dart';
+import 'package:tree_tracer/screens/view_species.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 import 'package:tree_tracer/ui_components/main_view.dart';
 

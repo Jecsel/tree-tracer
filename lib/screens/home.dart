@@ -10,7 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_compare/image_compare.dart';
 import 'package:path/path.dart';
 import 'dart:typed_data';
-import 'package:sqflite_common/sqlite_api.dart';
+// import 'package:sqflite_common/sqlite_api.dart';
 import 'package:tree_tracer/screens/admin.dart';
 import 'package:tree_tracer/screens/favorite.dart';
 import 'package:tree_tracer/screens/result.dart';
@@ -46,7 +46,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late Database database; // Declare a variable to hold the database instance
+  // late Database database; // Declare a variable to hold the database instance
   String searchQuery = '';
   int _selectedIndex = 0;
   int _selectedIdx = 0;
@@ -170,6 +170,10 @@ class _HomeState extends State<Home> {
     return filePath;
   }
 
+  _goToTrivia(){
+    Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context) => Home()));
+  }
+
   Future _getImageFromCamera() async {    /// Get Image from Camera
     setState(() {
       isLoading = true;
@@ -249,26 +253,6 @@ class _HomeState extends State<Home> {
     // add more images here...
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIdx = index;
-    });
-  }
-
-  void _goToPreviousSlide() {
-    _carouselController.previousPage();
-  }
-
-  void _goToNextSlide() {
-    _carouselController.nextPage();
-  }
-
-  void _onItemTappedCat(int index) {
-    setState(() {
-      _selectedIdx = index;
-    });
-  }
-
   _drawerItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -287,12 +271,15 @@ class _HomeState extends State<Home> {
               child: Text('No'),
               onPressed: () {
                 Navigator.of(context).pop(false);
+                // Navigator.pushReplacement(
+                //   context, MaterialPageRoute(builder: (context) => Home()));
               },
             ),
             TextButton(
               child: Text('Yes'),
               onPressed: () {
-                Navigator.of(context).pop(true);
+                // Navigator.of(context).pop(true);
+                exit(0);
               },
             ),
           ],
@@ -321,6 +308,11 @@ class _HomeState extends State<Home> {
               ElevatedButton(
                 onPressed: _getImageFromCamera,
                 child: Text('      Scan Image     '),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _goToTrivia,
+                child: Text('      Trivia     '),
               ),
             ],
           ),
@@ -388,15 +380,15 @@ class _HomeState extends State<Home> {
                 child: SizedBox(
                   width: 200,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      backgroundColor: Colors.green
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
+                    backgroundColor: Colors.green
+                  ),
                     onPressed: _showModal,
-                    child: const Text("Scan"),
+                    child: const Text("Scan", style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ),
@@ -470,7 +462,7 @@ class _HomeState extends State<Home> {
                 title: 'Exit',
                 index: 5,
                 onTap: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
                   _onBackPressed(context);
                 },
               ),

@@ -22,7 +22,7 @@ class _TreeImageListState extends State<TreeImageList> {
     copyDatabase(); // Call the method to copy the database
     loadTreeData(); // Load data from the Tree table when the widget is created
   }
-
+  
   Future<void> copyDatabase() async {
     // Get a reference to the database
     final databasePath = await getDatabasesPath();
@@ -60,8 +60,8 @@ class _TreeImageListState extends State<TreeImageList> {
       ),
       body: Column(
         children: [
-          Padding(
-              padding: const EdgeInsets.only(top: 20),
+          const Padding(
+              padding: EdgeInsets.only(top: 20),
               child: Text(
                 "List of your favorite trees",
                 style: TextStyle(

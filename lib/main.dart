@@ -1,12 +1,6 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tree_tracer/main_app.dart';
-import 'package:tree_tracer/routes.dart';
 import 'package:tree_tracer/screens/splash_screen.dart';
-import 'package:tree_tracer/theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tree_tracer/ui_components/main_view.dart';
 
 // void main() {
 //   runApp(DevicePreview(
