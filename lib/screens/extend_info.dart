@@ -84,17 +84,39 @@ class ExtendInfo extends StatefulWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 20.0),
-                          const Text('Description', style: TextStyle(fontWeight: FontWeight.bold),),
-                          Text(tracerData?.description ?? 'No Description'),
+                          const Text('Description', style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25.0
+                          ),),
+                          RichText(
+                            textAlign: TextAlign.justify,
+                            text: TextSpan(
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: tracerData?.description ?? 'No Description'
+                                )
+                              ]
+                            )
+                          ),
                           const SizedBox(height: 10.0),
                           Text(
                             tracerData?.benifits != '' ? 'Benifits' : '',
-                            style: const TextStyle(fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 25.0
+                            ),
                           ),
                           RichText(
                             textAlign: TextAlign.justify,
                             text: TextSpan(
-                              style: const TextStyle(color: Colors.black),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0
+                              ),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: tracerData?.benifits ?? 'No Benifits'

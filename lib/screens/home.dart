@@ -170,6 +170,10 @@ class _HomeState extends State<Home> {
     return filePath;
   }
 
+  _goToTrivia(){
+    Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context) => Home()));
+  }
+
   Future _getImageFromCamera() async {    /// Get Image from Camera
     setState(() {
       isLoading = true;
@@ -249,26 +253,6 @@ class _HomeState extends State<Home> {
     // add more images here...
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIdx = index;
-    });
-  }
-
-  void _goToPreviousSlide() {
-    _carouselController.previousPage();
-  }
-
-  void _goToNextSlide() {
-    _carouselController.nextPage();
-  }
-
-  void _onItemTappedCat(int index) {
-    setState(() {
-      _selectedIdx = index;
-    });
-  }
-
   _drawerItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -324,6 +308,11 @@ class _HomeState extends State<Home> {
               ElevatedButton(
                 onPressed: _getImageFromCamera,
                 child: Text('      Scan Image     '),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _goToTrivia,
+                child: Text('      Trivia     '),
               ),
             ],
           ),
