@@ -32,6 +32,7 @@ class _TriviaQuizState extends State<TriviaQuiz> {
     questions = [
       Question(
           question: 'In which part of Baranggay Agutay is Alagau Tree located?',
+          image: 'assets/images/alakaakpula1.jpeg',
           choices: [
             'A. Sitio Tia-ilan',
             'B. Sitio Kalamago',
@@ -43,6 +44,7 @@ class _TriviaQuizState extends State<TriviaQuiz> {
       Question(
           question:
               'In which Barangay in the town of Cajidiocan can the Bakan Tree be found?',
+          image: 'assets/images/alakaakpula2.jpeg',
           choices: [
             'A. Barangay Cambalo',
             'B. Barangay Cambajao',
@@ -53,6 +55,7 @@ class _TriviaQuizState extends State<TriviaQuiz> {
               'The Bakan Tree is found in Barangay Cambajao, Cajidiocan, Romblon. In Cambajao you can see a lot of these trees, some illegal loggers were caught there and after investigating the trees that were cut down they identified that the tree was Bakan Tree.'),
       Question(
           question: 'Where in Sibuyan Island can you often see the agoho tree?',
+          image: 'assets/images/alakaakpula3.jpeg',
           choices: [
             'A. Near the rivers at the foot of Mt. Guiting Guiting.',
             'B. On the seashore.',
@@ -73,16 +76,12 @@ class _TriviaQuizState extends State<TriviaQuiz> {
       selectedAnswers[questionIndex] = choiceIndex;
       questionIndexSelected = questionIndex;
       choiceIndexSelected = choiceIndex;
-
-      print('questionIndex ${questionIndex}');
-      print('selectedAnswers ${selectedAnswers}');
-      print('questions ${questions[questionIndex].correctAnswerIndex}');
       
       if (selectedAnswers[questionIndex] == questions[questionIndex].correctAnswerIndex) {
         showExplanation = true;
         isWrongAnswer = false;
         // audioCache.play('correct.mp3');
-        player.play(UrlSource('correct.mp3'));
+        player.play(AssetSource('correct.mp3'));
 
         Future.delayed(const Duration(seconds: 5), () {
           setState(() {
@@ -97,7 +96,7 @@ class _TriviaQuizState extends State<TriviaQuiz> {
         });
       } else {
         // audioCache.play('wrong.mp3');
-        player.play(UrlSource('wrong.mp3'));
+        player.play(AssetSource('wrong.mp3'));
         questions[questionIndex].choices.asMap().forEach((index, choice) {
           if (index == choiceIndex) {
             isWrongAnswer = true;
@@ -156,70 +155,74 @@ class _TriviaQuizState extends State<TriviaQuiz> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-            top: 20.0, bottom: 15.0, left: 10.0, right: 10.0),
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images/alakaakpula1.jpeg',
-              width: double.infinity,
-              height: 300.0,
-            ),
-            const SizedBox(height: 50.0),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0),
-              child: Text(questions.isNotEmpty
-                  ? '$currentNumber . ${questions[currentQuestionIndex].question}'
-                  : '',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold
-                  )
-                ),
-            ),
-            const SizedBox(height: 15.0),
-            ...questions[currentQuestionIndex].choices.map((choice) {
-              int index = questions[currentQuestionIndex].choices.indexOf(choice);
-              return Padding(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+              top: 20.0, bottom: 15.0, left: 10.0, right: 10.0),
+          child: Column(
+            children: [
+              Image.asset(
+                questions[currentQuestionIndex].image,
+                width: double.infinity,
+                height: 300.0,
+              ),
+              const SizedBox(height: 50.0),
+              Padding(
                 padding: const EdgeInsets.only(top: 15.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:  MaterialStateProperty.all<Color>(Colors.green),
-                    ),
-                    onPressed: () {
-                      onAnswerSelected(currentQuestionIndex, index);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                      child: Text(
-                        choice,
-                        textAlign: TextAlign.justify,
-                        style: const TextStyle(
-                          color: Colors.white,
+                child: Text(questions.isNotEmpty
+                    ? '$currentNumber . ${questions[currentQuestionIndex].question}'
+                    : '',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
+              ),
+              const SizedBox(height: 15.0),
+              ...questions[currentQuestionIndex].choices.map((choice) {
+                int index = questions[currentQuestionIndex].choices.indexOf(choice);
+                return Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:  MaterialStateProperty.all<Color>(Colors.green),
+                      ),
+                      onPressed: () {
+                        onAnswerSelected(currentQuestionIndex, index);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                        child: Text(
+                          choice,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
-            showExplanation
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: Text(
-                      questions.isNotEmpty
-                          ? questions[currentQuestionIndex].explanation
-                          : '',
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 15.0),
-                    ),
-                  )
-                : const Text('')
-          ],
+                );
+              }).toList(),
+              showExplanation
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Text(
+                        questions.isNotEmpty
+                            ? questions[currentQuestionIndex].explanation
+                            : '',
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 15.0),
+                      ),
+                    )
+                  : const Text('')
+            ],
+          ),
         ),
-      ),
+      )
+      
+      
     );
   }
 }
