@@ -83,35 +83,51 @@ class _TriviaQuizState extends State<TriviaQuiz> {
         // audioCache.play('correct.mp3');
         player.play(AssetSource('correct.mp3'));
 
-        Future.delayed(const Duration(seconds: 5), () {
-          setState(() {
-            if (currentQuestionIndex < questions.length - 1) {
-              showExplanation = false;
-              currentQuestionIndex++;
-            } else {
-              int finalScore = calculateScore();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Score(score: finalScore.toString())));
-            }
-          });
-        });
+        // Future.delayed(const Duration(seconds: 5), () {
+        //   setState(() {
+        //     if (currentQuestionIndex < questions.length - 1) {
+        //       showExplanation = false;
+        //       currentQuestionIndex++;
+        //     } else {
+        //       int finalScore = calculateScore();
+        //       Navigator.push(context, MaterialPageRoute(builder: (context) => Score(score: finalScore.toString())));
+        //     }
+        //   });
+        // });
       } else {
         // audioCache.play('wrong.mp3');
         player.play(AssetSource('wrong.mp3'));
         questions[questionIndex].choices.asMap().forEach((index, choice) {
           if (index == choiceIndex) {
             isWrongAnswer = true;
-            questions[questionIndex].choices[index] = 'Wrong Answer';
+            showExplanation = false;
+            if (currentQuestionIndex < questions.length - 1) {
+              currentQuestionIndex++;
+            } else {
+              int finalScore = calculateScore();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Score(score: finalScore.toString())));
+            }
+            
+            // questions[questionIndex].choices[index] = 'Wrong Answer';
             
           }
         });
       }
     });
+  }
 
-    // Future.delayed(const Duration(milliseconds: 500), () {
-    //   setState(() {
+  nextQuestion() {
+    setState(() {
+      isWrongAnswer = true;
+      showExplanation = false;
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        int finalScore = calculateScore();
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Score(score: finalScore.toString())));
+      }
+    });
 
-    //   });
-    // });
   }
 
   int calculateScore() {
@@ -216,7 +232,27 @@ class _TriviaQuizState extends State<TriviaQuiz> {
                             fontStyle: FontStyle.italic, fontSize: 15.0),
                       ),
                     )
-                  : const Text('')
+                  : const Text(''),
+              showExplanation ?
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                    ),
+                    onPressed: nextQuestion,
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      child: Text(
+                        'NEXT',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ) : const Text(''),
             ],
           ),
         ),
