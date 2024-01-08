@@ -26,22 +26,24 @@ import 'package:path_provider/path_provider.dart';
 Future<void> main() async {
 
   // Run your app within the runApp function
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
 
-  MyApp();
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Home(),
     );
   }
 }
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   State<StatefulWidget> createState() => _HomeState();
 }
@@ -50,7 +52,7 @@ class _HomeState extends State<Home> {
   // late Database database; // Declare a variable to hold the database instance
   String searchQuery = '';
   int _selectedIndex = 0;
-  int _selectedIdx = 0;
+  final int _selectedIdx = 0;
   final CarouselController _carouselController = CarouselController();
 
   static const IconData qr_code_scanner_rounded =
@@ -68,7 +70,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-      print("======= initState ===========");
       dbHelper = TracerDatabaseHelper.instance;
       fetchData();
   }
@@ -86,24 +87,12 @@ class _HomeState extends State<Home> {
       maxWidth: 1800,
       maxHeight: 1800,
     );
-    print('pickFile');
-    print(pickedFileFromGallery?.path);
-
-    print('tracerImages');
-    print(tracerImages!.length);
-    Navigator.pop(this.context);
+    // Navigator.pop(this.context);
 
     localImage = File(pickedFileFromGallery!.path);
 
     for (Map mangroveImage in tracerImages!) {
       String imagePath = mangroveImage['imagePath'];
-      print('TRACER imagePath');
-      print(imagePath);
-      print('TRACER localImage');
-      print(localImage);
-
-      print("mangroveImage['imageBlob']");
-      print(mangroveImage['imageBlob']);
 
       final tempDir = await getTemporaryDirectory();
       final tempPath = tempDir.path;
@@ -111,27 +100,15 @@ class _HomeState extends State<Home> {
       if(mangroveImage['imageBlob'] != null) {
         await file.writeAsBytes(mangroveImage['imageBlob']);
       }
-      print('========== PASOK ========');
-
-      // double similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
-      // print('========== Second ========');
-      // if (imagePath.startsWith('assets/')) {
-      //   similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
-      // }
 
        double similarityScore = 1.0;
       if (imagePath.startsWith('assets/')) {
-        print('======== TRACER UNA ========');
         similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
       } else {
-        print('======== TRACER Pangalawa ========');
         similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
       }
 
-      print("similarityScore $similarityScore.");
-
       if (similarityScore <= 0.5) {
-        print("Gallery image is similar to $similarityScore.");
 
         similarityScore = 100 - (similarityScore * 100);
         int roundedSimilarityScore = similarityScore.round();
@@ -143,7 +120,6 @@ class _HomeState extends State<Home> {
         similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
       }else{
         similarityScore = 100 - (similarityScore * 100);
-        print("Gallery image is BELOW similar to $similarityScore.");
       }
     }
 
@@ -151,10 +127,9 @@ class _HomeState extends State<Home> {
       localImage = File(pickedFileFromGallery.path);  
       similarImages = similarImages;
 
-      print("similarImages ${similarImages.length}");
       isErrorShow = false;
       isLoading = false;
-      if(similarImages.length > 0) {
+      if(similarImages.isNotEmpty) {
         Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
       } else {
         isErrorShow = true;
@@ -180,16 +155,11 @@ class _HomeState extends State<Home> {
       isLoading = true;
     });
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-    print('pickFile');
-    print(pickedFile);
 
-    Navigator.pop(this.context);
+    // Navigator.pop(this.context); 
 
     for (Map mangroveImage in tracerImages!) {
       String imagePath = mangroveImage['imagePath'];
-
-      print('TRACER IMAGES');
-      print(imagePath);
 
       double similarityScore = 1.0;
 
@@ -201,16 +171,12 @@ class _HomeState extends State<Home> {
       }
 
       if (imagePath.startsWith('assets/')) {
-        print('========= Una ========');
         similarityScore = await compareImages(src1: File(pickedFile!.path), src2: file, algorithm: PerceptualHash());
       } else {
-        print('========= Dalawa ========');
         similarityScore = await compareImages(src1: File(pickedFile!.path), src2: File(imagePath), algorithm: PerceptualHash());
       }
 
       if (similarityScore <= 0.75) {
-        
-        print("Gallery image is similar to $similarityScore.");
         similarityScore = 100 - (similarityScore * 100);
         int roundedSimilarityScore = similarityScore.round();
         Map<String, dynamic> imageInfo = {
@@ -219,8 +185,6 @@ class _HomeState extends State<Home> {
         };
         similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
         similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
-      }else{
-        print("Gallery image is BELOW similar to $similarityScore.");
       }
     }
 
@@ -229,7 +193,7 @@ class _HomeState extends State<Home> {
         takenImage = File(pickedFile.path);// Compare the images here and show the result
         isErrorShow = false;
         isLoading = false;
-        if(similarImages.length > 0) {
+        if(similarImages.isNotEmpty) {
           Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
         } else {
           isErrorShow = true;
@@ -265,11 +229,11 @@ class _HomeState extends State<Home> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Exit the app?'),
-          content: Text('Are you sure you want to exit the app?'),
+          title: const Text('Exit the app?'),
+          content: const Text('Are you sure you want to exit the app?'),
           actions: <Widget>[
             TextButton(
-              child: Text('No'),
+              child: const Text('No'),
               onPressed: () {
                 Navigator.of(context).pop(false);
                 // Navigator.pushReplacement(
@@ -277,7 +241,7 @@ class _HomeState extends State<Home> {
               },
             ),
             TextButton(
-              child: Text('Yes'),
+              child: const Text('Yes'),
               onPressed: () {
                 // Navigator.of(context).pop(true);
                 exit(0);
@@ -296,19 +260,19 @@ class _HomeState extends State<Home> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        content: Container(
+        content: SizedBox(
           height: 150,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: _getFromGallery,
-                child: Text('Take Local Image'),
+                child: const Text('Take Local Image'),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _getImageFromCamera,
-                child: Text('      Scan Image     '),
+                child: const Text('      Scan Image     '),
               )
             ],
           ),
@@ -341,7 +305,7 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: const Text('Home'),
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -360,8 +324,8 @@ class _HomeState extends State<Home> {
                   height: 200, // to create a perfect circle
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
+            const Padding(
+              padding: EdgeInsets.all(10.0),
               child: Text(
                 'TREE TRACER',
                 style: TextStyle(
@@ -389,7 +353,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Center(
@@ -411,7 +375,7 @@ class _HomeState extends State<Home> {
             ),
 
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Visibility(
               visible: isLoading, 
               child: Image.asset(
@@ -420,10 +384,10 @@ class _HomeState extends State<Home> {
                 height: 35, // to create a perfect circle
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Visibility(
               visible: !isLoading && isErrorShow,
-              child: Text(
+              child: const Text(
                 "No Results Found!",
                 style: TextStyle(color: Colors.red),
               ))
@@ -439,7 +403,7 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   _drawerItemTapped(0);
                   Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Home()));
+                  context, MaterialPageRoute(builder: (context) => const Home()));
                 },
               ),
               _buildDrawerItem(
@@ -455,7 +419,7 @@ class _HomeState extends State<Home> {
                 index: 2,
                 onTap: () {
                   Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => MainView()));
+                  MaterialPageRoute(builder: (context) => const MainView()));
                 },
               ),
               _buildDrawerItem(
@@ -511,7 +475,7 @@ class _HomeState extends State<Home> {
               case 0:
                 // _drawerItemTapped(0);
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
+                    context, MaterialPageRoute(builder: (context) => const Home()));
               case 1:
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
@@ -531,7 +495,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       routes: {
-        '/tracers': (context) => Trees(),
+        '/tracers': (context) => const Trees(),
         '/about_us': (context) => AboutUs(),
       },
     )
@@ -545,11 +509,11 @@ class _HomeState extends State<Home> {
       case 0:
         return _homePage();
       case 1:
-        return Trees();
+        return const Trees();
       case 2:
         return AboutUs();
       default:
-        return Text('Unknown Page');
+        return const Text('Unknown Page');
     }
   }
 
@@ -568,7 +532,7 @@ class _HomeState extends State<Home> {
       itemBuilder: (BuildContext context, int index) {
         final imageData = filteredDataList[index];
         return ListTile(
-          leading: Container(
+          leading: SizedBox(
             width: 100, // Adjust the width as needed
             height: 100, // Adjust the height as needed
             child: Image.asset(imageData.imagePath, fit: BoxFit.cover),
