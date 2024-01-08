@@ -10,7 +10,7 @@ class ExtendInfo extends StatefulWidget {
   final String userType; //What type of User
 
     const ExtendInfo(
-      {required this.tracerId,
+      {super.key, required this.tracerId,
       required this.category,
       required this.userType}
     ); 
@@ -75,7 +75,7 @@ class ExtendInfo extends StatefulWidget {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 20),
-                Container(
+                SizedBox(
                     width: double.infinity,
                     child: Align(
                       alignment: Alignment.topLeft,
@@ -86,14 +86,14 @@ class ExtendInfo extends StatefulWidget {
                           const SizedBox(height: 20.0),
                           const Text('Description', style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 25.0
+                            fontSize: 23.0
                           ),),
                           RichText(
                             textAlign: TextAlign.justify,
                             text: TextSpan(
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 20.0
+                                fontSize: 18.0
                               ),
                               children: <TextSpan>[
                                 TextSpan(
@@ -107,7 +107,7 @@ class ExtendInfo extends StatefulWidget {
                             tracerData?.benifits != '' ? 'Benifits' : '',
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 25.0
+                              fontSize: 23.0
                             ),
                           ),
                           RichText(
@@ -115,7 +115,7 @@ class ExtendInfo extends StatefulWidget {
                             text: TextSpan(
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 20.0
+                                fontSize: 18.0
                               ),
                               children: <TextSpan>[
                                 TextSpan(
@@ -129,7 +129,7 @@ class ExtendInfo extends StatefulWidget {
                             tracerData?.uses != '' ? 'Uses' : '',
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 25.0
+                              fontSize: 23.0
                             ),
                           ),
                           RichText(
@@ -137,11 +137,33 @@ class ExtendInfo extends StatefulWidget {
                             text: TextSpan(
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 20.0
+                                fontSize: 18.0
                               ),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: tracerData?.uses ?? 'No Uses'
+                                )
+                              ]
+                            )
+                          ),
+                          const SizedBox(height: 10.0),
+                          Text(
+                            tracerData?.trivia != '' ? 'Trivia' : '',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 23.0
+                            ),
+                          ),
+                          RichText(
+                            textAlign: TextAlign.justify,
+                            text: TextSpan(
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.0
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: tracerData?.trivia ?? 'No Trivia'
                                 )
                               ]
                             )

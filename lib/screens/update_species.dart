@@ -17,7 +17,7 @@ import 'package:tree_tracer/services/database_helper.dart';
 class UpdateSpecies extends StatefulWidget {
   final int tracerId;
 
-  UpdateSpecies({required this.tracerId});
+  const UpdateSpecies({super.key, required this.tracerId});
 
   @override
   _UpdateSpeciesState createState() => _UpdateSpeciesState();
@@ -55,6 +55,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
   TextEditingController familyController = TextEditingController();
   TextEditingController benifitsController = TextEditingController();
   TextEditingController usesController = TextEditingController();
+  TextEditingController triviaController = TextEditingController();
   //For Root
   TextEditingController rootNameInput = TextEditingController();
   TextEditingController rootDescInput = TextEditingController();
@@ -110,6 +111,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
       familyController.text = tracerData!.family;
       benifitsController.text = tracerData!.benifits;
       usesController.text = tracerData!.uses;
+      triviaController.text = tracerData!.trivia;
     });
   }
 
@@ -130,6 +132,7 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
       family: familyController.text,
       benifits: benifitsController.text,
       uses: usesController.text,
+      trivia: triviaController.text,
       favourite: 0
     );
 
@@ -406,6 +409,14 @@ class _UpdateSpeciesState extends State<UpdateSpecies> {
                       child: TextField(
                         controller: usesController,
                         decoration: const InputDecoration(labelText: 'Uses'),
+                        maxLines: 4, // You can adjust the number of lines
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                      child: TextField(
+                        controller: triviaController,
+                        decoration: const InputDecoration(labelText: 'Trivia'),
                         maxLines: 4, // You can adjust the number of lines
                       ),
                     ),
