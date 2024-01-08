@@ -155,7 +155,7 @@ class TracerDatabaseHelper {
     //   return null;
     // }e
 
-    return userData.length > 0;
+    return userData.isNotEmpty;
   }
 
   Future<int> insertDBTracerData(TracerModel tracerData) async {
@@ -190,7 +190,7 @@ class TracerDatabaseHelper {
 
   Future<List<TracerModel>> getTracerDataList() async {
     final db = await database;
-    print('========= db ======= ${db}');
+    print('========= db ======= $db');
     final List<Map<String, dynamic>> maps = await db.query('tracer');
     return List.generate(maps.length, (i) {
       return TracerModel.fromMap(maps[i]);
@@ -574,7 +574,7 @@ class TracerDatabaseHelper {
     } else {
       await setFlagInTempStorage();
 
-      List<dynamic> tree_datas = [
+      List<dynamic> treeDatas = [
         {
           'path': 'assets/images/agoho1.jpg',
           'image_paths': [
@@ -1795,23 +1795,25 @@ class TracerDatabaseHelper {
         },
       ];
 
-      for (var tracer in tree_datas) {
+      for (var tracer in treeDatas) {
         final Uint8List tracerImageBytes =
             await loadImageAsUint8List(tracer['path']);
 
         // final Uint8List tracerImageBytes = await fileToUint8List(File(tracer['path']));
 
         var newTracer = TracerModel(
-            imageBlob: tracerImageBytes,
-            imagePath: tracer['path'],
-            local_name: tracer['local_name'],
-            scientific_name: tracer['scientific_name'],
-            description: tracer['description'],
-            summary: tracer['summary'],
-            family: tracer['family'],
-            benifits: tracer['benifits'],
-            uses: tracer['uses'],
-            favourite: 0);
+          imageBlob: tracerImageBytes,
+          imagePath: tracer['path'],
+          local_name: tracer['local_name'],
+          scientific_name: tracer['scientific_name'],
+          description: tracer['description'],
+          summary: tracer['summary'],
+          family: tracer['family'],
+          benifits: tracer['benifits'],
+          uses: tracer['uses'],
+          trivia: tracer['trivia'],
+          favourite: 0
+        );
 
         int newTreeId = await dbHelper.insertDBTracerData(newTracer);
 

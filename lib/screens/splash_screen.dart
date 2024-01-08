@@ -33,8 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async{
-    await Future.delayed(Duration(milliseconds: 3000), (){});
+    await Future.delayed(const Duration(milliseconds: 3000), (){});
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const TriviaHome()));
   }
 
   @override
@@ -47,10 +48,10 @@ class _SplashScreenState extends State<SplashScreen> {
           ClipOval(
             child: Image.asset(
               "assets/images/app_logo.jpg",
-                  width: 200, // Set both width and height to the same value
-                  height: 200, // to create a perfect circle
-                ),
-              ),
+              width: 200, // Set both width and height to the same value
+              height: 200, // to create a perfect circle
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Image.asset(

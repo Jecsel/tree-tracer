@@ -15,6 +15,8 @@ import 'package:tree_tracer/screens/user_tree_list.dart';
 import 'package:tree_tracer/services/database_helper.dart';
 
 class AddSpecies extends StatefulWidget {
+  const AddSpecies({super.key});
+
   @override
   _AddSpeciesState createState() => _AddSpeciesState();
 }
@@ -51,6 +53,7 @@ class _AddSpeciesState extends State<AddSpecies> {
   TextEditingController familyController = TextEditingController();
   TextEditingController benifitsController = TextEditingController();
   TextEditingController usesController = TextEditingController();
+  TextEditingController triviaController = TextEditingController();
   //For Root
   TextEditingController rootNameInput = TextEditingController();
   TextEditingController rootDescInput = TextEditingController();
@@ -117,6 +120,7 @@ class _AddSpeciesState extends State<AddSpecies> {
         family: familyController.text,
         benifits: benifitsController.text,
         uses: usesController.text,
+        trivia: triviaController.text,
         favourite: 0
       );
       
@@ -160,10 +164,10 @@ class _AddSpeciesState extends State<AddSpecies> {
         description: fruitDescInput.text,
       );
 
-      final root_id = dbHelper?.insertDBRootData(newRoot);
-      final flower_id = dbHelper?.insertDBFlowerData(newFlower);
-      final leaf_id = dbHelper?.insertDBLeafData(newLeaf);
-      final fruit_id = dbHelper?.insertDBFruitData(newFruit);
+      final rootId = dbHelper?.insertDBRootData(newRoot);
+      final flowerId = dbHelper?.insertDBFlowerData(newFlower);
+      final leafId = dbHelper?.insertDBLeafData(newLeaf);
+      final fruitId = dbHelper?.insertDBFruitData(newFruit);
     }
   }
 
@@ -201,7 +205,7 @@ class _AddSpeciesState extends State<AddSpecies> {
   }
 
   Future<Widget> loadImageFromFile(String filePath) async {
-    print('============ loadImageFromFile ===== ${filePath}');
+    print('============ loadImageFromFile ===== $filePath');
       if (filePath.startsWith('assets/')) {
         // If the path starts with 'assets/', load from assets
         return Image.asset(filePath, width: 60, height: 60);
@@ -232,7 +236,7 @@ class _AddSpeciesState extends State<AddSpecies> {
   @override
   Widget build(BuildContext context) {
 
-    print("===tracerImage======= ${tracerImage} ===========");
+    print("===tracerImage======= $tracerImage ===========");
     if (tracerImage != null) {
       tempTracerFileImageArray.add(tracerImage!);
     }
@@ -242,14 +246,14 @@ class _AddSpeciesState extends State<AddSpecies> {
       home: Scaffold(
         appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back), // Add your arrow icon here
+              icon: const Icon(Icons.arrow_back), // Add your arrow icon here
               onPressed: () {
                 Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => AdminPage(searchKey: 'TREE', userType: 'User',)));
               },
             ),
             flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -257,30 +261,30 @@ class _AddSpeciesState extends State<AddSpecies> {
               ),
             ),
           ),
-            title: Text('Search Tree')
+            title: const Text('Search Tree')
             ),
             body: SingleChildScrollView(
               child: Center(
                 child: Column(
                   children: [
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "Tree",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Container(
+                    SizedBox(
                       height: 150.0,
-                      child: tempTracerFileImageArray.length > 0 ? 
+                      child: tempTracerFileImageArray.isNotEmpty ? 
                         ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: tempTracerFileImageArray.length,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Stack(
                                 children: [
                                   Image.file(
@@ -296,7 +300,7 @@ class _AddSpeciesState extends State<AddSpecies> {
                                       onTap: () {
                                         removeImageInArray(index);
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.remove_circle,
                                         color: Colors.red,
                                         size: 30.0,
@@ -326,8 +330,8 @@ class _AddSpeciesState extends State<AddSpecies> {
                     //         height: 150,
                     //         width: 150,
                     //       ),
-                    SizedBox(height: 10),
-                    Container(
+                    const SizedBox(height: 10),
+                    SizedBox(
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -336,11 +340,11 @@ class _AddSpeciesState extends State<AddSpecies> {
                             _getFromGallery('tree');
                           },
                           style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              minimumSize: Size(double.infinity, 60),
+                              textStyle: const TextStyle(fontSize: 20),
+                              minimumSize: const Size(double.infinity, 60),
                               backgroundColor: Colors.green
                             ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Add Tree Image'),
@@ -350,12 +354,12 @@ class _AddSpeciesState extends State<AddSpecies> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: localNameController,
-                        decoration: InputDecoration(labelText: 'Common Name'),
+                        decoration: const InputDecoration(labelText: 'Common Name'),
                       ),
                     ),
                     Padding(
@@ -363,14 +367,14 @@ class _AddSpeciesState extends State<AddSpecies> {
                       child: TextField(
                         controller: scientificNameController,
                         decoration:
-                            InputDecoration(labelText: 'Scientific Name'),
+                            const InputDecoration(labelText: 'Scientific Name'),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: familyController,
-                        decoration: InputDecoration(labelText: 'Family'),
+                        decoration: const InputDecoration(labelText: 'Family'),
                         maxLines: 2, // You can adjust the number of lines
                       ),
                     ),
@@ -378,7 +382,7 @@ class _AddSpeciesState extends State<AddSpecies> {
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: descriptionController,
-                        decoration: InputDecoration(labelText: 'Description'),
+                        decoration: const InputDecoration(labelText: 'Description'),
                         maxLines: 2, // You can adjust the number of lines
                       ),
                     ),
@@ -386,7 +390,7 @@ class _AddSpeciesState extends State<AddSpecies> {
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: benifitsController,
-                        decoration: InputDecoration(labelText: 'Benifits'),
+                        decoration: const InputDecoration(labelText: 'Benifits'),
                         maxLines: 4, // You can adjust the number of lines
                       ),
                     ),
@@ -394,13 +398,21 @@ class _AddSpeciesState extends State<AddSpecies> {
                       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: TextField(
                         controller: usesController,
-                        decoration: InputDecoration(labelText: 'Uses'),
+                        decoration: const InputDecoration(labelText: 'Uses'),
+                        maxLines: 4, // You can adjust the number of lines
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                      child: TextField(
+                        controller: triviaController,
+                        decoration: const InputDecoration(labelText: 'Trivia'),
                         maxLines: 4, // You can adjust the number of lines
                       ),
                     ),
                     
-                    SizedBox(height: 30),
-                    Container(
+                    const SizedBox(height: 30),
+                    SizedBox(
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -410,10 +422,10 @@ class _AddSpeciesState extends State<AddSpecies> {
                             _gotoSearchList();
                           },
                           style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20),
-                              backgroundColor:  Color.fromARGB(255, 2, 191, 5),
-                              minimumSize: Size(double.infinity, 60)),
-                          child: Text('UPLOAD')
+                              textStyle: const TextStyle(fontSize: 20),
+                              backgroundColor:  const Color.fromARGB(255, 2, 191, 5),
+                              minimumSize: const Size(double.infinity, 60)),
+                          child: const Text('UPLOAD')
                         ),
                       ),
                     ),
