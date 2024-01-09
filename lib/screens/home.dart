@@ -23,6 +23,8 @@ import 'package:tree_tracer/ui_components/main_view.dart';
 import '../widgets/image_placeholder.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'loading_screen.dart';
+
 Future<void> main() async {
 
   // Run your app within the runApp function
@@ -91,6 +93,8 @@ class _HomeState extends State<Home> {
 
     localImage = File(pickedFileFromGallery!.path);
 
+    Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> const MyLoadingScreen()));
+
     for (Map mangroveImage in tracerImages!) {
       String imagePath = mangroveImage['imagePath'];
 
@@ -133,6 +137,7 @@ class _HomeState extends State<Home> {
         Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
       } else {
         isErrorShow = true;
+        Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
       }
     });
   }
@@ -375,22 +380,22 @@ class _HomeState extends State<Home> {
             ),
 
 
-            const SizedBox(height: 20),
-            Visibility(
-              visible: isLoading, 
-              child: Image.asset(
-                "assets/images/loading.gif",
-                width: 35,  // Set both width and height to the same value
-                height: 35, // to create a perfect circle
-              ),
-            ),
-            const SizedBox(height: 20),
-            Visibility(
-              visible: !isLoading && isErrorShow,
-              child: const Text(
-                "No Results Found!",
-                style: TextStyle(color: Colors.red),
-              ))
+            // const SizedBox(height: 20),
+            // Visibility(
+            //   visible: isLoading, 
+            //   child: Image.asset(
+            //     "assets/images/loading.gif",
+            //     width: 35,  // Set both width and height to the same value
+            //     height: 35, // to create a perfect circle
+            //   ),
+            // ),
+            // const SizedBox(height: 20),
+            // Visibility(
+            //   visible: !isLoading && isErrorShow,
+            //   child: const Text(
+            //     "No Results Found!",
+            //     style: TextStyle(color: Colors.red),
+            //   ))
           ],
         ),
         endDrawer: Drawer(

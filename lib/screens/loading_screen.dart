@@ -12,7 +12,7 @@ class MyLoadingScreen extends StatefulWidget {
 class _MyLoadingScreenState extends State<MyLoadingScreen> {
   // Simulate a time-consuming operation (e.g., fetching data)
   Future<void> fetchData() async {
-    await Future.delayed(const Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   navigateToHome(){
@@ -34,7 +34,7 @@ class _MyLoadingScreenState extends State<MyLoadingScreen> {
                 children: [
                   const SizedBox(height: 200),
                   Image.asset(
-                    'assets/images/load.gif',
+                    'assets/images/loading.gif',
                     width: 100,
                     height: 100,
                   ),
@@ -58,7 +58,7 @@ class _MyLoadingScreenState extends State<MyLoadingScreen> {
                 children: [
                   const SizedBox(height: 200),
                   Image.asset(
-                    'assets/images/load.gif',
+                    'assets/images/loading.gif',
                     width: 100,
                     height: 100,
                   ),
