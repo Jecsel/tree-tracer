@@ -155,6 +155,18 @@ class _HomeState extends State<Home> {
     Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context) => const TriviaHome()));
   }
 
+  _goToTreeList(){
+    Navigator.pushReplacement(this.context,
+      MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)
+      )
+    );
+
+    setState(() {
+      _selectedIndex = 1;
+    });
+    
+  }
+
   Future _getImageFromCamera() async {    /// Get Image from Camera
     setState(() {
       isLoading = true;
@@ -352,8 +364,8 @@ class _HomeState extends State<Home> {
                     ),
                     backgroundColor: Colors.green
                   ),
-                    onPressed: _showModal,
-                    child: const Text("Scan", style: TextStyle(color: Colors.white)),
+                    onPressed: _goToTreeList,
+                    child: const Text("Tree List", style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ),
