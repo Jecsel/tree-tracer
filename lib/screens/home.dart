@@ -26,13 +26,11 @@ import 'package:path_provider/path_provider.dart';
 import 'loading_screen.dart';
 
 Future<void> main() async {
-
   // Run your app within the runApp function
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
 
   @override
@@ -58,7 +56,7 @@ class _HomeState extends State<Home> {
   final CarouselController _carouselController = CarouselController();
 
   static const IconData qr_code_scanner_rounded =
-  IconData(0xf00cc, fontFamily: 'MaterialIcons');
+      IconData(0xf00cc, fontFamily: 'MaterialIcons');
   final picker = ImagePicker();
   File? localImage;
   File? takenImage;
@@ -72,8 +70,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-      dbHelper = TracerDatabaseHelper.instance;
-      fetchData();
+    dbHelper = TracerDatabaseHelper.instance;
+    fetchData();
   }
 
   Future<void> fetchData() async {
@@ -84,7 +82,8 @@ class _HomeState extends State<Home> {
     setState(() {
       isLoading = true;
     });
-    final pickedFileFromGallery = await ImagePicker().getImage(     /// Get from gallery
+    final pickedFileFromGallery = await ImagePicker().getImage(
+      /// Get from gallery
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
@@ -93,7 +92,8 @@ class _HomeState extends State<Home> {
 
     localImage = File(pickedFileFromGallery!.path);
 
-    Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> const MyLoadingScreen()));
+    Navigator.pushReplacement(this.context,
+        MaterialPageRoute(builder: (context) => const MyLoadingScreen()));
 
     for (Map mangroveImage in tracerImages!) {
       String imagePath = mangroveImage['imagePath'];
@@ -101,47 +101,59 @@ class _HomeState extends State<Home> {
       final tempDir = await getTemporaryDirectory();
       final tempPath = tempDir.path;
       final file = File('$tempPath/temp_image.jpg');
-      if(mangroveImage['imageBlob'] != null) {
+      if (mangroveImage['imageBlob'] != null) {
         await file.writeAsBytes(mangroveImage['imageBlob']);
       }
 
-       double similarityScore = 1.0;
+      double similarityScore = 1.0;
       if (imagePath.startsWith('assets/')) {
-        similarityScore = await compareImages(src1: localImage, src2: file, algorithm: PerceptualHash());
+        similarityScore = await compareImages(
+            src1: localImage, src2: file, algorithm: PerceptualHash());
       } else {
-        similarityScore = await compareImages(src1: localImage, src2: File(imagePath), algorithm: PerceptualHash());
+        similarityScore = await compareImages(
+            src1: localImage,
+            src2: File(imagePath),
+            algorithm: PerceptualHash());
       }
 
       if (similarityScore <= 0.5) {
-
         similarityScore = 100 - (similarityScore * 100);
         int roundedSimilarityScore = similarityScore.round();
         Map<String, dynamic> imageInfo = {
           "score": similarityScore,
-          "image": mangroveImage, // Add the image or any other relevant information here
+          "image":
+              mangroveImage, // Add the image or any other relevant information here
         };
-        similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
+        similarImages.add(
+            imageInfo); //adding those results higher 50 percentage differences;
         similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
-      }else{
+      } else {
         similarityScore = 100 - (similarityScore * 100);
       }
     }
 
     setState(() {
-      localImage = File(pickedFileFromGallery.path);  
+      localImage = File(pickedFileFromGallery.path);
       similarImages = similarImages;
 
       isErrorShow = false;
       isLoading = false;
-      if(similarImages.isNotEmpty) {
-        Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+      if (similarImages.isNotEmpty) {
+        Navigator.pushReplacement(
+            this.context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ResultPage(results: similarImages, searchKey: 'TREE')));
       } else {
         isErrorShow = true;
-        Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+        Navigator.pushReplacement(
+            this.context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ResultPage(results: similarImages, searchKey: 'TREE')));
       }
     });
   }
-
 
   checkImagePath(filePath) {
     if (!filePath.startsWith('assets/')) {
@@ -151,29 +163,33 @@ class _HomeState extends State<Home> {
     return filePath;
   }
 
-  _goToTrivia(){
-    Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context) => const TriviaHome()));
+  _goToTrivia() {
+    Navigator.pushReplacement(this.context,
+        MaterialPageRoute(builder: (context) => const TriviaHome()));
   }
 
-  _goToTreeList(){
-    Navigator.pushReplacement(this.context,
-      MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)
-      )
-    );
+  _goToTreeList() {
+    Navigator.pushReplacement(
+        this.context,
+        MaterialPageRoute(
+            builder: (context) => UserTreeList(
+                  searchKey: 'TREE',
+                  userType: 'User',
+                )));
 
     setState(() {
       _selectedIndex = 1;
     });
-    
   }
 
-  Future _getImageFromCamera() async {    /// Get Image from Camera
+  Future _getImageFromCamera() async {
+    /// Get Image from Camera
     setState(() {
       isLoading = true;
     });
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
-    // Navigator.pop(this.context); 
+    // Navigator.pop(this.context);
 
     for (Map mangroveImage in tracerImages!) {
       String imagePath = mangroveImage['imagePath'];
@@ -183,14 +199,20 @@ class _HomeState extends State<Home> {
       final tempDir = await getTemporaryDirectory();
       final tempPath = tempDir.path;
       final file = File('$tempPath/temp_image.jpg');
-      if(mangroveImage['imageBlob'] != null) {
+      if (mangroveImage['imageBlob'] != null) {
         await file.writeAsBytes(mangroveImage['imageBlob']);
       }
 
       if (imagePath.startsWith('assets/')) {
-        similarityScore = await compareImages(src1: File(pickedFile!.path), src2: file, algorithm: PerceptualHash());
+        similarityScore = await compareImages(
+            src1: File(pickedFile!.path),
+            src2: file,
+            algorithm: PerceptualHash());
       } else {
-        similarityScore = await compareImages(src1: File(pickedFile!.path), src2: File(imagePath), algorithm: PerceptualHash());
+        similarityScore = await compareImages(
+            src1: File(pickedFile!.path),
+            src2: File(imagePath),
+            algorithm: PerceptualHash());
       }
 
       if (similarityScore <= 0.75) {
@@ -198,27 +220,33 @@ class _HomeState extends State<Home> {
         int roundedSimilarityScore = similarityScore.round();
         Map<String, dynamic> imageInfo = {
           "score": roundedSimilarityScore,
-          "image": mangroveImage, // Add the image or any other relevant information here
+          "image":
+              mangroveImage, // Add the image or any other relevant information here
         };
-        similarImages.add(imageInfo); //adding those results higher 50 percentage differences;
+        similarImages.add(
+            imageInfo); //adding those results higher 50 percentage differences;
         similarImages.sort((a, b) => b["score"].compareTo(a["score"]));
       }
     }
 
     if (pickedFile != null) {
       setState(() {
-        takenImage = File(pickedFile.path);// Compare the images here and show the result
+        takenImage = File(
+            pickedFile.path); // Compare the images here and show the result
         isErrorShow = false;
         isLoading = false;
-        if(similarImages.isNotEmpty) {
-          Navigator.pushReplacement(this.context, MaterialPageRoute(builder: (context)=> ResultPage(results: similarImages, searchKey: 'TREE')));
+        if (similarImages.isNotEmpty) {
+          Navigator.pushReplacement(
+              this.context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ResultPage(results: similarImages, searchKey: 'TREE')));
         } else {
           isErrorShow = true;
         }
       });
     }
   }
-
 
   // Define a list of ImageData objects
   List<ImageData> imageDataList = [
@@ -273,7 +301,7 @@ class _HomeState extends State<Home> {
   }
 
   _showModal() {
-  BuildContext context = this.context;
+    BuildContext context = this.context;
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -312,213 +340,224 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
-      onWillPop: () async {
-        return _onBackPressed(context);
+        onWillPop: () async {
+          return _onBackPressed(context);
         },
-      child: MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
-              ),
-            ),
-          ),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipOval(
-            child: Image.asset(
-              "assets/images/app_logo.jpg",
-                  width: 200, // Set both width and height to the same value
-                  height: 200, // to create a perfect circle
-                ),
-              ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'TREE TRACER',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20
+        child: MaterialApp(
+          home: Scaffold(
+            appBar: AppBar(
+              title: const Text('Home'),
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 24, 122, 0),
+                      Color.fromARGB(255, 82, 209, 90)
+                    ],
+                  ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Center(
-                child: SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ClipOval(
+                  child: Image.asset(
+                    "assets/images/app_logo.jpg",
+                    width: 200, // Set both width and height to the same value
+                    height: 200, // to create a perfect circle
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    'TREE TRACER',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            backgroundColor: Colors.green),
+                        onPressed: _goToTreeList,
+                        child: const Text("Tree List",
+                            style: TextStyle(color: Colors.white)),
+                      ),
                     ),
-                    backgroundColor: Colors.green
-                  ),
-                    onPressed: _goToTreeList,
-                    child: const Text("Tree List", style: TextStyle(color: Colors.white)),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Center(
-                child: SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            backgroundColor: Colors.green),
+                        onPressed: _goToTrivia,
+                        child: const Text("Trivia",
+                            style: TextStyle(color: Colors.white)),
+                      ),
                     ),
-                    backgroundColor: Colors.green
-                  ),
-                    onPressed: _goToTrivia,
-                    child: const Text("Trivia", style: TextStyle(color: Colors.white)),
                   ),
                 ),
+
+                // const SizedBox(height: 20),
+                // Visibility(
+                //   visible: isLoading,
+                //   child: Image.asset(
+                //     "assets/images/loading.gif",
+                //     width: 35,  // Set both width and height to the same value
+                //     height: 35, // to create a perfect circle
+                //   ),
+                // ),
+                // const SizedBox(height: 20),
+                // Visibility(
+                //   visible: !isLoading && isErrorShow,
+                //   child: const Text(
+                //     "No Results Found!",
+                //     style: TextStyle(color: Colors.red),
+                //   ))
+              ],
+            ),
+            endDrawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  _buildDrawerItem(
+                    title: 'Home',
+                    index: 0,
+                    onTap: () {
+                      _drawerItemTapped(0);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Home()));
+                    },
+                  ),
+                  _buildDrawerItem(
+                    title: 'Favorite',
+                    index: 1,
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FavoritePage()));
+                    },
+                  ),
+                  _buildDrawerItem(
+                    title: 'Admin',
+                    index: 2,
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MainView()));
+                    },
+                  ),
+                  _buildDrawerItem(
+                    title: 'Tree List',
+                    index: 3,
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserTreeList(
+                                    searchKey: 'TREE',
+                                    userType: 'User',
+                                  )));
+                    },
+                  ),
+                  _buildDrawerItem(
+                    title: 'About Us',
+                    index: 4,
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => AboutUs()));
+                    },
+                  ),
+                  _buildDrawerItem(
+                    title: 'Exit',
+                    index: 5,
+                    onTap: () {
+                      // Navigator.pop(context);
+                      _onBackPressed(context);
+                    },
+                  ),
+                ],
               ),
             ),
-
-
-            // const SizedBox(height: 20),
-            // Visibility(
-            //   visible: isLoading, 
-            //   child: Image.asset(
-            //     "assets/images/loading.gif",
-            //     width: 35,  // Set both width and height to the same value
-            //     height: 35, // to create a perfect circle
-            //   ),
-            // ),
-            // const SizedBox(height: 20),
-            // Visibility(
-            //   visible: !isLoading && isErrorShow,
-            //   child: const Text(
-            //     "No Results Found!",
-            //     style: TextStyle(color: Colors.red),
-            //   ))
-          ],
-        ),
-        endDrawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              _buildDrawerItem(
-                title: 'Home',
-                index: 0,
-                onTap: () {
-                  _drawerItemTapped(0);
-                  Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => const Home()));
-                },
-              ),
-              _buildDrawerItem(
-                title: 'Favorite',
-                index: 1,
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => FavoritePage()));
-                },
-              ),
-              _buildDrawerItem(
-                title: 'Admin',
-                index: 2,
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const MainView()));
-                },
-              ),
-              _buildDrawerItem(
-                title: 'Tree List',
-                index: 3,
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
-                },
-              ),
-              _buildDrawerItem(
-                title: 'About Us',
-                index: 4,
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => AboutUs()));
-                },
-              ),
-              _buildDrawerItem(
-                title: 'Exit',
-                index: 5,
-                onTap: () {
-                    // Navigator.pop(context);
-                  _onBackPressed(context);
-                },
-              ),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Colors.green),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grass),
-              label: 'Trees',
-              backgroundColor: Colors.green),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.face),
-              label: 'About',
-              backgroundColor: Colors.green),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.exit_to_app),
-              label: 'Exit',
-              backgroundColor: Colors.green),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: (int index) {
-            switch (index) {
-              case 0:
-                // _drawerItemTapped(0);
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => const Home()));
-              case 1:
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => UserTreeList(searchKey: 'TREE', userType: 'User',)));
-              case 2:
-                // _drawerItemTapped(2);
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => AboutUs()));
-              case 3:
-                _onBackPressed(context);
-            }
-            setState(
-              () {
-                _selectedIndex = index;
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                    backgroundColor: Colors.green),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.grass),
+                    label: 'Trees',
+                    backgroundColor: Colors.green),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.face),
+                    label: 'About',
+                    backgroundColor: Colors.green),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.exit_to_app),
+                    label: 'Exit',
+                    backgroundColor: Colors.green),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: const Color.fromARGB(255, 0, 4, 255),
+              onTap: (int index) {
+                switch (index) {
+                  case 0:
+                    // _drawerItemTapped(0);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => const Home()));
+                  case 1:
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserTreeList(
+                                  searchKey: 'TREE',
+                                  userType: 'User',
+                                )));
+                  case 2:
+                    // _drawerItemTapped(2);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => AboutUs()));
+                  case 3:
+                    _onBackPressed(context);
+                }
+                setState(
+                  () {
+                    _selectedIndex = index;
+                  },
+                );
               },
-            );
+            ),
+          ),
+          routes: {
+            '/tracers': (context) => const Trees(),
+            '/about_us': (context) => AboutUs(),
           },
-        ),
-      ),
-      routes: {
-        '/tracers': (context) => const Trees(),
-        '/about_us': (context) => AboutUs(),
-      },
-    )
-    );
-    
-
+        ));
   }
 
   Widget _getSelectedWidget() {

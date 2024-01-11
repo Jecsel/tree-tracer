@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tree_tracer/components/show_tree.dart';
 import 'package:tree_tracer/screens/about_us.dart';
@@ -9,7 +8,6 @@ class Trees extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _TreesPageState();
-
 }
 
 class DropdownItem {
@@ -41,13 +39,14 @@ class MyDropdownDemo extends StatefulWidget {
 class _MyDropdownDemoState extends State<MyDropdownDemo> {
   DropdownItem? selectedDropdownItem;
 
-    int _selectedIndex = 0;
+  int _selectedIndex = 0;
 
   _drawerItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   Widget _buildDrawerItem({
     required String title,
     required int index,
@@ -59,7 +58,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
       onTap: onTap,
     );
   }
-  
+
   List<DropdownItem> dropdownItems = [
     DropdownItem(
       label: 'Item 1',
@@ -74,7 +73,7 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
     // Add more items as needed
   ];
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -93,7 +92,8 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
               onChanged: (DropdownItem? newValue) {
                 setState(() {
                   // selectedDropdownItem = newValue;
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ShowTree()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => ShowTree()));
                 });
               },
               items: dropdownItems.map((DropdownItem item) {
@@ -254,14 +254,16 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
               index: 0,
               onTap: () {
                 _drawerItemTapped(0);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
               },
             ),
             _buildDrawerItem(
               title: 'Trees',
               index: 1,
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Trees()));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Trees()));
               },
             ),
             _buildDrawerItem(
@@ -269,7 +271,8 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
               index: 2,
               onTap: () {
                 _drawerItemTapped(2);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AboutUs()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => AboutUs()));
               },
             ),
             _buildDrawerItem(
@@ -283,53 +286,53 @@ class _MyDropdownDemoState extends State<MyDropdownDemo> {
           ],
         ),
       ),
-     bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.blueAccent),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.grass),
-                label: 'Trees',
-                backgroundColor: Colors.blueAccent),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.face),
-                label: 'About',
-                backgroundColor: Colors.blueAccent),
-            // BottomNavigationBarItem(
-            //     icon: Icon(Icons.qr_code_scanner_sharp),
-            //     label: 'Scan',
-            //     backgroundColor: Colors.blueAccent),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.exit_to_app),
-                label: 'Exit',
-                backgroundColor: Colors.blueAccent),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: (int index) {
-            switch (index) {
-              case 0:
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
-              case 1:
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => Trees()));
-              case 2:
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => AboutUs()));
-              case 3:
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
-            }
-            setState(
-              () {
-                _selectedIndex = index;
-              },
-            );
-          },
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Colors.blueAccent),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.grass),
+              label: 'Trees',
+              backgroundColor: Colors.blueAccent),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.face),
+              label: 'About',
+              backgroundColor: Colors.blueAccent),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.qr_code_scanner_sharp),
+          //     label: 'Scan',
+          //     backgroundColor: Colors.blueAccent),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.exit_to_app),
+              label: 'Exit',
+              backgroundColor: Colors.blueAccent),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: const Color.fromARGB(255, 0, 4, 255),
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            case 1:
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Trees()));
+            case 2:
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => AboutUs()));
+            case 3:
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+          }
+          setState(
+            () {
+              _selectedIndex = index;
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -636,7 +636,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The timber of Palaquium aureum is highly valued in the Philippines for its strength and resistance to termites. It is commonly used in traditional house construction, furniture, and other woodworking applications.',
-          'trivia': ''
+          'trivia':
+              'The Alakaak Pula Tree is located in the upper reaches of Mt. Guiting-Guiting'
         },
         {
           'path': 'assets/images/alim1.jpg',
@@ -714,7 +715,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Bagawak Morado is known to have various traditional medicinal uses in the Philippines and other regions where it is found. Feer Reduction: The leaves of Bagawak Morado are sometimes used to prepare herbal remedies for reducing fever. They may be brewed into a tea or decoction and consumed for their potential antipyretic (fever-reducing) properties. Pain Relief: In traditional medicine, parts of the tree, including the leaves and bark, may be used to alleviate pain, such as headaches and body aches. Anti-Inflammatory: Some preparations made from Bagawak Morado are believed to have anti-inflammatory properties and may be used to treat inflammatory conditions. Antioxidant: The plant may contain compounds with antioxidant properties, which could help protect cells from oxidative stress and related health issues. Digestive Ailments In some traditional remedies, Bagawak Morado may be used to address digestive problems, such as indigestion or stomach discomfort. Wound Healing: Extracts or poultices made from various parts of the tree are sometimes applied topically to wounds or skin irritations to promote healing.',
-          'trivia': ''
+          'trivia':
+              'The Bagwak Morado Tree is located in Barangay Danao, Cajidiocan, Romblon. This tree usually grows in low land areas. This tree is also often planted in the yard because of its beautiful flowers.'
         },
         {
           'path': 'assets/images/bahai1.jpg',
@@ -790,7 +792,8 @@ class TracerDatabaseHelper {
               'batikuling for woodcarving creates a continuing demand, which allows illegal loggers to thrive in business, as admitted by several people from Paete. In fact, illegal logging is the only way to acquire the batikuling in Paete, with carabao loggers or small-scale poachers coming all the way from Quezon Province. Other than this region, batikuling can also be found in Bataan, Sorsogon, Negros, and Leyte, but woodcarvers from Paete source their wood from nearby sources.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'Batikuling Tree is located in Barangay España, Sanfernado, Romblon. The fruit of this tree is edible but sour.'
         },
         {
           'path': 'assets/images/batitinan1.jpeg',
@@ -809,7 +812,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The heartwood is a light olive gray to dark grayish brown; the sapwood is whitish when fresh, turning grayish brown on exposure, it is sometimes a thin band 1 - 2cm wide and sharply demarcated, whilst at other times it can be 4 - 6cm wide and merging gradually into the heartwood. In wood from young, fast-growing trees the sapwood is hardly distinguishable from the heartwood after seasoning. The texture is fine and dense; the grain generally straight, sometimes with a short, very regular wave. The wood is hard; heavy; very durable, being rarely attacked even by termites or toredo. It seasons with little warping, but is liable to split badly at the ends; logs and freshly trimmed ends of sawn lumber should be painted to prevent splitting. The wood is rather difficult to work, but takes a beautifully smooth surface under sharp tools. It is used for purposes such as ship, wharf, and bridge building, including salt-water piles; ties; paving blocks; sills; posts; beams, joists, rafters; flooring, interior finish; furniture, cabinetwork.',
-          'trivia': ''
+          'trivia':
+              'The Batitinan Tree is located in the land protected area, in Barangay Tampayan there are many batitinan trees especially in Mt. Guiting Guiting National Park.'
         },
         {
           'path': 'assets/images/batobato1.jpg',
@@ -828,7 +832,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'To protect food against pests, as an aphrodisiac, a stimulant/depressant, a rodenticide and a fish poison, against insect bites, to induce conception and for general healing.',
-          'trivia': ''
+          'trivia':
+              'Bato Bato Tree is located in Barangay Cantagda, Cajidiocan, Romblon. Almost all places in Sibuyan grow this tree but in Barangay Cantagda there are a lot of Bato Bato Tree.'
         },
         {
           'path': 'assets/images/betis.jpeg',
@@ -847,7 +852,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Its fruit is gathered from the wild for local use as an oil for lamps etc. The timber is exploited locally.',
-          'trivia': ''
+          'trivia':
+              'Betis Tree is located in Barangay Lumbang Oeste, Cajidiocan, Romblon. This tree grows in the higher parts of the mountain and is rarely seen in the lowlands.'
         },
         {
           'path': 'assets/images/bilis.jpeg',
@@ -864,7 +870,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Bilis Tree can be seen anywhere in Sibuyan Island, it can be seen on the roadside and even in parks such as Magdiwang Park.'
         },
         {
           'path': 'assets/images/binayuyu.jpg',
@@ -921,7 +928,8 @@ class TracerDatabaseHelper {
               'Balakat Gubat, offers several benefits. Its wood is valuable for construction and furniture, and parts of the tree are used in traditional medicine for their potential therapeutic properties. Additionally, the tree may have cultural significance in certain regions.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'Balakat-gubat Tree is located in the upper reaches of Mt. Guiting Guiting. '
         },
         {
           'path': 'assets/images/banaibanai2.png',
@@ -936,7 +944,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Banai-Banai Tree is located in the land protected area, in Barangay Tampayan there are many banai-banai trees especially in Mt. Guiting Guiting National Park.'
         },
         {
           'path': 'assets/images/basan1.jpg',
@@ -954,7 +963,8 @@ class TracerDatabaseHelper {
               'The fruit is utilized in cooking, particularly in traditional South Asian dishes. It adds a sour flavor to curries and chutneys. Garcinia cambogia gained popularity for its alleged weight loss benefits. The peel of the fruit contains hydroxycitric acid (HCA), which some believe may help in weight management. The fruit is rich in antioxidants, which can help combat oxidative stress in the body. Garcinia cambogia has been used as a natural preservative for fish and other perishable foods due to its antimicrobial properties. It is essential to note that while some people believe in the weight loss benefits of Garcinia cambogia, scientific evidence supporting its effectiveness is limited, and its consumption should be approached with caution. Always consult with a healthcare professional before using it for medicinal purposes.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Basan Tree is located in Sitio Logdeck, Barangay Tampayan, Magdiwang, Romblon particularly in National Park in Sibuyan.'
         },
         {
           'path': 'assets/images/batino1.jpeg',
@@ -972,7 +982,8 @@ class TracerDatabaseHelper {
               'Batino is used as febrifuge, tonic, antiperiodic, antidysenteric, emmenagogue, anticholeric, and vulnerary.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Batino Tree is located in the upper reaches of Mt. Guiting Guiting.'
         },
         {
           'path': 'assets/images/binukau1.jpg',
@@ -989,7 +1000,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Binukau Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/binunga1.jpg',
@@ -1008,7 +1020,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Binunga trees produce a fruit known as "binjai" or "wani" with a sweet and tangy taste. The fruit is consumed fresh or used in traditional dishes and desserts. Various parts of the binunga tree, including the bark and leaves, have been utilized in traditional medicine. They are believed to have properties that may help with conditions like diarrhea, skin issues, and fever. The timber from binunga trees is used for construction and making furniture due to its durability and resistance to termites.',
-          'trivia': ''
+          'trivia':
+              'The Binunga Tree can be seen mainly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'
         },
         {
           'path': 'assets/images/bolongeta1.jpg',
@@ -1027,7 +1040,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Wood used for fancy woodwork and furniture. Bark has reported medicinal properties.',
-          'trivia': ''
+          'trivia':
+              'Bolong-eta Tree is located in Sitio Logdeck, Barangay Tampayan, Magdiwang, Romblon particularly in National Park in Sibuyan.'
         },
         {
           'path': 'assets/images/busisi1.jpeg',
@@ -1064,7 +1078,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Dalingdingan Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/dolalog.jpeg',
@@ -1102,7 +1117,8 @@ class TracerDatabaseHelper {
               'Fruits are edible, although with little flavor, sometimes eaten with sugar and cream. Leaves used in the treatment of allergy, asthma, diarrhea, diabetes, tumor and cancer. Scouring: Young leaves are used to clean cooking utensils and to scour wood floors, stairs, etc. Broiler supplement: Study showed applicability and benefits for use of the fruit as supplements to commercial mash, which resulted in significant weight gain and better animal performance. Repellent: Ayta people of Pampanga burn leaves and stem as mosquito repellent. Wood: Used for crafts and furniture making.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Is-is tree grows all around. In Agutay, Agtiwa, Barangay Agsao. simply chopped and utilized by the indigenous, whose leaves and roots are used in traditional medicine to heal illnesses.'
         },
         {
           'path': 'assets/images/kahoydalaga2.jpeg',
@@ -1140,7 +1156,8 @@ class TracerDatabaseHelper {
               'Decoction or infusion of the bark used for loss of appetite, bloating, vomiting, flatulence, toothache, headaches, rheumatism, dysentery, to help expel flatus and to facilitate menses; colds, fevers, sinus infections and bronchitis.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Kalingag Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/katmon1.jpg',
@@ -1174,7 +1191,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The plant is harvested from the wild for local use as a food and source of fibre.',
-          'trivia': ''
+          'trivia':
+              'You may encounter Kalomola trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/kansilay1.jpg',
@@ -1193,7 +1211,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'In some regions, parts of the tree are used in local cuisines, and the fruit can be consumed. The tree contributes to environmental conservation by providing shade and supporting biodiversity.',
-          'trivia': ''
+          'trivia':
+              'The Kansilay Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/kubi1.jpeg',
@@ -1230,7 +1249,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Used for medicine, food, and wood source for instruments, shoes, and other handicrafts. This native tree is classified as Vulnerable in the IUCN Red List of Threatened Species (2013). “Protect our trees, our forests- our source of life!',
-          'trivia': ''
+          'trivia':
+              'The Laneteng Gubat Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/liuin1.jpg',
@@ -1247,7 +1267,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'Liuin Tree is located in Barangay Agutay, Agtiwa, Agsao or anywhere Barangay has it. most of them can be seen next to the river or next to the stream.'
         },
         {
           'path': 'assets/images/malapapaya1.jpg',
@@ -1263,7 +1284,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Malapapaya Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/malaruhatpula1.jpeg',
@@ -1280,7 +1302,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The heartwood is a golden brown, greyish brown or brown, with pink or purplish glints; it is not clearly demarcated from the 1 - 4cm wide band of sapwood. The texture is fine; the grain slightly interlocked, sometimes wavy or irregular; there are resin deposits. The wood is heavy; moderately hard; somewhat durable, being moderately resistant to fungi and termites, but susceptible to dry wood borers. It seasons slowly, with a high risk of checking and distortion; once dry it is moderately stable in service. It works well with ordinary tools, nailing and screwing are good so long as the wood is pre-bored; gluing is correct. The wood is used for musical instruments, tool handles, furniture components, ship building, heavy carpentry, flooring, joinery etc.',
-          'trivia': ''
+          'trivia':
+              'You may encounter Malaruhat pula trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/malaruhatputi1.jpeg',
@@ -1296,7 +1319,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'ou may encounter Malaruhat puti trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/malasantol1.jpeg',
@@ -1354,7 +1378,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'WOOD USES: For bridges and heavy construction for which wood of great strength is required. It is preferred for door and window frames, and it is often used in place of Guijo for high grade construction. NON-WOOD USES: Bark contains tannin which can be used for leather production and in tannin-formaldehyde adhesive ENVIRONMENTAL SERVICES: Windbreaks and good for soil erosion control.',
-          'trivia': ''
+          'trivia':
+              'The Manggachapui Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/maganhop1.jpg',
@@ -1392,7 +1417,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The sweet fruits of Celtis luzonica are sometimes collected and eaten by people in the Philippines. They are also a food source for wildlife. Wood: The wood of the Luzon hackberry may be used for various purposes, including making furniture and small wooden items. It is valued for its hardness and durability. Rates of habitat loss through logging and shifting cultivation have led to considerable population declines. The plant is classified as Vulnerable in the IUCN Red List of Threatened Species.',
-          'trivia': ''
+          'trivia':
+              'Magobuyo Tree is located in Sitio Logdeck, Barangay Tampayan, Magdiwang, Romblon particularly in National Park in Sibuyan.'
         },
         {
           'path': 'assets/images/malabog1.png',
@@ -1409,7 +1435,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The wood is used for temporary construction and cheap grades of veneer and plywood; it is also used for making canoes.',
-          'trivia': ''
+          'trivia':
+              'Malabog Tree is located in Sitio Logdeck, Barangay Tampayan, Magdiwang, Romblon particularly in National Park in Sibuyan.'
         },
         {
           'path': 'assets/images/malapaho2.png',
@@ -1427,7 +1454,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'The wood is used for interior finish, furniture, cabinet work and construction under cover. The fruit is usually eaten unripe, because when ripe it becomes difficult to recover the little flesh there is.',
-          'trivia': ''
+          'trivia':
+              'The Malapaho Tree can be seen mainly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'
         },
         {
           'path': 'assets/images/malapanau1.jpg',
@@ -1483,7 +1511,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'In some cases, the wood may be used for local construction or crafting purposes. ',
-          'trivia': ''
+          'trivia':
+              'You may encounter Malabignai trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/malakadios1.jpeg',
@@ -1499,7 +1528,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'You may encounter Malakadios trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/malakape.jpg',
@@ -1515,7 +1545,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'ly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'
         },
         {
           'path': 'assets/images/marang1.jpeg',
@@ -1549,7 +1580,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Molato Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/nangkaon1.jpg',
@@ -1567,7 +1599,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               ' These may include anti-inflammatory properties and the treatment of ailments like diarrhea and skin disorders. However, scientific research on its medicinal properties is limited, so it is essential to consult with a healthcare professional before using it for therapeutic purposes.',
-          'trivia': ''
+          'trivia':
+              'You may encounter Nangkaon trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/mangasinoro1.jpg',
@@ -1621,7 +1654,8 @@ class TracerDatabaseHelper {
               'Young shoots are edible. In the Bicol area, leaves are cooked in gata (coconut milk). Cooked on top of steaming rice, then garnished with calamansi (Ini-ensalada). Cooked as side dish (bini-berdura) or as egg dish (tinorta). (15)- Study has shown leaves lubi-lubi leaves as potential flavoring in the preparation of enriched lubi-lubi noodles. (see study below). (15) Folkloric - Leaf decoction used for the treatment of hypertension, diabetes, kidney stones, and high cholesterol.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Niyog-Niyog Tree can be seen mainly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'
         },
         {
           'path': 'assets/images/pagsahingin1.jpg',
@@ -1637,7 +1671,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Use oleoresin to treat arthritis, rheumatism, boils, abscess, furuncles, burns, sores; the bark is used for fever and chills; as anti-lice; wood for light construction such as crates, furniture, joinery, toys, novelty items, musical instruments, pulp; resin known as Manila elemi is used to make paints, varnishes, perfumes, illuminant, for caulking boats and other uses.',
-          'trivia': ''
+          'trivia':
+              'Pagsahingin Tree is located in Barangay Agutay or anywhere Barangay has it. most of them can be seen next to the river or next to the stream.'
         },
         {
           'path': 'assets/images/palosapis1.png',
@@ -1654,7 +1689,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Palosapis Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/paho1.png',
@@ -1672,7 +1708,8 @@ class TracerDatabaseHelper {
               'Studies have suggested antioxidant and antibacterial properties.Fruits are eaten fresh, ripe or unripe, pickled or used in salads.- Fruit often eaten unripe, as condiment, appetizer, or salad  ingredient. Ripe fruts used to prepare marmalade.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Paho Tree can be seen mainly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'
         },
         {
           'path': 'assets/images/pusopuso1.jpeg',
@@ -1689,7 +1726,8 @@ class TracerDatabaseHelper {
               'Is included in the list of medicinal plants. Here, the pounded bark is also applied to wounds and bruises. In Bangladesh, the boiled leaves is used to cure diarrhea, while in India, the bark is pounded also and then applied to wounds.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'You may encounter Puso-puso trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/putat1.jpeg',
@@ -1727,7 +1765,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Red Luan Tree is abundant in the protected area. In Barangay Tampayan there are many Red Luan Trees, the leaves of this tree are very beautiful and this tree can be planted in the yard.'
         },
         {
           'path': 'assets/images/sasalit1.jpeg',
@@ -1744,7 +1783,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The Sasalit Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/sukalpi1.jpg',
@@ -1821,7 +1861,8 @@ class TracerDatabaseHelper {
               'Edibility - Ripe fruits are edible but rather tasteless; usually eaten with sugar.- Young leaves eaten as vegetable. Folkloric - Water extracted from standing tree drunk three times daily for fever.- Extracted water applied to relieve muscle pain.- Decoction of roots and bark used for urinary tract inflections, hypertension, and diabetes.- Water from cut branches used for urinary infections.- The Mansaka tribe of the Compostela Valley used a bark decoction to treat asthma, cough, and other respiratory conditions. The Ayta people of Porac, Pampanga use the stem of the plant species as repellent against hematophagous insects. Used for toothache and stomachache. Other - Wood: Used as firewood or charcoal.',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'Tibig is abundant in Barangay Agutay, Agtiwa, Agsao or anywhere Barangay has it. most of them can be seen next to the river or next to the stream. The main tibig tree in sibuyan island is called tayobog.'
         },
         {
           'path': 'assets/images/tindalo1.jpeg',
@@ -1876,7 +1917,8 @@ class TracerDatabaseHelper {
           'benifits': '',
           'summary': '',
           'uses': '',
-          'trivia': ''
+          'trivia':
+              'The White lauan Tree is located in the upper reaches of Mt. Guiting-Guiting.'
         },
         {
           'path': 'assets/images/yakalgisok1.jpg',
@@ -1895,7 +1937,8 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses':
               'Common applications of Shorea gisok wood include crafting furniture, flooring, and outdoor structures. Its resistance to decay makes it ideal for use in marine environments, such as boat construction. Additionally, the trees resin is utilized in traditional medicine in some regions.',
-          'trivia': ''
+          'trivia':
+              'Yakal gisaok Tree is located in Sitio Logdeck, Barangay Tampayan, Magdiwang, Romblon particularly in National Park in Sibuyan.'
         },
       ];
 

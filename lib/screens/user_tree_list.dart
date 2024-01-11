@@ -43,6 +43,7 @@ class _UserTreeListState extends State<UserTreeList> {
       _selectedIndex = index;
     });
   }
+
   Widget _buildDrawerItem({
     required String title,
     required int index,
@@ -58,9 +59,9 @@ class _UserTreeListState extends State<UserTreeList> {
   @override
   void initState() {
     super.initState();
-      print("======= initState ===========");
-      dbHelper = TracerDatabaseHelper.instance;
-      fetchData();
+    print("======= initState ===========");
+    dbHelper = TracerDatabaseHelper.instance;
+    fetchData();
   }
 
   Future<void> fetchData() async {
@@ -73,34 +74,32 @@ class _UserTreeListState extends State<UserTreeList> {
     List<FruitModel> fruits = await dbHelper.getFruitDataList();
     List<LeafModel> leaves = await dbHelper.getLeafDataList();
     List<RootModel> roots = await dbHelper.getRootDataList();
-    List<FlowerModel> flowers = await  dbHelper.getFlowerDataList();
-    
-    
+    List<FlowerModel> flowers = await dbHelper.getFlowerDataList();
+
     setState(() {
       switch (searchKey) {
         case 'TREE':
-            tracerData = result;
+          tracerData = result;
           break;
         case 'ROOT':
-            tracerData = roots;
+          tracerData = roots;
           break;
         case 'FRUIT':
-            tracerData = fruits;
+          tracerData = fruits;
           break;
         case 'LEAF':
-            tracerData = leaves;
+          tracerData = leaves;
           break;
         case 'FLOWER':
-            tracerData = flowers;
+          tracerData = flowers;
           break;
         default:
           tracerData = result;
       }
-    
     });
   }
 
-    Future<bool> _onBackPressed(BuildContext context) async {
+  Future<bool> _onBackPressed(BuildContext context) async {
     final confirmed = await showDialog(
       context: context,
       builder: (context) {
@@ -133,10 +132,12 @@ class _UserTreeListState extends State<UserTreeList> {
     if (filePath.startsWith('assets/')) {
       // If the path starts with 'assets/', load from assets
       return SizedBox(
-        width: 70,
-        height: 70,
-        child: Image.asset(filePath, fit: BoxFit.cover,)
-      );
+          width: 70,
+          height: 70,
+          child: Image.asset(
+            filePath,
+            fit: BoxFit.cover,
+          ));
     } else {
       final file = File(filePath);
 
@@ -146,28 +147,30 @@ class _UserTreeListState extends State<UserTreeList> {
           width: 70,
           height: 70,
           child: Image.file(
-            file, fit: BoxFit.cover,
+            file,
+            fit: BoxFit.cover,
           ),
         );
       }
     }
 
-  // If no valid image is found, return a default placeholder
-  return SizedBox(
-    width: 70,
-    height: 70,
-    child: Image.asset(
+    // If no valid image is found, return a default placeholder
+    return SizedBox(
+      width: 70,
+      height: 70,
+      child: Image.asset(
         "assets/images/default_placeholder.png",
         fit: BoxFit.cover,
       ),
-  ); // You can replace this with your placeholder image
-}
+    ); // You can replace this with your placeholder image
+  }
+
   void search(String keyword) {
     // Create a new list to store the filtered data
     List<TracerModel> filteredData = [];
 
     // Iterate through the original data and add matching items to the filtered list
-    if(keyword != '') {
+    if (keyword != '') {
       for (var item in tracerData) {
         if (item.local_name.toLowerCase().contains(keyword.toLowerCase())) {
           filteredData.add(item);
@@ -180,16 +183,14 @@ class _UserTreeListState extends State<UserTreeList> {
       });
     } else {
       fetchData();
-      
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     String searchKey = widget.searchKey;
     String userType = widget.userType;
-    
+
     List<Map<String, dynamic>> carouselItems = [
       {'name': 'TREE', 'image': 'assets/images/tree.png'},
       {'name': 'FLOWER', 'image': 'assets/images/flower.png'},
@@ -200,37 +201,38 @@ class _UserTreeListState extends State<UserTreeList> {
 
     return WillPopScope(
       child: MaterialApp(
-        home: Scaffold(
+          home: Scaffold(
         appBar: AppBar(
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color.fromARGB(255, 24, 122, 0), Color.fromARGB(255, 82, 209, 90)],
-                ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(255, 24, 122, 0),
+                  Color.fromARGB(255, 82, 209, 90)
+                ],
               ),
             ),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back), // Add your arrow icon here
-              onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
-              },
-            ),
-            title: Text('Tree List'), // Add your app title here
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back), // Add your arrow icon here
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            },
+          ),
+          title: Text('Tree List'), // Add your app title here
         ),
         body: Column(
           children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  "Tree Species List",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.0
-                  ),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Text(
+                "Tree Species List",
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.0),
               ),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
@@ -245,68 +247,85 @@ class _UserTreeListState extends State<UserTreeList> {
               ),
             ),
             Expanded(
-              child: searchKey == 'TREE' 
-              ? ListView.builder(
-                itemCount: tracerData.length,
-                itemBuilder: (context, index) {
-                  final imageData = tracerData[index];
-                  final mangroveId= tracerData[index].id;
+                child: searchKey == 'TREE'
+                    ? ListView.builder(
+                        itemCount: tracerData.length,
+                        itemBuilder: (context, index) {
+                          final imageData = tracerData[index];
+                          final mangroveId = tracerData[index].id;
 
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangroveId ?? 0, category: searchKey, userType: userType,)));
-                        // final imageData = tracerData[index];
-                        // final snackBar = SnackBar(
-                        //   content: Text('Tapped on ${imageData}'),
-                        // );
-                        // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    child: ListTile(
-                    title: Text('Local Name: ${imageData.local_name}'),
-                    subtitle: Text('Scientific Name: ${imageData.scientific_name}' ),
-                    leading: FutureBuilder<Widget>(
-                      future: loadImageFromFile(imageData.imagePath),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return snapshot.data ?? CircularProgressIndicator();
-                        } else {
-                          return CircularProgressIndicator(); // Or another loading indicator
-                        }
-                      },
-                    ),
-                  )
-                  );
-                },
-              )
-              : ListView.builder(
-                itemCount: tracerData.length,
-                itemBuilder: (context, index) {
-                  final imageDt = tracerData[index];
-                  final mangId= tracerData[index].mangroveId;
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ViewSpecies(
+                                              tracerId: mangroveId ?? 0,
+                                              category: searchKey,
+                                              userType: userType,
+                                            )));
+                                // final imageData = tracerData[index];
+                                // final snackBar = SnackBar(
+                                //   content: Text('Tapped on ${imageData}'),
+                                // );
+                                // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              },
+                              child: ListTile(
+                                title:
+                                    Text('Local Name: ${imageData.local_name}'),
+                                subtitle: Text(
+                                    'Scientific Name: ${imageData.scientific_name}'),
+                                leading: FutureBuilder<Widget>(
+                                  future:
+                                      loadImageFromFile(imageData.imagePath),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return snapshot.data ??
+                                          CircularProgressIndicator();
+                                    } else {
+                                      return CircularProgressIndicator(); // Or another loading indicator
+                                    }
+                                  },
+                                ),
+                              ));
+                        },
+                      )
+                    : ListView.builder(
+                        itemCount: tracerData.length,
+                        itemBuilder: (context, index) {
+                          final imageDt = tracerData[index];
+                          final mangId = tracerData[index].mangroveId;
 
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ViewSpecies(tracerId: mangId ?? 0, category: searchKey, userType: userType)));
-                      // final snackBar = SnackBar(content: Text('Tapped on ${mangId}'),);
-                      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    child: ListTile(  
-                    title: Text('Name: ${imageDt.name}'),
-                    leading: FutureBuilder<Widget>(
-                      future: loadImageFromFile(imageDt.imagePath),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return snapshot.data ?? CircularProgressIndicator();
-                        } else {
-                          return CircularProgressIndicator(); // Or another loading indicator
-                        }
-                      },
-                    ),
-                  )
-                  );
-                },
-              )
-            )
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ViewSpecies(
+                                            tracerId: mangId ?? 0,
+                                            category: searchKey,
+                                            userType: userType)));
+                                // final snackBar = SnackBar(content: Text('Tapped on ${mangId}'),);
+                                // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              },
+                              child: ListTile(
+                                title: Text('Name: ${imageDt.name}'),
+                                leading: FutureBuilder<Widget>(
+                                  future: loadImageFromFile(imageDt.imagePath),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return snapshot.data ??
+                                          CircularProgressIndicator();
+                                    } else {
+                                      return CircularProgressIndicator(); // Or another loading indicator
+                                    }
+                                  },
+                                ),
+                              ));
+                        },
+                      ))
           ],
         ),
         endDrawer: Drawer(
@@ -326,8 +345,8 @@ class _UserTreeListState extends State<UserTreeList> {
                 title: 'Favorite',
                 index: 1,
                 onTap: () {
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => Trees()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Trees()));
                 },
               ),
               _buildDrawerItem(
@@ -343,9 +362,9 @@ class _UserTreeListState extends State<UserTreeList> {
                 index: 3,
                 onTap: () {
                   Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserTreeList(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserTreeList(
                                 searchKey: 'TREE',
                                 userType: 'User',
                               )));
@@ -389,7 +408,7 @@ class _UserTreeListState extends State<UserTreeList> {
                 backgroundColor: Colors.green),
           ],
           currentIndex: 1,
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: const Color.fromARGB(255, 0, 4, 255),
           onTap: (int index) {
             switch (index) {
               case 0:
@@ -404,8 +423,8 @@ class _UserTreeListState extends State<UserTreeList> {
                               userType: 'User',
                             )));
               case 2:
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => AboutUs()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => AboutUs()));
               case 3:
                 _onBackPressed(context);
             }
@@ -416,11 +435,10 @@ class _UserTreeListState extends State<UserTreeList> {
             );
           },
         ),
-      
-      ))
-  , 
-      onWillPop: () async { return _onBackPressed(context); },
+      )),
+      onWillPop: () async {
+        return _onBackPressed(context);
+      },
     );
-    
-    }
+  }
 }
