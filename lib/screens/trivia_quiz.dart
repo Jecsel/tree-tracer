@@ -53,7 +53,7 @@ class _TriviaQuizState extends State<TriviaQuiz> {
           explanation:
               'The Bakan Tree is found in Barangay Cambajao, Cajidiocan, Romblon. In Cambajao you can see a lot of these trees, some illegal loggers were caught there and after investigating the trees that were cut down they identified that the tree was Bakan Tree.'),
       Question(
-          question: 'Where in Sibuyan Island can you often see the agoho tree?',
+          question: 'Where in Sibuyan Island can you often see the Agoho Tree?',
           image: 'assets/images/agoho1.jpg',
           choices: [
             'A. Near the rivers at the foot of Mt. Guiting Guiting.',
@@ -86,7 +86,7 @@ class _TriviaQuizState extends State<TriviaQuiz> {
           ],
           correctAnswerIndex: 0,
           explanation:
-              'You may encounter Malasantol trees in various lowland areas, including parts of Mount Guiting-Guiting National Park. The tree may have applications in traditional medicine or local practices, although the extent of such uses can vary regionally.'),
+              'You may encounter Malasantol Trees in various lowland areas, including parts of Mount Guiting-Guiting National Park. The tree may have applications in traditional medicine or local practices, although the extent of such uses can vary regionally.'),
       Question(
           question:
               'In which place in Magdiwang can you see the huge Kubi Tree?',
@@ -106,19 +106,19 @@ class _TriviaQuizState extends State<TriviaQuiz> {
           ],
           correctAnswerIndex: 0,
           explanation:
-              'The Busisi tree grows all around. In Agutay, Agtiwa, Barangay Agsao. simply chopped and utilized by the indigenous, whose leaves and roots are used in traditional medicine to heal illnesses.'),
+              'The Busisi Tree grows all around. In Agutay, Agtiwa, Barangay Agsao. simply chopped and utilized by the indigenous, whose leaves and roots are used in traditional medicine to heal illnesses.'),
       Question(
           question:
-              'Where in Sibuyan Island can you often see the Dolalog tree?',
+              'Where in Sibuyan Island can you often see the Dolalog Tree?',
           image: 'assets/images/dolalog.jpeg',
           choices: [
-            'A. . Close to the riverside.',
+            'A. Close to the riverside.',
             'B. On the upper reaches of Mt. Guiting-Guiting.',
             'C. On the seashore.'
           ],
           correctAnswerIndex: 0,
           explanation:
-              'Dolalog is abundant in Barangay Agutay, Agtiwa, Agsao or anywhere Barangay has it. most of them can be seen next to the river or next to the stream. The main dolalog tree in sibuyan island is called tayobog.'),
+              'Dolalog Tree is abundant in Barangay Agutay, Agtiwa, Agsao or anywhere Barangay has it. most of them can be seen next to the river or next to the stream. The main dolalog tree in sibuyan island is called tayobog.'),
       Question(
           question:
               'In which Barangay in the town of Magdiwang can the Balinghasai Tree be found?',
@@ -357,6 +357,236 @@ class _TriviaQuizState extends State<TriviaQuiz> {
           correctAnswerIndex: 2,
           explanation:
               'The Malapanau Tree can be found in lowland areas including parts of MT. GUITING GUITING National Park in Sibuyan.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the White lauan Tree located?',
+          image: 'assets/images/whitelauan1.jpg',
+          choices: [
+            'A. On the upper reaches of Mt. Guiting-Guiting.',
+            'B. Lowland areas of MT. Guiting Guiting National Park.',
+            'C. Near the rivers at the foot of Mt. Guiting Guiting.'
+          ],
+          correctAnswerIndex: 0,
+          explanation:
+              'The White lauan Tree is located in the upper reaches of Mt. Guiting-Guiting.'),
+      Question(
+          question:
+              'In which Barangay in Cajidiocan is the Bato Bato Tree located?',
+          image: 'assets/images/batobato4.jpg',
+          choices: [
+            'A. Barangay Cantagda',
+            'B. Barangay Danao',
+            'C. Barangay Cambijang'
+          ],
+          correctAnswerIndex: 0,
+          explanation:
+              'Bato Bato Tree is located in Barangay Cantagda, Cajidiocan, Romblon. Almost all places in Sibuyan grow this tree but in Barangay Cantagda there are a lot of Bato Bato Tree.'),
+      Question(
+          question:
+              'In which Barangay in Cajidiocan is the Betis Tree located?',
+          image: 'assets/images/betis2.jpg',
+          choices: [
+            'A. Barangay Danao',
+            'B. Barangay Cantagda',
+            'C. Barangay Lumbang Oeste'
+          ],
+          correctAnswerIndex: 2,
+          explanation:
+              'Betis Tree is located in Barangay Lumbang Oeste, Cajidiocan, Romblon. This tree grows in the higher parts of the mountain and is rarely seen in the lowlands.'),
+      Question(
+          question: 'Where in sibuyan island can you see the Bilis Tree?',
+          image: 'assets/images/bilis3.jpeg',
+          choices: [
+            'A. Town of Magdiwang',
+            'B. Everywhere in the Island of Sibuyan',
+            'C. Town of Sanfernado'
+          ],
+          correctAnswerIndex: 1,
+          explanation:
+              'The Bilis Tree can be seen anywhere in Sibuyan Island, it can be seen on the roadside and even in parks such as Magdiwang Park.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Balakat gubat Tree located?',
+          image: 'assets/images/balakat3.jpeg',
+          choices: [
+            'A. On the upper reaches of Mt. Guiting-Guiting.',
+            'B. Lowland areas of MT. Guiting Guiting National Park.',
+            'C. Near the rivers at the foot of Mt. Guiting Guiting.'
+          ],
+          correctAnswerIndex: 0,
+          explanation:
+              'Balakat-gubat Tree is located in the upper reaches of Mt. Guiting Guiting.'),
+      Question(
+          question: 'Where in Sibuyan Island can you often see the Tibig Tree?',
+          image: 'assets/images/tibig4.jpeg',
+          choices: [
+            'A. On the seashore.',
+            'B. Close to the riverside.',
+            'C. On the upper reaches of Mt. Guiting-Guiting.'
+          ],
+          correctAnswerIndex: 1,
+          explanation:
+              'Tibig is abundant in Barangay Agutay, Agtiwa, Agsao or anywhere Barangay has it. most of them can be seen next to the river or next to the stream.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Batino Tree located?',
+          image: 'assets/images/batino1.jpeg',
+          choices: [
+            'A. On the upper reaches of Mt. Guiting-Guiting.',
+            'B. Lowland areas of MT. Guiting Guiting National Park.',
+            'C. Near the rivers at the foot of Mt. Guiting Guiting.'
+          ],
+          correctAnswerIndex: 0,
+          explanation:
+              'The Batino Tree is located in the upper reaches of Mt. Guiting Guiting.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Laneteng Gubat Tree located?',
+          image: 'assets/images/lanetenggubat2.jpg',
+          choices: [
+            'A. Near the rivers at the foot of Mt. Guiting Guiting.',
+            'B. Lowland areas of MT. Guiting Guiting National Park.',
+            'C. On the upper reaches of Mt. Guiting-Guiting.'
+          ],
+          correctAnswerIndex: 2,
+          explanation:
+              'The Laneteng Gubat Tree is located in the upper reaches of Mt. Guiting-Guiting.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Molato Tree located?',
+          image: 'assets/images/molato.jpeg',
+          choices: [
+            'A. On the seashore.',
+            'B. Close to the riverside.',
+            'C. On the upper reaches of Mt. Guiting-Guiting.'
+          ],
+          correctAnswerIndex: 2,
+          explanation:
+              'The Molato Tree is located in the upper reaches of Mt. Guiting-Guiting.'),
+      Question(
+          question: 'Where in sibuyan island can you see the Paho Tree?',
+          image: 'assets/images/paho1.png',
+          choices: [
+            'A. Town of Sanfernado',
+            'B. Everywhere in the Island of Sibuyan',
+            'C. Town of Magdiwang'
+          ],
+          correctAnswerIndex: 1,
+          explanation:
+              'The Paho Tree can be seen mainly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Manggachapui Tree located?',
+          image: 'assets/images/manggachapui1.jpg',
+          choices: [
+            'A. On the upper reaches of Mt. Guiting-Guiting.',
+            'B. Lowland areas of MT. Guiting Guiting National Park.',
+            'C. Near the rivers at the foot of Mt. Guiting Guiting.'
+          ],
+          correctAnswerIndex: 0,
+          explanation:
+              'The Manggachapui Tree is located in the upper reaches of Mt. Guiting-Guiting.'),
+      Question(
+          question: 'Where in sibuyan island can you see the Malakape Tree?',
+          image: 'assets/images/malakape.jpg',
+          choices: [
+            'A. Town of Sanfernado',
+            'B. Everywhere in the Island of Sibuyan',
+            'C. Town of Magdiwang'
+          ],
+          correctAnswerIndex: 1,
+          explanation:
+              'Secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'),
+      Question(
+          question:
+              'In which Barangay in Magdiwang is the Tagotoi Tree located?',
+          image: 'assets/images/liuin2.jpg',
+          choices: [
+            'A. Agutay, Agtiwa, Agsao',
+            'B. Ambulong, Ipil Dulangan',
+            'C. Silum, Tampayan, Jao-asan'
+          ],
+          correctAnswerIndex: 0,
+          explanation:
+              'Liuin Tree is located in Barangay Agutay, Agtiwa, Agsao or anywhere Barangay has it. most of them can be seen next to the river or next to the stream.'),
+      Question(
+          question: 'Where in Maganhop island can you see the Betis Tree?',
+          image: 'assets/images/banaibanai2.png',
+          choices: ['Barangay Tampayan', 'Barangay Agsao', 'Barangay Ambulong'],
+          correctAnswerIndex: 0,
+          explanation:
+              'The Banai-Banai Tree is located in the land protected area, in Barangay Tampayan there are many banai-banai trees especially in Mt. Guiting Guiting National Park.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Malaruhat puti Tree located?',
+          image: 'assets/images/malaruhatputi1.jpeg',
+          choices: [
+            'A. Near the rivers at the foot of Mt. Guiting Guiting.',
+            'B. On the upper reaches of Mt. Guiting-Guiting.',
+            'C. Lowland areas of MT. Guiting Guiting National Park.'
+          ],
+          correctAnswerIndex: 2,
+          explanation:
+              'You may encounter Malaruhat puti trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Palospis Tree located?',
+          image: 'assets/images/palosapis1.png',
+          choices: [
+            'A. Near the rivers at the foot of Mt. Guiting Guiting.',
+            'B. On the upper reaches of Mt. Guiting-Guiting.',
+            'C. Lowland areas of MT. Guiting Guiting National Park.'
+          ],
+          correctAnswerIndex: 1,
+          explanation:
+              'The Palosapis Tree is located in the upper reaches of Mt. Guiting-Guiting.'),
+      Question(
+          question: 'Where in sibuyan island can you see the Malapaho Tree?',
+          image: 'assets/images/malapaho2.png',
+          choices: [
+            'A. Town of Magdiwang ',
+            'B. Town of Sanfernado ',
+            'C. Everywhere in the Island of Sibuyan.'
+          ],
+          correctAnswerIndex: 2,
+          explanation:
+              'The Malapaho Tree can be seen mainly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'),
+      Question(
+          question:
+              'Which part of Mt. Guiting Guiting is the Malabignai Tree located?',
+          image: 'assets/images/malagbignai1.jpg',
+          choices: [
+            'A. Near the rivers at the foot of Mt. Guiting Guiting.',
+            'B. On the upper reaches of Mt. Guiting-Guiting.',
+            'C. Lowland areas of MT. Guiting Guiting National Park.'
+          ],
+          correctAnswerIndex: 2,
+          explanation:
+              'You may encounter Malabignai trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'),
+      Question(
+          question:
+              'In which Barangay in Magdiwang is the Kansilay Tree located?',
+          image: 'assets/images/kansilay1.jpg',
+          choices: [
+            'A. Near the rivers at the foot of Mt. Guiting Guiting.',
+            'B. On the upper reaches of Mt. Guiting-Guiting.',
+            'C. Lowland areas of MT. Guiting Guiting National Park.'
+          ],
+          correctAnswerIndex: 1,
+          explanation:
+              'The Kansilay Tree is located in the upper reaches of Mt. Guiting-Guiting.'),
+      Question(
+          question:
+              'In which Barangay in Magdiwang is the Batitinan Tree located?',
+          image: 'assets/images/batitinan3.jpeg',
+          choices: [
+            'A. Barangay Tampayan',
+            'B. Barangay Agsao',
+            'C. Barangay Ambulong'
+          ],
+          correctAnswerIndex: 0,
+          explanation:
+              'The Batitinan Tree is located in the land protected area, in Barangay Tampayan there are many batitinan trees especially in Mt. Guiting Guiting National Park.'),
     ];
 
     questions.shuffle();

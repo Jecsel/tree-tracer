@@ -99,11 +99,11 @@ class AboutUsState extends State<AboutUs> {
                   SizedBox(height: 10),
                   Text(
                       textAlign: TextAlign.justify,
-                      "      While the most important feature of the app is its ability to tell users about the general location of trees in the Island of Sibuyan, the app also provides information about the species of the tree, including its common name, scientific name, and other relevant details such as its uses, and benefits. In addition to that, the application also offers trivia questions about random information about the trees and where it is located in the Island of Sibuyan making it a fun and interactive between the system and the user."),
+                      "      While the most important feature of the app is its ability to tell users about the general location of trees in the Island of Sibuyan, the app also provides information about the species of the tree, including its common name, scientific name, and other relevant details such as its uses, and benefits. In addition to that, the application also offers trivia questions or random information about the trees and where it is located in the Island of Sibuyan making it a fun and interactive between the system and the user."),
                   SizedBox(height: 10),
                   Text(
                       textAlign: TextAlign.justify,
-                      "      Overall, the Tree Tracer application is a valuable tool for anyone interested in learning about trees in Sibuyan Island. It provides a fun and interactive way to explore the environment and can help users deepen their knowledge and appreciation of Sibuyan Island."),
+                      "      Overall, the Tree Tracer application is a valuable tool in learning about trees in Sibuyan Island. It provides a fun and interactive way to explore the environment and can help users deepen their knowledge and appreciation of Sibuyan Island."),
                   SizedBox(height: 10),
                   Text(textAlign: TextAlign.justify, ""),
                   SizedBox(height: 10),

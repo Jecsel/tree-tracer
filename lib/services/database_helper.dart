@@ -1320,7 +1320,7 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses': '',
           'trivia':
-              'ou may encounter Malaruhat puti trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
+              'You may encounter Malaruhat puti trees in various lowland areas, including parts of Mount Guiting-Guiting National Park.'
         },
         {
           'path': 'assets/images/malasantol1.jpeg',
@@ -1546,7 +1546,7 @@ class TracerDatabaseHelper {
           'summary': '',
           'uses': '',
           'trivia':
-              'ly secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'
+              'Secondary places like roadsides, regrowth thickets, depleted open forest, forest edges in savannah, coconut plantations, old gardens. We can see this tree around Island of Sibuyan.'
         },
         {
           'path': 'assets/images/marang1.jpeg',
